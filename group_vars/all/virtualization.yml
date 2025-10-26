@@ -1,13 +1,11 @@
 ---
 
-virtualization_docker_repo_file_url: https://download.docker.com/linux/fedora/docker-ce.repo
-virtualization_docker_rpm_key_url: https://download.docker.com/linux/fedora/gpg
 virtualization_docker_packages:
-  - docker-ce
-  - docker-ce-cli
-  - containerd.io
-  - docker-buildx-plugin
-  - docker-compose-plugin
+  - moby-engine
+  - docker-cli
+  - containerd
+  - docker-buildx
+  - docker-compose
 
 virtualization_virtualbox_extension_pack:
   remote_url: https://download.virtualbox.org/virtualbox/7.2.2/Oracle_VirtualBox_Extension_Pack-7.2.2.vbox-extpack  # NOTE: must match the virtualbox version getting installed
