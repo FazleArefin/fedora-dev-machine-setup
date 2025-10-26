@@ -1,4 +1,4 @@
-# fedora-dev-machine-setup | Fedora Workstation 42
+# fedora-dev-machine-setup | Fedora Workstation 43
 
 ## Description
 
@@ -6,7 +6,7 @@ This repo contains Ansible playbooks to configure your system as a development m
 
 The playbooks have been tested on:
 
-- **Fedora Workstation 42**
+- **Fedora Workstation 43**
 
 ---
 
@@ -84,8 +84,8 @@ Summary of packages that get installed and configured based on roles:
   - Install Firejail for sandboxing applications
 
 - **role: virtualization**
-  - Enable the Docker CE repo and install Docker packages
-  - Enable the Oracle VirtualBox repo and install VirtualBox packages
+  - Install Docker packages
+  - Install VirtualBox packages
 
 - **role: hashicorp**
   - Install Vagrant, Terraform, and Packer
