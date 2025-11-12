@@ -132,6 +132,7 @@ base_developer_tools:
   - python3-tmuxp  # `tmuxp` is a session manager for tmux
   - tree
   - uget
+  - uv  # An extremely fast Python package and project manager, written in Rust
   - vim
   - xsel
   - yamllint
