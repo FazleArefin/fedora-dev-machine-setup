@@ -67,7 +67,7 @@ base_developer_tools:
   - cargo
   - cloc  # cloc counts blank lines, comment lines, and physical lines of source code in many programming languages
   - clusterssh
-  - python3-csvkit
+  # - python3-csvkit
   - curl
   - dos2unix
   - duf  # Disk Usage/Free Utility
@@ -108,6 +108,7 @@ base_developer_tools:
   - pv
   - pylint
   - python3-demjson  # provides jsonlint-py3 for json lint
+  - python3-devel
   - python3-jmespath
   - python3-pip
   - python3-poetry
@@ -132,6 +133,7 @@ base_developer_tools:
   - python3-tmuxp  # `tmuxp` is a session manager for tmux
   - tree
   - uget
+  - uv  # An extremely fast Python package and project manager, written in Rust
   - vim
   - xsel
   - yamllint

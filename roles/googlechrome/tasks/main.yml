@@ -9,6 +9,8 @@
     description: google-chrome
     baseurl: "{{ googlechrome_yum_repository_url }}"
     gpgcheck: true
+    skip_if_unavailable: true
+    gpgkey: "{{ googlechrome_rpm_key_url }}"
     file: google-chrome
     name: google-chrome
 
