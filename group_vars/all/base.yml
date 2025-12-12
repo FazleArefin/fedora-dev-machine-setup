@@ -51,8 +51,8 @@ base_download_tools:
   - axel
   - transmission
   - wget
-  - yt-dlp
-  - yt-dlp-zsh-completion
+  # - yt-dlp
+  # - yt-dlp-zsh-completion
 
 base_developer_tools:
   - '@development-tools'
@@ -63,10 +63,10 @@ base_developer_tools:
   - bat
   - bats  # bash automated testing system
   - bpython
-  - black
+  # - black
   - cargo
   - cloc  # cloc counts blank lines, comment lines, and physical lines of source code in many programming languages
-  - clusterssh
+  # - clusterssh
   # - python3-csvkit
   - curl
   - dos2unix
@@ -74,7 +74,7 @@ base_developer_tools:
   - difftastic  # Structural diff that understands syntax
   - entr
   - expect
-  - filezilla
+  # - filezilla
   - fzf
   - g++
   - gawk
@@ -91,7 +91,7 @@ base_developer_tools:
   - meld
   - miller  # `mlr` is for querying, shaping, and reformatting data files in various formats including CSV, TSV, JSON, and JSON Lines
   - moreutils
-  - most
+  # - most
   - mtr
   - nmap
   - nmap-ncat
@@ -103,7 +103,7 @@ base_developer_tools:
   - perf  # performance monitoring for the Linux kernel
   - pipx
   - poetry
-  - pssh
+  # - pssh
   - ptpython
   - pv
   - pylint
@@ -115,12 +115,12 @@ base_developer_tools:
   - python3-autopep8
   - qemu-tools
   - rclone
-  - recode
+  # - recode
   - remmina
   - renameutils
   - ripgrep  # launch using rg from the cli
   - ruby
-  - ruff
+  - ruff  # Python linter and code formatter compatible with black, written in Rust
   - rust  # rust compiler
   - rustfmt  # rust code formatter
   - shellcheck
@@ -130,10 +130,10 @@ base_developer_tools:
   - sshpass
   - sshuttle
   - tmux
-  - python3-tmuxp  # `tmuxp` is a session manager for tmux
+  # - python3-tmuxp  # `tmuxp` is a session manager for tmux
   - tree
   - uget
-  - uv  # An extremely fast Python package and project manager, written in Rust
+  # - uv  # An extremely fast Python package and project manager, written in Rust
   - vim
   - xsel
   - yamllint
