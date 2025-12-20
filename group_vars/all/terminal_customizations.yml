@@ -13,7 +13,7 @@ terminal_customizations_nerd_fonts:
 
   # FiraCode
   - "{{ terminal_customizations_nerd_fonts_base_url }}/FiraCode/Bold/FiraCodeNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/FiraCode/Regular/FiraCodeNerdFontMono-Regular.ttf"             # don't remove; tilix profile uses this
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/FiraCode/Regular/FiraCodeNerdFontMono-Regular.ttf"
 
   # JetBrainsMono (Ligatures)
   - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/BoldItalic/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
