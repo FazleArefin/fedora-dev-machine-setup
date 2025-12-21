@@ -7,7 +7,6 @@
 - import_playbook: vscode.yml
 - import_playbook: privacy.yml
 - import_playbook: security.yml
-- import_playbook: hashicorp.yml
 - import_playbook: googlechrome.yml
 - import_playbook: virtualization.yml
 - import_playbook: post_install.yml
