@@ -96,6 +96,7 @@ base_developer_tools:
   - nmap-ncat
   - nmon
   # - nodejs
+  - opentofu  # terraform fork; infrastructure as code tool
   - pandoc
   - parallel
   - pcre2-tools  # provides pcre2grep and pcre2test (perl-compatible regex)
