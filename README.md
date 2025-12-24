@@ -85,7 +85,6 @@ Summary of packages that get installed and configured based on roles:
 
 - **role: virtualization**
   - Install Docker packages
-  - Install VirtualBox packages
 
 - **role: googlechrome**
   - Add the Google Chrome APT repo
