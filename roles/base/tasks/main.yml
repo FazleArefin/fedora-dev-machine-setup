@@ -130,11 +130,10 @@
 
 
 # Set GNOME color-scheme to prefer-dark (modern dark mode)
-- name: Set GNOME color-scheme to prefer-dark
-  community.general.gsettings:
-    schema: org.gnome.desktop.interface
-    key: color-scheme
-    value: 'prefer-dark'
+- name: Set GNOME color-scheme to prefer-dark using dconf
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/color-scheme"
+    value: "'prefer-dark'"
   become: true
   become_user: "{{ local_username }}"
 
