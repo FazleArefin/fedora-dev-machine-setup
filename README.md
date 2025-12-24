@@ -114,7 +114,7 @@ cd fedora-dev-machine-setup
 **Run the following as yourself (the primary user), not as `root`:**
 
 ```bash
-ansible-playbook main.yml -vv -e "{ laptop_mode: True }" -e "local_username=$(id -un)" -K
+ansible-playbook main.yml -vv -e "{ laptop_mode: True }" -K
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.

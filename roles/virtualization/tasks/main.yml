@@ -8,7 +8,7 @@
 
     - name: Add user to docker group
       ansible.builtin.user:
-        name: "{{ local_username }}"
+        name: "{{ ansible_user_id }}"
         append: true
         groups: "{{ virtualization_docker.user_groups }}"
 
@@ -34,7 +34,7 @@
 
     - name: Add current user to virtualization groups
       ansible.builtin.user:
-        name: "{{ local_username }}"
+        name: "{{ ansible_user_id }}"
         groups: "{{ virtualization_kvm_qemu.user_groups }}"
         append: true
 

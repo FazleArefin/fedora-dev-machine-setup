@@ -7,45 +7,45 @@
 
 - name: Change user's shell to zsh
   ansible.builtin.user:
-    name: "{{ local_username }}"
+    name: "{{ ansible_user_id }}"
     shell: /bin/zsh
 
 - block:
     - name: Clone antigen git repo
       ansible.builtin.git:
         repo: "{{ zsh_antigen_git_repo }}"
-        dest: "~{{ local_username }}/.antigen"
+        dest: "~{{ ansible_user_id }}/.antigen"
         version: v2.2.3
 
     - name: Check if .zshrc exists in user's home dir
       ansible.builtin.stat:
-        path: "~{{ local_username }}/.zshrc"
+        path: "~{{ ansible_user_id }}/.zshrc"
       register: dotzshrc
 
     - name: Backup .zshrc if it exists
       ansible.builtin.copy:
-        src: "~{{ local_username }}/.zshrc"
-        dest: "~{{ local_username }}/.zshrc.orig"
+        src: "~{{ ansible_user_id }}/.zshrc"
+        dest: "~{{ ansible_user_id }}/.zshrc.orig"
         mode: '0644'
       when: dotzshrc.stat.exists
 
     - name: Copy the sample .zshrc file
       ansible.builtin.copy:
         src: .zshrc
-        dest: "~{{ local_username }}/.zshrc"
+        dest: "~{{ ansible_user_id }}/.zshrc"
         mode: '0644'
         force: true
 
     - name: Copy the sample .shell_*.sh files
       ansible.builtin.copy:
         src: "{{ item }}"
-        dest: "~{{ local_username }}/{{ item }}"
+        dest: "~{{ ansible_user_id }}/{{ item }}"
         mode: '0644'
       with_items:
         - .shell_aliases.sh
         - .shell_functions.sh
         - .shell_variables.sh
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
 
 ...

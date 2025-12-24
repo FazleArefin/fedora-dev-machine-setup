@@ -10,8 +10,8 @@
     - name: Clone LazyVim starter git repo
       ansible.builtin.git:
         repo: "{{ neovim_lazyvim_starter_url }}"
-        dest: "~{{ local_username }}/.config/nvim"
+        dest: "~{{ ansible_user_id }}/.config/nvim"
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
 
 ...

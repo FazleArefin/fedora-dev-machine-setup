@@ -71,23 +71,23 @@
     name: "{{ item }}"
   with_items: "{{ base_developer_tools_pipx }}"
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
 
 - name: Create .ssh dir
   ansible.builtin.file:
-    path: "~{{ local_username }}/.ssh"
+    path: "~{{ ansible_user_id }}/.ssh"
     state: directory
     mode: '0700'
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
 
 - name: Setup golang directories and GOPATH
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
   block:
     - name: Create directories for golang
       ansible.builtin.file:
-        path: "~{{ local_username }}/{{ item }}"
+        path: "~{{ ansible_user_id }}/{{ item }}"
         state: directory
         mode: '0755'
       with_items:
@@ -97,7 +97,7 @@
 
     - name: Make GOPATH available in .bashrc
       ansible.builtin.lineinfile:
-        path: "~{{ local_username }}/.bashrc"
+        path: "~{{ ansible_user_id }}/.bashrc"
         line: "{{ item }}"
         create: true
         mode: '0644'
@@ -125,7 +125,7 @@
     - { key: 'night-light-temperature', value: "{{ base_permanent_night_light.night_light_temperature }}" }
   when: base_permanent_night_light.night_light_enabled
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
   changed_when: false
 
 
@@ -135,19 +135,19 @@
     key: "/org/gnome/desktop/interface/color-scheme"
     value: "'prefer-dark'"
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
 
 # Always prefer dark theme for GTK3 apps
 - name: Ensure GTK3 apps prefer dark theme
   community.general.ini_file:
-    path: "~{{ local_username }}/.config/gtk-3.0/settings.ini"
+    path: "~{{ ansible_user_id }}/.config/gtk-3.0/settings.ini"
     section: Settings
     option: gtk-application-prefer-dark-theme
     value: '1'
     mode: '0644'
     create: true
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
 
 - name: Setup fstrim timer for SSD longevity
   block:
@@ -180,14 +180,14 @@
 - name: Make poetry create virtualenv dirs inside the project dir itself
   ansible.builtin.command: "poetry config virtualenvs.in-project true"
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
   changed_when: false
 
 - name: Build and install golang binaries
   ansible.builtin.command: "go install {{ item }}"
   with_items: "{{ base_golang_tools }}"
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
   changed_when: false
 
 - name: Build and install cargo packages
@@ -197,7 +197,7 @@
     state: latest
   with_items: "{{ base_cargo_packages }}"
   become: true
-  become_user: "{{ local_username }}"
+  become_user: "{{ ansible_user_id }}"
 
 - name: Setup flatpak and install apps
   block:
