@@ -42,6 +42,7 @@ Summary of packages that get installed and configured based on roles:
   - Install [lazygit](https://github.com/jesseduffield/lazygit)
   - Install terminal emulators Tilix and Alacritty
   - Install Dive, a tool for exploring each layer in a Docker image
+  - Set GNOME color-scheme to dark mode
 
 - **role: zsh**
   - Install the Zsh package and set the user shell to Zsh
