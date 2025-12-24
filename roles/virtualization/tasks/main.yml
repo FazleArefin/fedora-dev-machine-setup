@@ -12,4 +12,44 @@
         append: true
         groups: "{{ virtualization_docker.user_groups }}"
 
+- name: Install and configure QEMU/KVM with libvirt
+  block:
+    - name: Install virtualization package groups
+      ansible.builtin.dnf:
+        name: "{{ virtualization_kvm_qemu.package_groups }}"
+        state: present
+        install_weak_deps: true
+
+    - name: Install virtualization packages
+      ansible.builtin.dnf:
+        name: "{{ virtualization_kvm_qemu.packages }}"
+        state: present
+
+    - name: Enable and start systemd services
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop: "{{ virtualization_kvm_qemu.systemd_services }}"
+
+    - name: Add current user to virtualization groups
+      ansible.builtin.user:
+        name: "{{ local_username }}"
+        groups: "{{ virtualization_kvm_qemu.user_groups }}"
+        append: true
+
+    - name: Ensure libvirt networks are started
+      ansible.builtin.command: virsh net-start {{ item }}
+      loop: "{{ virtualization_kvm_qemu.networks }}"
+      register: virtualization_net_start
+      failed_when: false
+      changed_when: "'started' in virtualization_net_start.stdout"
+
+    - name: Ensure libvirt networks autostart
+      ansible.builtin.command: virsh net-autostart {{ item }}
+      loop: "{{ virtualization_kvm_qemu.networks }}"
+      register: virtualization_net_autostart
+      failed_when: false
+      changed_when: "'marked as autostarted' in virtualization_net_autostart.stdout"
+
 ...

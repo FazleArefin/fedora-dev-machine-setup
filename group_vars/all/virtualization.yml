@@ -10,4 +10,19 @@ virtualization_docker:
   user_groups:
     - docker
 
+virtualization_kvm_qemu:
+  package_groups:
+    - '@Virtualization'
+  packages:
+    - virt-manager
+    - edk2-ovmf
+    - swtpm
+    - quickemu
+  systemd_services:
+    - libvirtd
+  user_groups:
+    - libvirt
+    - kvm
+  networks:
+    - default
 ...
