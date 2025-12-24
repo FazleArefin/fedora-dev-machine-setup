@@ -1,46 +1,55 @@
 ---
 
-- block:
-  - name: Install docker packages
-    ansible.builtin.dnf:
-      name: "{{ virtualization_docker_packages }}"
+- name: Docker setup
+  block:
+    - name: Install docker packages
+      ansible.builtin.dnf:
+        name: "{{ virtualization_docker.packages }}"
 
-  - name: Enable docker service on boot
-    ansible.builtin.systemd:
-      name: docker.service
-      state: started
-      enabled: true
+    - name: Add user to docker group
+      ansible.builtin.user:
+        name: "{{ local_username }}"
+        append: true
+        groups: "{{ virtualization_docker.user_groups }}"
 
-  - name: Add user to docker group
-    ansible.builtin.user:
-      name: "{{ local_username }}"
-      append: true
-      groups:
-        - docker
+- name: Install and configure QEMU/KVM with libvirt
+  block:
+    - name: Install virtualization package groups
+      ansible.builtin.dnf:
+        name: "{{ virtualization_kvm_qemu.package_groups }}"
+        state: present
+        install_weak_deps: true
 
-- block:
-  # TODO: revise this task once Fedora official repo releases virtualbox-guest-additions-7.1
-  - name: Remove conflicting packages
-    ansible.builtin.dnf:
-      name: "{{ item }}"
-      state: absent
-    with_items: "{{ virtualization_virtualbox_conflict_packages }}"
+    - name: Install virtualization packages
+      ansible.builtin.dnf:
+        name: "{{ virtualization_kvm_qemu.packages }}"
+        state: present
 
-  - name: Install virtualbox packages
-    ansible.builtin.dnf:
-      name: "{{ virtualization_virtualbox_packages }}"
+    - name: Enable and start systemd services
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop: "{{ virtualization_kvm_qemu.systemd_services }}"
 
-  - name: Download virtualbox extension pack
-    ansible.builtin.get_url:
-        url: "{{ virtualization_virtualbox_extension_pack.remote_url }}"
-        dest: "{{ virtualization_virtualbox_extension_pack.local_path }}"
+    - name: Add current user to virtualization groups
+      ansible.builtin.user:
+        name: "{{ local_username }}"
+        groups: "{{ virtualization_kvm_qemu.user_groups }}"
+        append: true
 
-  - name: Install Virtualbox Extension Pack
-    ansible.builtin.command: bash -c "yes y | VBoxManage extpack install --replace {{ virtualization_virtualbox_extension_pack.local_path }}"
+    - name: Ensure libvirt networks are started
+      ansible.builtin.command: virsh net-start {{ item }}
+      loop: "{{ virtualization_kvm_qemu.networks }}"
+      register: virtualization_net_start
+      failed_when: false
+      changed_when: "'started' in virtualization_net_start.stdout"
 
-  - name: Add user to vboxusers group
-    ansible.builtin.user:
-      name: "{{ local_username }}"
-      append: true
-      groups:
-        - vboxusers
+    - name: Ensure libvirt networks autostart
+      ansible.builtin.command: virsh net-autostart {{ item }}
+      loop: "{{ virtualization_kvm_qemu.networks }}"
+      register: virtualization_net_autostart
+      failed_when: false
+      changed_when: "'marked as autostarted' in virtualization_net_autostart.stdout"
+
+...

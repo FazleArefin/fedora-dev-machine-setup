@@ -85,7 +85,7 @@ Summary of packages that get installed and configured based on roles:
 
 - **role: virtualization**
   - Install Docker packages
-  - Install VirtualBox packages
+  - Install and configure QEMU and KVM with libvirt
 
 - **role: googlechrome**
   - Add the Google Chrome APT repo

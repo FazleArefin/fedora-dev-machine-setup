@@ -1,18 +1,28 @@
 ---
 
-virtualization_docker_packages:
-  - moby-engine
-  - docker-cli
-  - containerd
-  - docker-buildx
-  - docker-compose
+virtualization_docker:
+  packages:
+    - moby-engine
+    - docker-cli
+    - containerd
+    - docker-buildx
+    - docker-compose
+  user_groups:
+    - docker
 
-virtualization_virtualbox_extension_pack:
-  remote_url: https://download.virtualbox.org/virtualbox/7.2.2/Oracle_VirtualBox_Extension_Pack-7.2.2.vbox-extpack  # NOTE: must match the virtualbox version getting installed
-  local_path: /tmp/Oracle_VirtualBox_Extension_Pack.vbox-extpack
-virtualization_virtualbox_packages:
-  - VirtualBox
-
-# TODO: revise this once Fedora official repo releases virtualbox-guest-additions-7.1
-virtualization_virtualbox_conflict_packages:
-  - virtualbox-guest-additions  # comes from the official repo and conflicts with package from Oracle repo
+virtualization_kvm_qemu:
+  package_groups:
+    - '@Virtualization'
+  packages:
+    - virt-manager
+    - edk2-ovmf
+    - swtpm
+    - quickemu
+  systemd_services:
+    - libvirtd
+  user_groups:
+    - libvirt
+    - kvm
+  networks:
+    - default
+...
