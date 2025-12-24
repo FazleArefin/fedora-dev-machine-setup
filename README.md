@@ -40,8 +40,7 @@ Summary of packages that get installed and configured based on roles:
   - Option to turn on Night Light for eye comfort (set `base_permanent_night_light.night_light_enabled` to `True`)
   - Enable `fzf` fuzzy finder in the Zsh terminal
   - Install [lazygit](https://github.com/jesseduffield/lazygit)
-  - Install terminal emulators Tilix and Alacritty
-  - Install Dive, a tool for exploring each layer in a Docker image
+  - Install terminal emulator Alacritty
   - Set GNOME color-scheme to dark mode
 
 - **role: zsh**
