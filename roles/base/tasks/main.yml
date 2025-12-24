@@ -133,6 +133,18 @@
   become: true
   become_user: "{{ local_username }}"
 
+# Always prefer dark theme for GTK3 apps
+- name: Ensure GTK3 apps prefer dark theme
+  community.general.ini_file:
+    path: "~{{ local_username }}/.config/gtk-3.0/settings.ini"
+    section: Settings
+    option: gtk-application-prefer-dark-theme
+    value: '1'
+    mode: '0644'
+    create: true
+  become: true
+  become_user: "{{ local_username }}"
+
 # make fstrim run daily rather than the default weekly schedule for SSD longevity
 - block:
     - name: Enable fstrim.timer
