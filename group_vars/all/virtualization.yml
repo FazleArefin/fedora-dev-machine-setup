@@ -1,8 +1,13 @@
 ---
 
-virtualization_docker_packages:
-  - moby-engine
-  - docker-cli
-  - containerd
-  - docker-buildx
-  - docker-compose
+virtualization_docker:
+  packages:
+    - moby-engine
+    - docker-cli
+    - containerd
+    - docker-buildx
+    - docker-compose
+  user_groups:
+    - docker
+
+...

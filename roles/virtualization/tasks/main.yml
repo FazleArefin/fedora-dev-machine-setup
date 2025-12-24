@@ -1,19 +1,15 @@
 ---
 
-- block:
-  - name: Install docker packages
-    ansible.builtin.dnf:
-      name: "{{ virtualization_docker_packages }}"
+- name: Docker setup
+  block:
+    - name: Install docker packages
+      ansible.builtin.dnf:
+        name: "{{ virtualization_docker.packages }}"
 
-  - name: Enable docker service on boot
-    ansible.builtin.systemd:
-      name: docker.service
-      state: started
-      enabled: true
+    - name: Add user to docker group
+      ansible.builtin.user:
+        name: "{{ local_username }}"
+        append: true
+        groups: "{{ virtualization_docker.user_groups }}"
 
-  - name: Add user to docker group
-    ansible.builtin.user:
-      name: "{{ local_username }}"
-      append: true
-      groups:
-        - docker
+...
