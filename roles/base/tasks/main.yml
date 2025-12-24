@@ -1,17 +1,19 @@
 ---
 
-- block:
 
-  - name: Ensure firewalld service is running and enabled on boot
-    ansible.builtin.systemd:
-      name: firewalld
-      state: started
-      enabled: true
+# Initial system firewall setup
+- name: Ensure firewalld is enabled and running
+  block:
+    - name: Ensure firewalld service is running and enabled on boot
+      ansible.builtin.systemd:
+        name: firewalld
+        state: started
+        enabled: true
 
-  - name: Enable firewall
-    ansible.posix.firewalld:
-      state: enabled
-      permanent: true
+    - name: Enable firewall
+      ansible.posix.firewalld:
+        state: enabled
+        permanent: true
 
 # It may be desirable to set this to zero, so that application memory is retained as long as possible at the expense
 # of the page cache. When there is still a memory shortage, the kernel can still use swapping.
@@ -79,11 +81,15 @@
   become: true
   become_user: "{{ local_username }}"
 
-- block:
+- name: Setup golang directories and GOPATH
+  become: true
+  become_user: "{{ local_username }}"
+  block:
     - name: Create directories for golang
       ansible.builtin.file:
         path: "~{{ local_username }}/{{ item }}"
         state: directory
+        mode: '0755'
       with_items:
         - go
         - go/src
@@ -94,11 +100,10 @@
         path: "~{{ local_username }}/.bashrc"
         line: "{{ item }}"
         create: true
+        mode: '0644'
       with_items:
         - export GOPATH=$HOME/go
         - export PATH=$PATH:$GOPATH/bin
-  become: true
-  become_user: "{{ local_username }}"
 
 - name: Install download tools
   ansible.builtin.dnf:
@@ -118,10 +123,10 @@
     - { key: 'night-light-schedule-from', value: "{{ base_permanent_night_light.night_light_schedule_from }}" }
     - { key: 'night-light-schedule-to', value: "{{ base_permanent_night_light.night_light_schedule_to }}" }
     - { key: 'night-light-temperature', value: "{{ base_permanent_night_light.night_light_temperature }}" }
-
   when: base_permanent_night_light.night_light_enabled
   become: true
   become_user: "{{ local_username }}"
+  changed_when: false
 
 
 # Set GNOME color-scheme to prefer-dark (modern dark mode)
@@ -145,8 +150,8 @@
   become: true
   become_user: "{{ local_username }}"
 
-# make fstrim run daily rather than the default weekly schedule for SSD longevity
-- block:
+- name: Setup fstrim timer for SSD longevity
+  block:
     - name: Enable fstrim.timer
       ansible.builtin.systemd:
         name: fstrim.timer
@@ -177,12 +182,14 @@
   ansible.builtin.command: "poetry config virtualenvs.in-project true"
   become: true
   become_user: "{{ local_username }}"
+  changed_when: false
 
 - name: Build and install golang binaries
   ansible.builtin.command: "go install {{ item }}"
   with_items: "{{ base_golang_tools }}"
   become: true
   become_user: "{{ local_username }}"
+  changed_when: false
 
 - name: Build and install cargo packages
   community.general.cargo:
@@ -193,7 +200,8 @@
   become: true
   become_user: "{{ local_username }}"
 
-- block:
+- name: Setup flatpak and install apps
+  block:
     - name: Add the flathub flatpak repository remote to the user installation
       community.general.flatpak_remote:
         name: flathub
