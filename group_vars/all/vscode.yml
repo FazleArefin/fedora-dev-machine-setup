@@ -5,28 +5,27 @@ vscode_yum_repository_url: "https://packages.microsoft.com/yumrepos/vscode"
 vscode_package_name: code
 
 vscode_extensions:
-  - aaron-bond.better-comments
-  - formulahendry.code-runner
-  - donjayamanne.githistory
-  - eamodio.gitlens
-  - golang.Go
-  - vincaslt.highlight-matching-tag
-  - oderwat.indent-rainbow
-  - yzhang.markdown-all-in-one
-  - ms-python.python
-  - ms-python.vscode-pylance
-  - humao.rest-client
-  - Gruntfuggly.todo-tree
-  - shardulm94.trailing-spaces
-  - vscodevim.vim
-  - visualstudioexptteam.vscodeintellicode
-  - ms-azuretools.vscode-docker
-  - vscode-icons-team.vscode-icons
-  - esbenp.prettier-vscode
-  - redhat.vscode-yaml
-  - danielroedl.meld-diff
-  - davidanson.vscode-markdownlint
-  - hashicorp.terraform
+  - aaron-bond.better-comments  # better comments extension
+  - formulahendry.code-runner  # code runner extension
+  - donjayamanne.githistory  # git history viewer
+  - eamodio.gitlens  # supercharged git capabilities
+  - golang.Go  # golang extension
+  - vincaslt.highlight-matching-tag  # highlight matching tag extension
+  - oderwat.indent-rainbow  # indent rainbow extension
+  - yzhang.markdown-all-in-one  # all-in-one markdown extension
+  - ms-python.python  # python extension
+  - ms-python.vscode-pylance  # python language server
+  - humao.rest-client  # REST client for testing APIs
+  - Gruntfuggly.todo-tree # todo comments highlighter
+  - shardulm94.trailing-spaces  # highlight trailing spaces
+  - vscodevim.vim  # vim emulation
+  - ms-azuretools.vscode-docker  # docker extension
+  - vscode-icons-team.vscode-icons  # vscode icons extension
+  - esbenp.prettier-vscode  # code formatter
+  - redhat.vscode-yaml  # YAML support and validation
+  - danielroedl.meld-diff  # Meld diff viewer integration
+  - davidanson.vscode-markdownlint  # markdown linting and style checking
+  - OpenTofu.vscode-opentofu  # OpenTofu extension
   - gera2ld.markmap-vscode  # create mindmap from markdown file
   - rangav.vscode-thunder-client  # lightweight rest client for testing APIs
   - redhat.ansible  # ansible extension
@@ -34,10 +33,11 @@ vscode_extensions:
   - Catppuccin.catppuccin-vsc  # Catppuccin theme
   - Catppuccin.catppuccin-vsc-icons  # Catppuccin icons
   - bierner.markdown-mermaid  # markdown preview mermaid support
-#  - terrastruct.d2  # diagram scripting language that turns text to diagrams
-  - rust-lang.rust-analyzer  # rust linter
+  - rust-lang.rust-analyzer  # rust analyzer extension
   - vadimcn.vscode-lldb  # native debugger powered by LLDB. Debug C++, Rust and other compiled languages
   - usernamehw.errorlens  # Improve highlighting of errors, warnings and other language diagnostics
   - tamasfe.even-better-toml  # TOML support
+  - GitHub.copilot  # GitHub Copilot AI code completion
+  - GitHub.copilot-chat  # Chat with GitHub Copilot AI
 
 ...
