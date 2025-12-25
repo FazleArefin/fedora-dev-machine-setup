@@ -67,7 +67,9 @@
       ansible.builtin.pause:
         seconds: 5
 
-    # --- THE FIXED NETWORK DEFINITIONS ---
+    - name: Re-activate NIC to pick up bridge-slave profile
+      ansible.builtin.command: "nmcli device reapply {{ virtualization_active_nic }}"
+      changed_when: false
 
     - name: Define bridged network XML
       community.libvirt.virt_net:
