@@ -56,8 +56,7 @@
       community.general.nmcli:
         conn_name: "bridge-slave-{{ virtualization_active_nic }}"
         ifname: "{{ virtualization_active_nic }}"
-        type: ethernet
-        slave_type: bridge
+        type: bridge-slave  # Use bridge-slave for port clarity
         master: br0
         state: present
       async: 45
@@ -74,11 +73,12 @@
       ansible.builtin.pause:
         seconds: 5
 
-    - name: Define and activate bridged network
+    # --- THE FIXED NETWORK DEFINITIONS ---
+
+    - name: Define bridged network XML
       community.libvirt.virt_net:
         name: bridged
-        state: active
-        autostart: true
+        state: present
         xml: |
           <network>
             <name>bridged</name>
@@ -86,11 +86,16 @@
             <bridge name="br0"/>
           </network>
 
-    - name: Define and activate isolated network
+    - name: Ensure bridged network is active and autostarted
       community.libvirt.virt_net:
-        name: isolated
+        name: bridged
         state: active
         autostart: true
+
+    - name: Define isolated network XML
+      community.libvirt.virt_net:
+        name: isolated
+        state: present
         xml: |
           <network>
             <name>isolated</name>
@@ -102,4 +107,8 @@
             </ip>
           </network>
 
-...
+    - name: Ensure isolated network is active and autostarted
+      community.libvirt.virt_net:
+        name: isolated
+        state: active
+        autostart: true
