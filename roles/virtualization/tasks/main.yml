@@ -63,13 +63,6 @@
       async: 45
       poll: 5
 
-    - name: Ensure libvirt default networks are active and set to autostart
-      community.libvirt.virt_net:
-        name: "{{ item }}"
-        state: active
-        autostart: true
-      loop: "{{ virtualization_kvm_qemu.networks }}"
-
     - name: Wait for bridge br0 to settle
       ansible.builtin.pause:
         seconds: 5
@@ -113,3 +106,10 @@
         name: isolated
         state: active
         autostart: true
+
+    - name: Ensure all libvirt networks are active and set to autostart
+      community.libvirt.virt_net:
+        name: "{{ item }}"
+        state: active
+        autostart: true
+      loop: "{{ virtualization_kvm_qemu.networks }}"
