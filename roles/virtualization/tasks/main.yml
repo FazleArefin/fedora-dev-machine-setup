@@ -56,7 +56,8 @@
       community.general.nmcli:
         conn_name: "bridge-slave-{{ virtualization_active_nic }}"
         ifname: "{{ virtualization_active_nic }}"
-        type: bridge-slave
+        type: ethernet
+        slave_type: bridge
         master: br0
         state: present
       async: 45
