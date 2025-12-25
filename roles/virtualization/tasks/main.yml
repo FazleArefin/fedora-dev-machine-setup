@@ -67,9 +67,10 @@
       ansible.builtin.pause:
         seconds: 5
 
-    - name: Re-activate NIC to pick up bridge-slave profile
-      ansible.builtin.command: "nmcli device reapply {{ virtualization_active_nic }}"
-      changed_when: false
+    - name: Force activation of bridge slave profile
+      ansible.builtin.command: "nmcli connection up bridge-slave-{{ virtualization_active_nic }}"
+      register: virtualization_nmcli_up
+      changed_when: "'Connection successfully activated' in virtualization_nmcli_up.stdout"
 
     - name: Define bridged network XML
       community.libvirt.virt_net:
