@@ -63,7 +63,7 @@
       async: 45
       poll: 5
 
-    - name: Ensure libvirt networks are active and set to autostart
+    - name: Ensure libvirt default networks are active and set to autostart
       community.libvirt.virt_net:
         name: "{{ item }}"
         state: active
@@ -73,7 +73,8 @@
     - name: Define and activate bridged network
       community.libvirt.virt_net:
         name: bridged
-        state: active
+        state: present
+        active: true
         autostart: true
         xml: |
           <network>
@@ -85,7 +86,8 @@
     - name: Define and activate isolated network
       community.libvirt.virt_net:
         name: isolated
-        state: active
+        state: present
+        active: true
         autostart: true
         xml: |
           <network>
