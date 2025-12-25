@@ -116,3 +116,12 @@
         state: active
         autostart: true
       loop: "{{ virtualization_kvm_qemu.networks }}"
+
+    - name: Force autostart persistence for all networks
+      ansible.builtin.command: "virsh net-autostart {{ item }}"
+      loop: "{{ virtualization_kvm_qemu.networks }}"
+      register: virtualization_autostart_results
+      changed_when: "'marked as autostarted' in virtualization_autostart_results.stdout"
+      failed_when:
+        - autostart_results.rc != 0
+        - "'already marked as autostarted' not in autostart_results.stderr"
