@@ -18,6 +18,7 @@ virtualization_kvm_qemu:
     - edk2-ovmf
     - swtpm
     - quickemu
+    - python3-libvirt
   systemd_services:
     - libvirtd
   user_groups:

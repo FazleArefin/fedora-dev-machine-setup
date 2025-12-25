@@ -38,18 +38,63 @@
         groups: "{{ virtualization_kvm_qemu.user_groups }}"
         append: true
 
-    - name: Ensure libvirt networks are started
-      ansible.builtin.command: virsh net-start {{ item }}
-      loop: "{{ virtualization_kvm_qemu.networks }}"
-      register: virtualization_net_start
-      failed_when: false
-      changed_when: "'started' in virtualization_net_start.stdout"
+    - name: Get the active physical NIC name
+      ansible.builtin.set_fact:
+        virtualization_active_nic: "{{ ansible_default_ipv4.interface }}"
 
-    - name: Ensure libvirt networks autostart
-      ansible.builtin.command: virsh net-autostart {{ item }}
+    - name: Create host Linux bridge br0
+      community.general.nmcli:
+        conn_name: br0
+        ifname: br0
+        type: bridge
+        method4: auto
+        state: present
+      async: 45
+      poll: 5
+
+    - name: Enslave physical NIC to bridge
+      community.general.nmcli:
+        conn_name: "bridge-slave-{{ virtualization_active_nic }}"
+        ifname: "{{ virtualization_active_nic }}"
+        type: ethernet
+        master: br0
+        state: present
+      async: 45
+      poll: 5
+
+    - name: Ensure libvirt networks are active and set to autostart
+      community.libvirt.virt_net:
+        name: "{{ item }}"
+        state: active
+        autostart: true
       loop: "{{ virtualization_kvm_qemu.networks }}"
-      register: virtualization_net_autostart
-      failed_when: false
-      changed_when: "'marked as autostarted' in virtualization_net_autostart.stdout"
+
+    - name: Define and activate bridged network
+      community.libvirt.virt_net:
+        name: bridged
+        state: active
+        autostart: true
+        xml: |
+          <network>
+            <name>bridged</name>
+            <forward mode="bridge"/>
+            <bridge name="br0"/>
+          </network>
+
+    - name: Define and activate isolated network
+      community.libvirt.virt_net:
+        name: isolated
+        state: active
+        autostart: true
+        xml: |
+          <network>
+            <name>isolated</name>
+            <bridge name="virbr666" stp="on" delay="0"/>
+            <ip address="10.66.6.1" netmask="255.255.255.0">
+              <dhcp>
+                <range start="10.66.6.66" end="10.66.6.254"/>
+              </dhcp>
+            </ip>
+          </network>
 
 ...
