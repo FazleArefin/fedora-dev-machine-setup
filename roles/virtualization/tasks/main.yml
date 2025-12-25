@@ -70,11 +70,14 @@
         autostart: true
       loop: "{{ virtualization_kvm_qemu.networks }}"
 
+    - name: Wait for bridge br0 to settle
+      ansible.builtin.pause:
+        seconds: 5
+
     - name: Define and activate bridged network
       community.libvirt.virt_net:
         name: bridged
-        state: present
-        active: true
+        state: active
         autostart: true
         xml: |
           <network>
@@ -86,8 +89,7 @@
     - name: Define and activate isolated network
       community.libvirt.virt_net:
         name: isolated
-        state: present
-        active: true
+        state: active
         autostart: true
         xml: |
           <network>
