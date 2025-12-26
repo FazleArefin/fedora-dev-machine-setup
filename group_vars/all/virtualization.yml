@@ -26,6 +26,5 @@ virtualization_kvm_qemu:
     - kvm
   networks:
     - default
-    - bridged
     - isolated
 ...
