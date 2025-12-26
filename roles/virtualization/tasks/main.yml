@@ -61,10 +61,8 @@
         autostart: true
 
     - name: Ensure all libvirt networks are active and set to autostart
-      community.libvirt.virt_net:
-        name: "{{ item }}"
-        state: active
-        autostart: true
+      ansible.builtin.shell: virsh net-autostart "{{ item }}"
+      changed_when: false
       loop: "{{ virtualization_kvm_qemu.networks }}"
 
 ...
