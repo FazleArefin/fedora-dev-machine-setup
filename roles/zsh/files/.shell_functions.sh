@@ -1,10 +1,16 @@
 # .shell_functions.sh - Custom shell functions for convenience and system management
 
+# Check if the shell is interactive
+[[ $- != *i* ]] && return
+
 function update_fedora {
+    echo "Updating Fedora system..."
     /usr/bin/sudo dnf -y upgrade --refresh
+    /usr/bin/sudo dnf distro-sync -y
     /usr/bin/sudo dnf autoremove -y
     /usr/bin/sudo dnf clean all
     /usr/bin/sudo flatpak update -y
+    echo "Update complete!"
 }
 
 # a locked-down firefox instance running inside a sandbox
@@ -14,9 +20,9 @@ function safefox {
 
 # update existing docker images
 function update_docker_images {
-    docker images --format "{{.Repository}}:{{.Tag}}" | grep -v "<none>" | sort -u | xargs -L1 docker pull
+    docker images --format "{{.Repository}}:{{.Tag}}" | grep -v "<none>" | sort -u | xargs --no-run-if-empty -L1 docker pull
     # cleanup images containing no tags; usually the ones which get updated
-    if nonetags=$(docker images | grep "<none>"); then awk '{ print $3 }' <<< "$nonetags" | xargs -L1 docker rmi -f; fi
+    if nonetags=$(docker images | grep "<none>"); then awk '{ print $3 }' <<< "$nonetags" | xargs --no-run-if-empty -L1 docker rmi -f; fi
 }
 
 ### BEGIN night light control ###
@@ -50,7 +56,7 @@ function night_light_high {
 function extract {
     if [ -z "$1" ]; then
         # display usage if no parameters given
-        echo "Usage: ex <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+        echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
         echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
     else
         for n in "$@"

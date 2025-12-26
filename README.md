@@ -48,7 +48,7 @@ Summary of packages that get installed and configured based on roles:
   - Install Antigen Zsh plugin manager
   - Copy and enable a sample `~/.zshrc` file if one doesn't exist
     - Includes a function to stop `ssh-agent` from repeatedly asking for encrypted SSH key passwords in new terminals
-    - Adds additional aliases and functions in `~/.shell_aliases` and `~/.shell_functions`
+    - Adds additional aliases, functions, and variables in `~/.shell_aliases.sh`,`~/.shell_functions.sh`, and `~/.shell_variables.sh` for use in interactive sessions
   - Install ohmyzsh/ohmyzsh and enable bundled plugins
   - Enable the Bullet Train Zsh theme (others like p10k can be configured as well)
 

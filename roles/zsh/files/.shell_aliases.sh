@@ -1,13 +1,16 @@
 # .shell_aliases.sh - Custom shell aliases for convenience and system management
 
+# Check if the shell is interactive
+[[ $- != *i* ]] && return
+
 # Flush file system buffers with 'sync' and drop cached data from memory
-alias clear_cache="/usr/bin/sudo sh -c 'sync && echo 1 > /proc/sys/vm/drop_caches'"
+alias drop_caches='/usr/bin/sudo sh -c "sync && echo 3 > /proc/sys/vm/drop_caches && echo Caches cleared"'
 
 alias my_public_ipv4='dig @resolver1.opendns.com A myip.opendns.com +short -4'
 alias my_public_ipv6='dig @resolver1.opendns.com AAAA myip.opendns.com +short -6'
 
 # pipe text output to clipboard (can be pasted using Ctrl v)
-alias clipboard='xsel -ib'
+alias clipboard='xsel -ib || xclip -selection clipboard'
 
 # aliases to send traffic through a man-in-the-middle proxy or the tor network
 alias proxy_on='export http_proxy=http://localhost:8080; export https_proxy=http://localhost:8080'
@@ -16,12 +19,12 @@ alias proxy_status="env | grep -i 'http_proxy\|https_proxy'"
 alias proxy_off='unset http_proxy; unset https_proxy'
 
 # Changing "ls" to "lsd"
-#alias ls='lsd --color=auto --group-directories-first'
-#alias l.='lsd --color=auto --group-directories-first -a | egrep "^\."' # show only dotfiles
-#alias l1='lsd -1 -a --color=auto --group-directories-first'             # Single column output
-#alias ll='lsd -al --color=auto --group-directories-first'  # long format
-#alias lss='lsd -a -1 --color=auto --group-directories-first --sort=size'
-#alias lsm='lsd -a -1 --color=auto --group-directories-first --sort=time'
-#alias lst='lsd -a --tree --color=auto --group-directories-first' # tree listing
-#alias lsi='lsd -lah --color=auto --group-directories-first --icon=always'
-#alias lsg='lsd -lah --color=auto --group-directories-first --git' # Show git status in file listings
+alias ls='lsd --group-directories-first'
+alias l.='lsd -a --group-directories-first | grep -E "^\."' # show only dotfiles
+alias l1='lsd -1 -a --group-directories-first'             # Single column output
+alias ll='lsd -al --group-directories-first'  # long format
+alias lss='lsd -a -1 --group-directories-first --sort=size'
+alias lsm='lsd -a -1 --group-directories-first --sort=time'
+alias lst='lsd -a --tree --group-directories-first' # tree listing
+alias lsi='lsd -lah --group-directories-first --icon=always'
+alias lsg='lsd -lah --group-directories-first --git' # Show git status in file listings

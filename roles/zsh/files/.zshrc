@@ -24,7 +24,6 @@ antigen bundle pylint
 antigen bundle python
 #antigen bundle ruby
 antigen bundle sudo
-antigen bundle vagrant
 #antigen bundle yarn
 
 # Syntax highlighting and autosuggestions
