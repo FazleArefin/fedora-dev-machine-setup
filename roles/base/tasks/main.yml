@@ -140,7 +140,7 @@
 # Always prefer dark theme for GTK3 apps
 - name: Ensure GTK3 apps prefer dark theme
   community.general.ini_file:
-    path: "~{{ local_username }}/.config/gtk-3.0/settings.ini"
+    path: "~{{ local_username }}/.config/{{ item }}/settings.ini"
     section: Settings
     option: gtk-application-prefer-dark-theme
     value: '1'
@@ -148,6 +148,9 @@
     create: true
   become: true
   become_user: "{{ local_username }}"
+  loop:
+    - gtk-3.0
+    - gtk-4.0
 
 - name: Setup fstrim timer for SSD longevity
   block:
