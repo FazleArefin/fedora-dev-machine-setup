@@ -65,4 +65,14 @@
       changed_when: false
       loop: "{{ virtualization_kvm_qemu.networks }}"
 
+- name: Configure Virt-Manager preferences
+  become: true
+  become_user: "{{ local_username }}"
+  block:
+    - name: Set Virt-Manager preferences
+      community.general.dconf:
+        key: "{{ item.0.base_path }}/{{ item.1.key }}"
+        value: "{{ item.1.value }}"
+      loop: "{{ virtualization_virt_manager_preferences.groups | subelements('items') }}"
+
 ...

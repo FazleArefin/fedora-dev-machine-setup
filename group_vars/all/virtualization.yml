@@ -27,4 +27,18 @@ virtualization_kvm_qemu:
   networks:
     - default
     - isolated
+
+virtualization_virt_manager_preferences:
+  groups:
+    - name: "Console Settings"
+      base_path: "/org/virt-manager/virt-manager/console"
+      items:
+        - { key: "auto-redirect", value: "false" }
+        - { key: "scaling", value: "0" }
+        - { key: "resize-guest", value: "0" }
+    - name: "General Settings"
+      base_path: "/org/virt-manager/virt-manager"
+      items:
+        - { key: "xmleditor-enabled", value: "false" }
+
 ...
