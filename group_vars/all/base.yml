@@ -160,6 +160,7 @@ base_golang_tools:
   #- oss.terrastruct.com/d2@latest  # d2 diagram as code tool
 
 base_cargo_packages:
+  - cargo-update  # utility for managing updates of rust binaries installed via cargo
   - tlrc  # official tldr rust client
   - xh  # drop-in replacement for httpie/http
 
