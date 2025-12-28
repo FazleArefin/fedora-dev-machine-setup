@@ -89,3 +89,11 @@ function extract {
         done
     fi
 }
+
+# update all cargo-installed packages
+function update_cargo_packages {
+    if ! command -v cargo-install-update &>/dev/null; then
+        cargo install cargo-update
+    fi
+    cargo install-update --all
+}
