@@ -16,12 +16,18 @@
   ansible.builtin.dnf:
     name: "{{ vscode_package_name }}"
 
-- name: Install some popular vscode extensions
-  ansible.builtin.command: code --install-extension {{ item }}
+- name: Install some popular VSCode extensions
+  ansible.builtin.command: >-
+    code --install-extension {{ item }}
   loop: "{{ vscode_extensions }}"
   loop_control:
     pause: 0.5  # to avoid rate limiting
   become: true
   become_user: "{{ local_username }}"
+  register: vscode_install_result
+  changed_when: "'successfully installed' in vscode_install_result.stdout"
+  failed_when: >
+    vscode_install_result.rc != 0
+    and 'already installed' not in vscode_install_result.stdout.lower()
 
 ...
