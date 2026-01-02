@@ -11,9 +11,11 @@
 - block:
     - name: Download nerd fonts to local fonts folder
       ansible.builtin.get_url:
-        url: "{{ item  }}"
+        url: "{{ item }}"
         dest: "~{{ local_username }}/.local/share/fonts/"
-      with_items: "{{ terminal_customizations_nerd_fonts }}"
+      loop: "{{ terminal_customizations_nerd_fonts }}"
+      loop_control:
+        pause: 0.5  # slow down downloads to avoid server overload
   become: true
   become_user: "{{ local_username }}"
 
