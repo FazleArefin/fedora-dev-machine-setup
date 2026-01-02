@@ -18,7 +18,9 @@
 
 - name: Install some popular vscode extensions
   ansible.builtin.command: code --install-extension {{ item }}
-  with_items: "{{ vscode_extensions }}"
+  loop: "{{ vscode_extensions }}"
+  loop_control:
+    pause: 0.5  # to avoid rate limiting
   become: true
   become_user: "{{ local_username }}"
 
