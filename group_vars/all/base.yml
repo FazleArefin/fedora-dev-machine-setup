@@ -81,6 +81,7 @@ base_developer_tools:
   - git-delta
   - git-extras
   - gitg
+  - git-credential-libsecret
   - glow
   - golang-go
   - httpie
