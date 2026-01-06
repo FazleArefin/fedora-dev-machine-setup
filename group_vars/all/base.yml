@@ -26,6 +26,8 @@ base_system_tools:
   - htop
   - fatrace
   - fdupes
+  - fuse
+  - fuse-libs
   - zoxide  # a smarter `cd` command
   - gnome-calculator
   - progress
