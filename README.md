@@ -12,8 +12,6 @@ The playbooks have been tested on:
 
 ## What gets installed and configured?
 
-I am a DevSecOps Engineer, and my daily job includes working with AWS, Docker, Ansible, Terraform, etc. If you're in a similar profession, the installed system will suit your needs. It is also easy to extend using Ansible roles.
-
 Summary of packages that get installed and configured based on roles:
 
 - **role: harden_system**
