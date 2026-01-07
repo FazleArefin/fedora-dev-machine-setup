@@ -11,6 +11,10 @@
       ansible.builtin.file:
         path: /etc/systemd/resolved.conf.d
         state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
 
     - name: Create custom options file
       ansible.builtin.copy:
