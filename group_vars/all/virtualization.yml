@@ -19,6 +19,7 @@ virtualization_kvm_qemu:
     - swtpm
     - quickemu
     - python3-libvirt
+    - guestfs-tools
   systemd_services:
     - libvirtd
   user_groups:
