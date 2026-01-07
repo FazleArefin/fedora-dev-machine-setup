@@ -29,25 +29,17 @@
         - Restart systemd-resolved
       changed_when: true
 
-- name: Create new Firewalld zone with hardened rules
+- name: Configure hardened Firewalld zone
   block:
-    - name: Create a new firewalld zone called 'FedoraWsHardened'
-      ansible.posix.firewalld:
-        zone: FedoraWsHardened
-        state: present
-        permanent: true
-
-    - name: Set the target of 'FedoraWsHardened' zone to DROP
+    - name: Ensure 'FedoraWsHardened' zone exists with DROP target
       ansible.posix.firewalld:
         zone: FedoraWsHardened
         target: DROP
         state: present
         permanent: true
+        immediate: true
 
-    - name: Reload firewalld for new zone to be picked up
-      ansible.builtin.systemd_service:
-        name: firewalld
-        state: reloaded
-
-    - name: Set 'FedoraWsHardened' zone as the default zone
+    - name: Set 'FedoraWsHardened' as the default zone
       ansible.builtin.command: firewall-cmd --set-default-zone=FedoraWsHardened
+      register: harden_system_set_default_zone
+      changed_when: "'ZONE_ALREADY_SET' not in harden_system_set_default_zone.stderr"
