@@ -5,6 +5,36 @@
     name: "{{ harden_system_redundant_packages }}"
     state: absent
 
+- name: Disable unnecessary discovery services (avahi and wsdd)
+  block:
+    - name: Stop and disable avahi-daemon service and socket
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+        masked: true
+      loop:
+        - avahi-daemon.service
+        - avahi-daemon.socket
+
+    - name: Stop and disable wsdd system service if present
+      ansible.builtin.systemd:
+        name: wsdd.service
+        state: stopped
+        enabled: false
+        masked: true
+      failed_when: false
+
+    - name: Configure wsdd to disable host mode (prevents persistent listening)
+      ansible.builtin.lineinfile:
+        path: /etc/sysconfig/wsdd
+        regexp: '^#?\s*OPTIONS=.*'
+        line: 'OPTIONS="--no-host"'
+        create: true
+        owner: root
+        group: root
+        mode: '0644'
+
 - name: Turn off Link-Local Multicast Name Resolution (LLMNR)
   block:
     - name: Create directory /etc/systemd/resolved.conf.d
