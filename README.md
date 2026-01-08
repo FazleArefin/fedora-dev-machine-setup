@@ -29,12 +29,11 @@ Summary of packages that get installed and configured based on roles:
   - Install Foliate, an e-book reader
   - Install Obsidian markdown editor
   - Install power management tools like [TLP](https://github.com/linrunner/TLP)
-  - Install development tools like android-tools, awscli, httpie, clusterssh, Docker, FileZilla, Golang, Poetry, etc.
-  - Install code formatters and linters like Black, Ruff, ansible-lint, etc.
-  - Set up Golang directories
-  - Install download tools like Axel, Transmission, Wget, Aria2
+  - Install development tools like android-tools, awscli, httpie, docker, golang, poetry, etc.
+  - Install code formatters and linters like ruff, ansible-lint, etc.
+  - Set up golang directories
+  - Install download tools like axel, transmission, wget, aria2
   - Install image, audio, and video tools like VLC, Totem, GIMP, ImageMagick, etc.
-  - Install and configure an SSH server if not set to `laptop_mode`
   - Option to turn on Night Light for eye comfort (set `base_permanent_night_light.night_light_enabled` to `True`)
   - Enable `fzf` fuzzy finder in the Zsh terminal
   - Install [lazygit](https://github.com/jesseduffield/lazygit)
@@ -112,7 +111,7 @@ cd fedora-dev-machine-setup
 **Run the following as yourself (the primary user), not as `root`:**
 
 ```bash
-ansible-playbook main.yml -vv -e "{ laptop_mode: True }" -e "local_username=$(id -un)" -K
+ansible-playbook main.yml -vv -e "laptop_mode=true night_light_enabled=false local_username=$(id -un)" -K
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.
@@ -121,15 +120,14 @@ The `main.yml` playbook can take between 15 minutes to an hour to finish.
 
 Once complete, reboot your laptop for all changes to take effect.
 
-> ### What is `laptop_mode`?
+### Effect of the extra vars passed using `-e`
 
-#### When set to `True`
-
-- Installs packages like [TLP](https://github.com/linrunner/TLP) for battery optimization
-
-#### When set to `False`
-
-- Skips installing battery-saving packages like [TLP](https://github.com/linrunner/TLP)
+- `laptop_mode`
+  - `true`: installs packages like [TLP](https://github.com/linrunner/TLP) for battery optimization
+  - `false`: skips installing battery-saving packages like [TLP](https://github.com/linrunner/TLP)
+- `night_light_enabled`
+  - `true`: sets screen color temperature to 4200K (warmer, yellowish)
+  - `false`: uses default screen color temperature
 
 ---
 
