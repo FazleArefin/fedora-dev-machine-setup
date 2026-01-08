@@ -5,12 +5,45 @@
     name: "{{ harden_system_redundant_packages }}"
     state: absent
 
+- name: Disable unnecessary discovery services (avahi and wsdd)
+  block:
+    - name: Stop and disable avahi-daemon service and socket
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+        masked: true
+      loop:
+        - avahi-daemon.service
+        - avahi-daemon.socket
+
+    - name: Stop and disable wsdd system service if present
+      ansible.builtin.systemd:
+        name: wsdd.service
+        state: stopped
+        enabled: false
+        masked: true
+      failed_when: false
+
+    - name: Configure wsdd to maximally restrict network exposure
+      ansible.builtin.lineinfile:
+        path: /etc/sysconfig/wsdd
+        regexp: '^#?\s*OPTIONS=.*'
+        line: 'OPTIONS="--no-host --no-http --ipv4only --shortlog --no-autostart"'
+        create: true
+        owner: root
+        group: root
+        mode: '0644'
+
 - name: Turn off Link-Local Multicast Name Resolution (LLMNR)
   block:
     - name: Create directory /etc/systemd/resolved.conf.d
       ansible.builtin.file:
         path: /etc/systemd/resolved.conf.d
         state: directory
+        owner: root
+        group: root
+        mode: '0755'
 
     - name: Create custom options file
       ansible.builtin.copy:
@@ -21,6 +54,8 @@
         content: |
           [Resolve]
           LLMNR=no
+          MulticastDNS=no
+          FallbackDNS=1.1.1.1 1.0.0.1 9.9.9.9 149.112.112.112
       notify:
         - Restart systemd-resolved
       changed_when: true
@@ -47,3 +82,5 @@
 
     - name: Set 'FedoraWsHardened' zone as the default zone
       ansible.builtin.command: firewall-cmd --set-default-zone=FedoraWsHardened
+      register: harden_system_set_default_zone
+      changed_when: "'ZONE_ALREADY_SET' not in harden_system_set_default_zone.stderr"
