@@ -50,3 +50,5 @@
 
     - name: Set 'FedoraWsHardened' zone as the default zone
       ansible.builtin.command: firewall-cmd --set-default-zone=FedoraWsHardened
+      register: harden_system_set_default_zone
+      changed_when: "'ZONE_ALREADY_SET' not in harden_system_set_default_zone.stderr"
