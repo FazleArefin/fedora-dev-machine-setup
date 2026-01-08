@@ -34,7 +34,7 @@ Summary of packages that get installed and configured based on roles:
   - Set up golang directories
   - Install download tools like axel, transmission, wget, aria2
   - Install image, audio, and video tools like VLC, Totem, GIMP, ImageMagick, etc.
-  - Option to turn on Night Light for eye comfort (set `base_permanent_night_light.night_light_enabled` to `True`)
+  - Option to turn on Night Light for eye comfort (set `base_permanent_night_light.night_light_enabled` to `true` in `group_vars/all/base.yml`)
   - Enable `fzf` fuzzy finder in the Zsh terminal
   - Install [lazygit](https://github.com/jesseduffield/lazygit)
   - Install terminal emulator Alacritty
@@ -102,7 +102,7 @@ Install `ansible` and `git` first:
 ```
 
 ```bash
-git clone https://github.com/fazlearefin/fedora-dev-machine-setup.git
+git clone https://github.com/FazleArefin/fedora-dev-machine-setup.git
 cd fedora-dev-machine-setup
 ```
 
@@ -111,7 +111,7 @@ cd fedora-dev-machine-setup
 **Run the following as yourself (the primary user), not as `root`:**
 
 ```bash
-ansible-playbook main.yml -vv -e "laptop_mode=true night_light_enabled=false local_username=$(id -un)" -K
+ansible-playbook main.yml -vv -e "laptop_mode=true local_username=$(id -un)" -K
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.
@@ -125,9 +125,6 @@ Once complete, reboot your laptop for all changes to take effect.
 - `laptop_mode`
   - `true`: installs packages like [TLP](https://github.com/linrunner/TLP) for battery optimization
   - `false`: skips installing battery-saving packages like [TLP](https://github.com/linrunner/TLP)
-- `night_light_enabled`
-  - `true`: sets screen color temperature to 4200K (warmer, yellowish)
-  - `false`: uses default screen color temperature
 
 ---
 
