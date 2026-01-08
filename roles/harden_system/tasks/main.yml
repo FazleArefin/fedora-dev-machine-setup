@@ -29,7 +29,7 @@
       ansible.builtin.lineinfile:
         path: /etc/sysconfig/wsdd
         regexp: '^#?\s*OPTIONS=.*'
-        line: 'OPTIONS="--no-host --no-http --ipv4only"'
+        line: 'OPTIONS="--no-host --no-http --ipv4only --shortlog --no-autostart"'
         create: true
         owner: root
         group: root
