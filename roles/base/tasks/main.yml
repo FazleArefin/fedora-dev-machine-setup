@@ -59,7 +59,7 @@
   ansible.builtin.dnf:
     name: "{{ base_system_tools_laptop }}"
     state: present
-  when: laptop_mode
+  when: laptop_mode | bool
 
 - name: Install developer tools
   ansible.builtin.dnf:
@@ -123,7 +123,7 @@
     - { key: 'night-light-schedule-from', value: "{{ base_permanent_night_light.night_light_schedule_from }}" }
     - { key: 'night-light-schedule-to', value: "{{ base_permanent_night_light.night_light_schedule_to }}" }
     - { key: 'night-light-temperature', value: "{{ base_permanent_night_light.night_light_temperature }}" }
-  when: base_permanent_night_light.night_light_enabled
+  when: base_permanent_night_light.night_light_enabled | bool
   become: true
   become_user: "{{ local_username }}"
   changed_when: false
