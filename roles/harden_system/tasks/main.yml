@@ -25,11 +25,11 @@
         masked: true
       failed_when: false
 
-    - name: Configure wsdd to disable host mode (prevents persistent listening)
+    - name: Configure wsdd to maximally restrict network exposure
       ansible.builtin.lineinfile:
         path: /etc/sysconfig/wsdd
         regexp: '^#?\s*OPTIONS=.*'
-        line: 'OPTIONS="--no-host"'
+        line: 'OPTIONS="--no-host --no-http --ipv4only"'
         create: true
         owner: root
         group: root
