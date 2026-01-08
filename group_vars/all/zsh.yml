@@ -2,7 +2,10 @@
 
 zsh_packages:
   - zsh
+  - fzf
+  - zoxide
 
-zsh_antigen_git_repo: https://github.com/zsh-users/antigen.git
+zsh_zinit_git_repo: "https://github.com/zdharma-continuum/zinit.git"
+zsh_zinit_install_path: "~/.local/share/zinit/zinit.git"
 
 ...
