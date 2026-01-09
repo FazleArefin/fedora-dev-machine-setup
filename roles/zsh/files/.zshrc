@@ -1,59 +1,66 @@
+# 📂 Paths & Environment
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export TERM="xterm-256color"
 
-source ~/.antigen/antigen.zsh
+# 📜 History
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
+setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# ⚡ Zinit Setup
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle colored-man-pages
-antigen bundle colorize
-antigen bundle docker
-antigen bundle encode64
-#antigen bundle gem
-antigen bundle git
-antigen bundle git-extras
-antigen bundle httpie
-#antigen bundle kubectl
-#antigen bundle node
-#antigen bundle npm
-antigen bundle pep8
-antigen bundle pip
-antigen bundle pipenv
-antigen bundle pylint
-antigen bundle python
-#antigen bundle ruby
-antigen bundle sudo
-#antigen bundle yarn
+# Auto-install Zinit if not present
+[[ ! -f $ZINIT_HOME/zinit.zsh ]] && \
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
-# Syntax highlighting and autosuggestions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-syntax-highlighting
+source "${ZINIT_HOME}/zinit.zsh"
 
-# pure theme
-# https://github.com/sindresorhus/pure
-antigen bundle mafredri/zsh-async@main
-antigen bundle sindresorhus/pure@main
+# 🏗️ Core Library & Completions (Immediate)
+zinit light zsh-users/zsh-completions
+zinit snippet OMZL::completion.zsh
 
-# powerlevel10k theme
-# https://github.com/romkatv/powerlevel10k
-#antigen theme romkatv/powerlevel10k
+# Make completions work reliably
+autoload -Uz compinit && compinit
 
-# bullet train theme
-# https://github.com/caiogondim/bullet-train.zsh
-#antigen theme caiogondim/bullet-train.zsh bullet-train
+# 🚀 Turbo Mode Plugins (Loaded in background after prompt appears)
+zinit ice wait"1" lucid; zinit snippet OMZL::git.zsh
+zinit ice wait"1" lucid; zinit snippet OMZL::theme-and-appearance.zsh
 
-# spaceship theme
-# https://github.com/spaceship-prompt/spaceship-prompt
-#antigen theme spaceship-prompt/spaceship-prompt
+# Oh-My-Zsh Plugins
+zinit ice wait"1" lucid; zinit snippet OMZP::colored-man-pages
+zinit ice wait"1" lucid; zinit snippet OMZP::docker
+zinit ice wait"1" lucid; zinit snippet OMZP::git-extras
+zinit ice wait"1" lucid; zinit snippet OMZP::pip
+zinit ice wait"1" lucid; zinit snippet OMZP::pylint
+zinit ice wait"1" lucid; zinit snippet OMZP::python
+zinit ice wait"1" lucid; zinit snippet OMZP::rust
+zinit ice wait"1" lucid; zinit snippet OMZP::sudo
 
-# Tell antigen that you're done.
-antigen apply
+# 🔍 Suggesting & Highlighting (Highlighting MUST be last)
+zinit ice wait"1" lucid atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
 
-##### START Fix for ssh-agent {
-# Ref: http://mah.everybody.org/docs/ssh
+zinit ice wait"1" lucid
+zinit light zsh-users/zsh-syntax-highlighting
 
+# 🎨 Themes Section
+
+# Pure theme (official recommended Zinit setup – async bundled)
+zinit ice lucid pick"async.zsh" src"pure.zsh"
+zinit light sindresorhus/pure
+
+# Powerlevel10k (uncomment to switch)
+# zinit ice depth"1"; zinit light romkatv/powerlevel10k
+
+# Other themes (uncomment if desired)
+# zinit ice pick"bullet-train.zsh-theme"; zinit light caiogondim/bullet-train.zsh
+# zinit ice pick"spaceship.zsh"; zinit light spaceship-prompt/spaceship-prompt
+
+# 🔑 SSH-Agent Fix
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
@@ -61,42 +68,31 @@ function start_agent {
      /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
      echo succeeded
      chmod 600 "${SSH_ENV}"
-     . "${SSH_ENV}" > /dev/null
-     /usr/bin/ssh-add;
+     source "${SSH_ENV}" > /dev/null
+     /usr/bin/ssh-add
 }
 
-# Source SSH settings, if applicable
-if [ -f "${SSH_ENV}" ]; then
-     source "${SSH_ENV}" > /dev/null
-     #ps ${SSH_AGENT_PID} doesn't work under cywgin
-     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-          start_agent;
-     }
+if [[ -f "$SSH_ENV" ]]; then
+     source "$SSH_ENV" > /dev/null
+     kill -0 $SSH_AGENT_PID 2>/dev/null || start_agent
 else
-     start_agent;
+     start_agent
 fi
-##### } END Fix for ssh-agent
 
-# cargo/rust
-export PATH=$PATH:$HOME/.cargo/bin
-
-# golang
-export GOPATH=$HOME/go
+# 🛤️ System Paths
+export PATH=$PATH:$HOME/.cargo/bin        # Rust
+export GOPATH=$HOME/go                    # Go
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$HOME/.local/bin        # pipx / local binaries
 
-# pipx executables
-export PATH=$PATH:$HOME/.local/bin
-
-# make sure pipenv creates virtualenv dir in current dir under .venv
+# 🐍 Python Settings
 export PIPENV_VENV_IN_PROJECT=1
 
-# extra aliases, functions and variables can be defined in these files
+# 📎 External Configs
 [[ -f ~/.shell_aliases.sh ]] && source ~/.shell_aliases.sh
 [[ -f ~/.shell_functions.sh ]] && source ~/.shell_functions.sh
 [[ -f ~/.shell_variables.sh ]] && source ~/.shell_variables.sh
 
-# Set up fzf key bindings and fuzzy completion
+# 🔎 Tools & Utilities
 source <(fzf --zsh)
-
-# initialize zoxide
 eval "$(zoxide init zsh)"

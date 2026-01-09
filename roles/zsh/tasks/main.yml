@@ -10,24 +10,35 @@
     name: "{{ local_username }}"
     shell: /bin/zsh
 
-- block:
-    - name: Clone antigen git repo
+- name: Setup zinit and zsh configuration files
+  become: true
+  become_user: "{{ local_username }}"
+  block:
+    - name: Ensure zinit installation directory exists
+      ansible.builtin.file:
+        # Using ~ ensures expansion to the become_user's home
+        path: "{{ zsh_zinit_install_path | expanduser }}"
+        state: directory
+        mode: '0755'
+
+    - name: Clone zinit git repo
       ansible.builtin.git:
-        repo: "{{ zsh_antigen_git_repo }}"
-        dest: "~{{ local_username }}/.antigen"
-        version: v2.2.3
+        repo: "{{ zsh_zinit_git_repo }}"
+        dest: "{{ zsh_zinit_install_path | expanduser }}"
+        version: main
+        update: true
 
     - name: Check if .zshrc exists in user's home dir
       ansible.builtin.stat:
         path: "~{{ local_username }}/.zshrc"
-      register: dotzshrc
+      register: zsh_dotzshrc
 
     - name: Backup .zshrc if it exists
       ansible.builtin.copy:
         src: "~{{ local_username }}/.zshrc"
         dest: "~{{ local_username }}/.zshrc.orig"
         mode: '0644'
-      when: dotzshrc.stat.exists
+      when: zsh_dotzshrc.stat.exists
 
     - name: Copy the sample .zshrc file
       ansible.builtin.copy:
@@ -45,7 +56,5 @@
         - .shell_aliases.sh
         - .shell_functions.sh
         - .shell_variables.sh
-  become: true
-  become_user: "{{ local_username }}"
 
 ...

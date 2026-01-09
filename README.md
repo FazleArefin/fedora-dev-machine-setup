@@ -42,7 +42,7 @@ Summary of packages that get installed and configured based on roles:
 
 - **role: zsh**
   - Install the Zsh package and set the user shell to Zsh
-  - Install Antigen Zsh plugin manager
+  - Install zinit Zsh plugin manager
   - Copy and enable a sample `~/.zshrc` file if one doesn't exist
     - Includes a function to stop `ssh-agent` from repeatedly asking for encrypted SSH key passwords in new terminals
     - Adds additional aliases, functions, and variables in `~/.shell_aliases.sh`,`~/.shell_functions.sh`, and `~/.shell_variables.sh` for use in interactive sessions
@@ -132,8 +132,7 @@ Once complete, reboot your laptop for all changes to take effect.
 
 - If the Ansible playbook stops mid-way, rerun it. Most tasks are idempotent, so re-execution is safe.
 - If your terminal displays strange characters after installing a Zsh theme, change the font to a Nerd Font in the terminal's settings.
-- If you dislike fuzzy finder completions, comment out the `#fzf` lines in your `~/.zshrc` (this is a feature, not a bug).
-- Some [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh) plugins like `docker` may cause an error such as `tee: <snip> No such file or directory` when launching the terminal. Fix this by running: `mkdir -p ~/.antigen/bundles/robbyrussell/oh-my-zsh/cache/completions`.
+- If you dislike fuzzy finder completions, comment out the `#fzf` line in your `~/.zshrc` (this is a feature, not a bug).
 
 ---
 
