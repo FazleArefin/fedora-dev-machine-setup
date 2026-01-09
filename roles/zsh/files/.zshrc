@@ -49,12 +49,9 @@ zinit light zsh-users/zsh-syntax-highlighting
 
 # 🎨 Themes Section
 
-# Pure theme – includes its own async now (no separate zsh-async needed)
-zinit ice pick"pure.zsh" src"pure.zsh"
+# Pure theme (official recommended Zinit setup – async bundled)
+zinit ice lucid pick"async.zsh" src"pure.zsh"
 zinit light sindresorhus/pure
-
-# Activate Pure prompt immediately
-autoload -U promptinit; promptinit; prompt pure
 
 # Powerlevel10k (uncomment to switch)
 # zinit ice depth"1"; zinit light romkatv/powerlevel10k
