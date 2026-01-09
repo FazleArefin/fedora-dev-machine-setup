@@ -15,7 +15,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Auto-install Zinit if not present
 [[ ! -f $ZINIT_HOME/zinit.zsh ]] && \
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
 source "${ZINIT_HOME}/zinit.zsh"
 
@@ -64,19 +64,19 @@ zinit light sindresorhus/pure
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
-     echo "Initialising new SSH agent..."
-     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-     echo succeeded
-     chmod 600 "${SSH_ENV}"
-     source "${SSH_ENV}" > /dev/null
-     /usr/bin/ssh-add
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    source "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add
 }
 
 if [[ -f "$SSH_ENV" ]]; then
-     source "$SSH_ENV" > /dev/null
-     kill -0 $SSH_AGENT_PID 2>/dev/null || start_agent
+    source "$SSH_ENV" > /dev/null
+    kill -0 $SSH_AGENT_PID 2>/dev/null || start_agent
 else
-     start_agent
+    start_agent
 fi
 
 # 🛤️ System Paths
