@@ -25,7 +25,7 @@
       ansible.builtin.git:
         repo: "{{ zsh_zinit_git_repo }}"
         dest: "{{ zsh_zinit_install_path | expanduser }}"
-        version: master
+        version: main
         update: true
 
     - name: Check if .zshrc exists in user's home dir
