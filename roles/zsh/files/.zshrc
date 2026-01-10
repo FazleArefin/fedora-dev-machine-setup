@@ -12,7 +12,7 @@ setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY \
        INTERACTIVE_COMMENTS APPEND_HISTORY HIST_EXPIRE_DUPS_FIRST \
        HIST_FIND_NO_DUPS INC_APPEND_HISTORY EXTENDED_HISTORY \
        AUTO_CD CORRECT AUTO_PUSHD PUSHD_IGNORE_DUPS \
-       PROMPT_SUBST
+       PROMPT_SUBST NO_BEEP HIST_SAVE_NO_DUPS HIST_REDUCE_BLANKS
 
 # ⚡ Zinit Setup
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -44,13 +44,21 @@ zinit ice wait"1" lucid; zinit snippet OMZP::pylint
 zinit ice wait"1" lucid; zinit snippet OMZP::python
 zinit ice wait"1" lucid; zinit snippet OMZP::rust
 zinit ice wait"1" lucid; zinit snippet OMZP::sudo
+zinit ice wait"1" lucid; zinit snippet OMZP::safe-paste  # prevents running malicious pasted code
+zinit ice wait"1" lucid; zinit snippet OMZP::extract     # extract shell function for easy archive extraction
+
+# 📎 --- Clipboard Utilities ---
+zinit ice wait"2" lucid; zinit snippet OMZL::clipboard.zsh  # Provides 'clipcopy' and 'clippaste'
+zinit ice wait"2" lucid; zinit snippet OMZP::copybuffer     # Ctrl+O copies the current command line you are typing
+zinit ice wait"2" lucid; zinit snippet OMZP::copyfile       # 'copyfile <filename>' copies file contents
+zinit ice wait"2" lucid; zinit snippet OMZP::copypath       # 'copypath' copies the current directory path
 
 # 🔍 Suggesting & Highlighting (Highlighting MUST be last)
 zinit ice wait"1" lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait"1" lucid
-zinit light zsh-users/zsh-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # 🎨 Themes Section
 
@@ -66,6 +74,7 @@ zinit light sindresorhus/pure
 # zinit ice pick"spaceship.zsh"; zinit light spaceship-prompt/spaceship-prompt
 
 # 🔑 SSH-Agent Fix
+[ -d "$HOME/.ssh" ] || mkdir -p -m 700 "$HOME/.ssh"
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
@@ -77,8 +86,8 @@ function start_agent {
     /usr/bin/ssh-add
 }
 
-if [[ -f "$SSH_ENV" ]]; then
-    source "$SSH_ENV" > /dev/null
+if [[ -f "${SSH_ENV}" ]]; then
+    source "${SSH_ENV}" > /dev/null
     kill -0 $SSH_AGENT_PID 2>/dev/null || start_agent
 else
     start_agent
