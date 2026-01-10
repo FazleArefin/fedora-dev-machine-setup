@@ -215,13 +215,4 @@
         name: "{{ base_flatpak_flathub_apps }}"
         state: present
 
-- name: Make vim the default editor instead of nano
-  ansible.builtin.copy:
-    dest: /etc/profile.d/vim.sh
-    content: |
-      # Set vim as the default editor
-      export EDITOR=/usr/bin/vim
-      export VISUAL=/usr/bin/vim
-    mode: '0644'
-
 ...

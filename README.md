@@ -20,7 +20,6 @@ Summary of packages that get installed and configured based on roles:
   - Create and activate a new `firewalld` zone `FedoraWsHardened`, which DROPS all incoming requests
 
 - **role: base**
-  - Set the default system editor to Vim instead of Nano
   - Enable the `firewalld` firewall
   - Tune system swappiness to greatly reduce swapping
   - Upgrade all packages
