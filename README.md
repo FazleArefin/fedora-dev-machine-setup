@@ -82,6 +82,8 @@ Summary of packages that get installed and configured based on roles:
 - **role: virtualization**
   - Install Docker packages
   - Install and configure QEMU and KVM with libvirt
+    - sets up an isolated network virbr69 10.69.69.0/24 in addition to the default NAT netowrk
+    - sets up additional storage pools `isos` and `templates` with correct SELinux contexts
 
 - **role: googlechrome**
   - Add the Google Chrome APT repo
