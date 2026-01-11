@@ -54,15 +54,16 @@
             </ip>
           </network>
 
-    - name: Ensure isolated network is active and autostarted
+    - name: Ensure all networks are active
       community.libvirt.virt_net:
-        name: isolated
+        name: "{{ item }}"
         state: active
-        autostart: true
+      loop: "{{ virtualization_kvm_qemu.networks }}"
 
-    - name: Ensure all libvirt networks are active and set to autostart
-      ansible.builtin.shell: virsh net-autostart "{{ item }}"
-      changed_when: false
+    - name: Ensure all networks are autostarted
+      community.libvirt.virt_net:
+        name: "{{ item }}"
+        autostart: true
       loop: "{{ virtualization_kvm_qemu.networks }}"
 
     - name: Ensure custom libvirt storage directories exist with correct ownership
@@ -89,7 +90,6 @@
       community.libvirt.virt_pool:
         name: isos
         state: present
-        autostart: true
         xml: |
           <pool type="dir">
             <name>isos</name>
@@ -98,16 +98,10 @@
             </target>
           </pool>
 
-    - name: Activate ISO storage pool
-      community.libvirt.virt_pool:
-        name: isos
-        state: active
-
-    - name: Define templates (golden images) storage pool
+    - name: Define templates storage pool
       community.libvirt.virt_pool:
         name: templates
         state: present
-        autostart: true
         xml: |
           <pool type="dir">
             <name>templates</name>
@@ -116,23 +110,21 @@
             </target>
           </pool>
 
-    - name: Activate templates storage pool
+    - name: Activate iso and templates storage pool
       community.libvirt.virt_pool:
-        name: templates
+        name: "{{ item }}"
         state: active
+      loop:
+        - isos
+        - templates
 
-    - name: Ensure default storage pool is active and autostarted
+    - name: Autostart iso and templates storage pool
       community.libvirt.virt_pool:
-        name: default
-        state: active
+        name: "{{ item }}"
         autostart: true
-      register: virtualization_default_pool_result
-      failed_when: >
-        virtualization_default_pool_result.failed and
-        'not found' not in virtualization_default_pool_result.msg | lower and
-        'no storage pool with matching name' not in virtualization_default_pool_result.msg | lower
-      changed_when: false
-      ignore_errors: false   # ← explicit is better (can even omit this line)
+      loop:
+        - isos
+        - templates
 
 - name: Configure Virt-Manager preferences
   become: true
