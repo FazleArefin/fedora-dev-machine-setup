@@ -83,14 +83,12 @@
         setype: "{{ item.type }}"
         seuser: system_u
         state: present
-      become: true
       loop:
         - { target: '/var/lib/libvirt/isos(/.*)?', type: virt_content_t }   # better for ISOs
         - { target: '/var/lib/libvirt/templates(/.*)?', type: virt_image_t }
 
     - name: Apply correct SELinux contexts recursively
       ansible.builtin.command: restorecon -Rv -F "{{ item }}"
-      become: true
       changed_when: "'relabeled' in result.stdout"
       register: result
       loop:
