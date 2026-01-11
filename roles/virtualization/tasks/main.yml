@@ -19,6 +19,7 @@
       ansible.builtin.dnf:
         name: "{{ virtualization_kvm_qemu.package_groups }}"
         state: present
+        install_weak_deps: true
 
     - name: Install additional virtualization packages
       ansible.builtin.dnf:
@@ -30,7 +31,6 @@
         name: "{{ item }}"
         enabled: true
         state: started
-        masked: false
       loop: "{{ virtualization_kvm_qemu.systemd_services }}"
 
     - name: Add current user to libvirt groups
@@ -42,8 +42,7 @@
     - name: Define and activate isolated network
       community.libvirt.virt_net:
         name: isolated
-        state: active
-        autostart: true
+        state: present
         xml: |
           <network>
             <name>isolated</name>
@@ -54,8 +53,17 @@
               </dhcp>
             </ip>
           </network>
-      vars:
-        ansible_libvirt_uri: qemu:///system   # optional but clearer
+
+    - name: Ensure isolated network is active and autostarted
+      community.libvirt.virt_net:
+        name: isolated
+        state: active
+        autostart: true
+
+    - name: Ensure all libvirt networks are active and set to autostart
+      ansible.builtin.shell: virsh net-autostart "{{ item }}"
+      changed_when: false
+      loop: "{{ virtualization_kvm_qemu.networks }}"
 
     - name: Ensure custom libvirt storage directories exist with correct ownership
       ansible.builtin.file:
