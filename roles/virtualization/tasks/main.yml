@@ -25,7 +25,7 @@
         name: "{{ virtualization_kvm_qemu.packages }}"
         state: present
 
-    - name: Enable and start libvirt related systemd services
+    - name: Enable and start required libvirt services
       ansible.builtin.systemd:
         name: "{{ item }}"
         enabled: true
@@ -39,11 +39,11 @@
         groups: "{{ virtualization_kvm_qemu.user_groups | join(',') }}"
         append: true
 
-    # ── Networking ───────────────────────────────────────────────────────
-    - name: Define isolated network
+    - name: Define and activate isolated network
       community.libvirt.virt_net:
         name: isolated
-        state: present
+        state: active
+        autostart: true
         xml: |
           <network>
             <name>isolated</name>
@@ -54,55 +54,73 @@
               </dhcp>
             </ip>
           </network>
-        autostart: true         # ← can be set here
-        active: true
       vars:
         ansible_libvirt_uri: qemu:///system   # optional but clearer
 
-    # ── Storage directories & SELinux ─────────────────────────────────────
-    - name: Ensure custom libvirt directories exist
+    - name: Ensure custom libvirt storage directories exist with correct ownership
       ansible.builtin.file:
         path: "{{ item.path }}"
         state: directory
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
         mode: "{{ item.mode }}"
       loop:
-        - { path: "/var/lib/libvirt/isos",      mode: "0755", owner: "root",   group: "root"   }  # ISOs usually readable
-        - { path: "/var/lib/libvirt/templates", mode: "0750", owner: "qemu",   group: "qemu"   }  # golden images → qemu needs r-x
+        - { path: "/var/lib/libvirt/isos", owner: "root", group: "root", mode: "0755" }
+        - { path: "/var/lib/libvirt/templates", owner: "qemu", group: "qemu", mode: "0750" }
 
-    - name: Set correct SELinux type on custom storage directories
-      ansible.posix.seboolean:
-        name: virt_use_execmem   # optional but sometimes needed
-        state: true
-        persistent: true
-      ignore_errors: true  # not always applicable
-
-    - name: Apply virt_image_t SELinux context recursively
-      ansible.posix.selinux:
+    - name: Set SELinux virt_image_t context recursively on custom directories
+      ansible.builtin.file:
         path: "{{ item }}"
         setype: virt_image_t
-        recursive: true
+        recurse: true
       loop:
         - /var/lib/libvirt/isos
         - /var/lib/libvirt/templates
 
-    # ── Storage Pools ─────────────────────────────────────────────────────
-    - name: Create & activate ISO storage pool
+    - name: Define ISO storage pool
+      community.libvirt.virt_pool:
+        name: isos
+        state: present
+        autostart: true
+        xml: |
+          <pool type="dir">
+            <name>isos</name>
+            <target>/var/lib/libvirt/isos</target>
+          </pool>
+
+    - name: Activate ISO storage pool
       community.libvirt.virt_pool:
         name: isos
         state: active
-        autostart: true
-        type: dir
-        target: /var/lib/libvirt/isos
 
-    - name: Create & activate templates (golden images) storage pool
+    - name: Define templates (golden images) storage pool
+      community.libvirt.virt_pool:
+        name: templates
+        state: present
+        autostart: true
+        xml: |
+          <pool type="dir">
+            <name>templates</name>
+            <target>/var/lib/libvirt/templates</target>
+          </pool>
+
+    - name: Activate templates storage pool
       community.libvirt.virt_pool:
         name: templates
         state: active
+
+    - name: Ensure default storage pool is active and autostarted
+      community.libvirt.virt_pool:
+        name: default
+        state: active
         autostart: true
-        type: dir
-        target: /var/lib/libvirt/templates
+      register: virtualization_default_pool_result
+      failed_when: >
+        virtualization_default_pool_result.failed and
+        'not found' not in virtualization_default_pool_result.msg | lower and
+        'no storage pool with matching name' not in virtualization_default_pool_result.msg | lower
+      changed_when: false
+      ignore_errors: false   # ← explicit is better (can even omit this line)
 
 - name: Configure Virt-Manager preferences
   become: true
