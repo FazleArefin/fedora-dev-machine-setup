@@ -77,11 +77,22 @@
         - { path: "/var/lib/libvirt/isos", owner: "root", group: "root", mode: "0755" }
         - { path: "/var/lib/libvirt/templates", owner: "qemu", group: "qemu", mode: "0750" }
 
-    - name: Set SELinux virt_image_t context recursively on custom directories
-      ansible.builtin.file:
-        path: "{{ item }}"
-        setype: virt_image_t
-        recurse: true
+    - name: Define persistent SELinux file context for custom directories
+      community.general.sefcontext:
+        target: "{{ item.target }}"
+        setype: "{{ item.type }}"
+        seuser: system_u
+        state: present
+      become: true
+      loop:
+        - { target: '/var/lib/libvirt/isos(/.*)?', type: virt_content_t }   # better for ISOs
+        - { target: '/var/lib/libvirt/templates(/.*)?', type: virt_image_t }
+
+    - name: Apply correct SELinux contexts recursively
+      ansible.builtin.command: restorecon -Rv -F "{{ item }}"
+      become: true
+      changed_when: "'relabeled' in result.stdout"
+      register: result
       loop:
         - /var/lib/libvirt/isos
         - /var/lib/libvirt/templates
