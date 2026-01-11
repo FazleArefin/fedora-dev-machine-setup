@@ -93,7 +93,9 @@
         xml: |
           <pool type="dir">
             <name>isos</name>
-            <target>/var/lib/libvirt/isos</target>
+            <target>
+              <path>/var/lib/libvirt/isos</path>
+            </target>
           </pool>
 
     - name: Activate ISO storage pool
@@ -109,7 +111,9 @@
         xml: |
           <pool type="dir">
             <name>templates</name>
-            <target>/var/lib/libvirt/templates</target>
+            <target>
+              <path>/var/lib/libvirt/templates</path>
+            </target>
           </pool>
 
     - name: Activate templates storage pool
