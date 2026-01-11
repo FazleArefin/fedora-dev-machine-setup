@@ -21,49 +21,119 @@
         state: present
         install_weak_deps: true
 
-    - name: Install virtualization packages
+    - name: Install additional virtualization packages
       ansible.builtin.dnf:
         name: "{{ virtualization_kvm_qemu.packages }}"
         state: present
 
-    - name: Enable and start systemd services
+    - name: Enable and start required libvirt services
       ansible.builtin.systemd:
         name: "{{ item }}"
         enabled: true
         state: started
       loop: "{{ virtualization_kvm_qemu.systemd_services }}"
 
-    - name: Add current user to virtualization groups
+    - name: Add current user to libvirt groups
       ansible.builtin.user:
         name: "{{ local_username }}"
-        groups: "{{ virtualization_kvm_qemu.user_groups }}"
+        groups: "{{ virtualization_kvm_qemu.user_groups | join(',') }}"
         append: true
 
-    - name: Define isolated network XML
+    - name: Define and activate isolated network
       community.libvirt.virt_net:
         name: isolated
         state: present
         xml: |
           <network>
             <name>isolated</name>
-            <bridge name="virbr666" stp="on" delay="0"/>
-            <ip address="10.66.6.1" netmask="255.255.255.0">
+            <bridge name="virbr69" stp="on" delay="0"/>
+            <ip address="10.69.69.1" netmask="255.255.255.0">
               <dhcp>
-                <range start="10.66.6.66" end="10.66.6.254"/>
+                <range start="10.69.69.2" end="10.69.69.254"/>
               </dhcp>
             </ip>
           </network>
 
-    - name: Ensure isolated network is active and autostarted
+    - name: Ensure all networks are active
       community.libvirt.virt_net:
-        name: isolated
+        name: "{{ item }}"
         state: active
-        autostart: true
-
-    - name: Ensure all libvirt networks are active and set to autostart
-      ansible.builtin.shell: virsh net-autostart "{{ item }}"
-      changed_when: false
       loop: "{{ virtualization_kvm_qemu.networks }}"
+
+    - name: Ensure all networks are autostarted
+      community.libvirt.virt_net:
+        name: "{{ item }}"
+        autostart: true
+      loop: "{{ virtualization_kvm_qemu.networks }}"
+
+    - name: Ensure custom libvirt storage directories exist with correct ownership
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+      loop:
+        - { path: "/var/lib/libvirt/isos", owner: "root", group: "root", mode: "0755" }
+        - { path: "/var/lib/libvirt/templates", owner: "qemu", group: "qemu", mode: "0750" }
+
+    - name: Define persistent SELinux file context for custom directories
+      community.general.sefcontext:
+        target: "{{ item.target }}"
+        setype: "{{ item.type }}"
+        seuser: system_u
+        state: present
+      loop:
+        - { target: '/var/lib/libvirt/isos(/.*)?', type: virt_content_t }   # better for ISOs
+        - { target: '/var/lib/libvirt/templates(/.*)?', type: virt_image_t }
+
+    - name: Apply correct SELinux contexts recursively
+      ansible.builtin.command: restorecon -Rv -F "{{ item }}"
+      changed_when: "'relabeled' in result.stdout"
+      register: result
+      loop:
+        - /var/lib/libvirt/isos
+        - /var/lib/libvirt/templates
+
+    - name: Define ISO storage pool
+      community.libvirt.virt_pool:
+        name: isos
+        state: present
+        xml: |
+          <pool type="dir">
+            <name>isos</name>
+            <target>
+              <path>/var/lib/libvirt/isos</path>
+            </target>
+          </pool>
+
+    - name: Define templates storage pool
+      community.libvirt.virt_pool:
+        name: templates
+        state: present
+        xml: |
+          <pool type="dir">
+            <name>templates</name>
+            <target>
+              <path>/var/lib/libvirt/templates</path>
+            </target>
+          </pool>
+
+    - name: Activate iso and templates storage pool
+      community.libvirt.virt_pool:
+        name: "{{ item }}"
+        state: active
+      loop:
+        - isos
+        - templates
+
+    - name: Autostart iso and templates storage pool
+      community.libvirt.virt_pool:
+        name: "{{ item }}"
+        autostart: true
+      loop:
+        - isos
+        - templates
 
 - name: Configure Virt-Manager preferences
   become: true
