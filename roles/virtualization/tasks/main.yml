@@ -19,51 +19,90 @@
       ansible.builtin.dnf:
         name: "{{ virtualization_kvm_qemu.package_groups }}"
         state: present
-        install_weak_deps: true
 
-    - name: Install virtualization packages
+    - name: Install additional virtualization packages
       ansible.builtin.dnf:
         name: "{{ virtualization_kvm_qemu.packages }}"
         state: present
 
-    - name: Enable and start systemd services
+    - name: Enable and start libvirt related systemd services
       ansible.builtin.systemd:
         name: "{{ item }}"
         enabled: true
         state: started
+        masked: false
       loop: "{{ virtualization_kvm_qemu.systemd_services }}"
 
-    - name: Add current user to virtualization groups
+    - name: Add current user to libvirt groups
       ansible.builtin.user:
         name: "{{ local_username }}"
-        groups: "{{ virtualization_kvm_qemu.user_groups }}"
+        groups: "{{ virtualization_kvm_qemu.user_groups | join(',') }}"
         append: true
 
-    - name: Define isolated network XML
+    # ── Networking ───────────────────────────────────────────────────────
+    - name: Define isolated network
       community.libvirt.virt_net:
         name: isolated
         state: present
         xml: |
           <network>
             <name>isolated</name>
-            <bridge name="virbr666" stp="on" delay="0"/>
-            <ip address="10.66.6.1" netmask="255.255.255.0">
+            <bridge name="virbr69" stp="on" delay="0"/>
+            <ip address="10.69.69.1" netmask="255.255.255.0">
               <dhcp>
-                <range start="10.66.6.66" end="10.66.6.254"/>
+                <range start="10.69.69.2" end="10.69.69.254"/>
               </dhcp>
             </ip>
           </network>
+        autostart: true         # ← can be set here
+        active: true
+      vars:
+        ansible_libvirt_uri: qemu:///system   # optional but clearer
 
-    - name: Ensure isolated network is active and autostarted
-      community.libvirt.virt_net:
-        name: isolated
+    # ── Storage directories & SELinux ─────────────────────────────────────
+    - name: Ensure custom libvirt directories exist
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode }}"
+      loop:
+        - { path: "/var/lib/libvirt/isos",      mode: "0755", owner: "root",   group: "root"   }  # ISOs usually readable
+        - { path: "/var/lib/libvirt/templates", mode: "0750", owner: "qemu",   group: "qemu"   }  # golden images → qemu needs r-x
+
+    - name: Set correct SELinux type on custom storage directories
+      ansible.posix.seboolean:
+        name: virt_use_execmem   # optional but sometimes needed
+        state: true
+        persistent: true
+      ignore_errors: true  # not always applicable
+
+    - name: Apply virt_image_t SELinux context recursively
+      ansible.posix.selinux:
+        path: "{{ item }}"
+        setype: virt_image_t
+        recursive: true
+      loop:
+        - /var/lib/libvirt/isos
+        - /var/lib/libvirt/templates
+
+    # ── Storage Pools ─────────────────────────────────────────────────────
+    - name: Create & activate ISO storage pool
+      community.libvirt.virt_pool:
+        name: isos
         state: active
         autostart: true
+        type: dir
+        target: /var/lib/libvirt/isos
 
-    - name: Ensure all libvirt networks are active and set to autostart
-      ansible.builtin.shell: virsh net-autostart "{{ item }}"
-      changed_when: false
-      loop: "{{ virtualization_kvm_qemu.networks }}"
+    - name: Create & activate templates (golden images) storage pool
+      community.libvirt.virt_pool:
+        name: templates
+        state: active
+        autostart: true
+        type: dir
+        target: /var/lib/libvirt/templates
 
 - name: Configure Virt-Manager preferences
   become: true
