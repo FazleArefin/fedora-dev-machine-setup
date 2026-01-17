@@ -42,11 +42,13 @@ Summary of packages that get installed and configured based on roles:
 - **role: zsh**
   - Install the Zsh package and set the user shell to Zsh
   - Install zinit Zsh plugin manager
+    - enable Zsh pure theme
+    - enable Zsh syntax highlighting, autosuggestions, and completions
+    - some other ohmyzsh plugins like git, python, clipboard utls, etc
+    - Install ohmyzsh/ohmyzsh and enable bundled plugins
   - Copy and enable a sample `~/.zshrc` file if one doesn't exist
     - Includes a function to stop `ssh-agent` from repeatedly asking for encrypted SSH key passwords in new terminals
     - Adds additional aliases, functions, and variables in `~/.shell_aliases.sh`,`~/.shell_functions.sh`, and `~/.shell_variables.sh` for use in interactive sessions
-  - Install ohmyzsh/ohmyzsh and enable bundled plugins
-  - Enable the Bullet Train Zsh theme (others like p10k can be configured as well)
 
 - **role: terminal_customizations**
   - Download and install Nerd Fonts from ryanoasis/nerd-fonts; ideal for terminal and programming editors
@@ -62,7 +64,7 @@ Summary of packages that get installed and configured based on roles:
     - Open `nvim` from terminal; plugins will install automatically on first launch
 
 - **role: vscode**
-  - Add the Visual Studio Code APT repo
+  - Add the Visual Studio Code DNF repo
   - Install Visual Studio Code
   - Install popular extensions
 
@@ -82,11 +84,11 @@ Summary of packages that get installed and configured based on roles:
 - **role: virtualization**
   - Install Docker packages
   - Install and configure QEMU and KVM with libvirt
-    - sets up an isolated network virbr69 10.69.69.0/24 in addition to the default NAT netowrk
-    - sets up additional storage pools `isos` and `templates` with correct SELinux contexts
+    - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
+    - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 
 - **role: googlechrome**
-  - Add the Google Chrome APT repo
+  - Add the Google Chrome DNF repo
   - Install Google Chrome
 
 ---
