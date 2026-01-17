@@ -1,11 +1,13 @@
 ---
-
+# packages to be installed via DNF for Neovim setup
+# <https://www.lazyvim.org/#%EF%B8%8F-requirements>
 neovim_dnf_packages:
   - neovim
   - luarocks
   - fd-find
   - tree-sitter-cli
+  - ripgrep
+  - git
+  - curl
 
 neovim_lazyvim_starter_url: https://github.com/LazyVim/starter.git
-
-...
