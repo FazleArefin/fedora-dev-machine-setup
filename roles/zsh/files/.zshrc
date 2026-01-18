@@ -54,10 +54,10 @@ zinit ice wait"2" lucid; zinit snippet OMZP::copyfile       # 'copyfile <filenam
 zinit ice wait"2" lucid; zinit snippet OMZP::copypath       # 'copypath' copies the current directory path
 
 # 🔍 Suggesting & Highlighting (Highlighting MUST be last)
-zinit ice wait"1" lucid atload"_zsh_autosuggest_start"
+zinit ice wait"0" lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
-zinit ice wait"1" lucid
+zinit ice wait"0" lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # 🎨 Themes Section
