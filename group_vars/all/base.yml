@@ -126,6 +126,7 @@ base_developer_tools:
   - ruff  # Python linter and code formatter compatible with black, written in Rust
   - rust  # rust compiler
   - rustfmt  # rust code formatter
+  - sequoia-sq  # OpenPGP toolchain and library
   - shellcheck
   - siege  # HTTP loadtesting and benchmarking tool
   - socat
