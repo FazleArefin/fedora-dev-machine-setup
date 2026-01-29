@@ -75,22 +75,24 @@
         mode: "{{ item.mode }}"
       loop:
         - { path: "/var/lib/libvirt/isos", owner: "root", group: "root", mode: "0755" }
-        - { path: "/var/lib/libvirt/templates", owner: "qemu", group: "qemu", mode: "0750" }
+        - { path: "/var/lib/libvirt/templates", owner: "root", group: "root", mode: "0755" }
 
     - name: Define persistent SELinux file context for custom directories
       community.general.sefcontext:
         target: "{{ item.target }}"
         setype: "{{ item.type }}"
-        seuser: system_u
+        seuser: "system_u"
         state: present
       loop:
-        - { target: '/var/lib/libvirt/isos(/.*)?', type: virt_content_t }   # better for ISOs
-        - { target: '/var/lib/libvirt/templates(/.*)?', type: virt_image_t }
+        - { target: '/var/lib/libvirt/isos(/.*)?', type: "virt_content_t" }
+        - { target: '/var/lib/libvirt/templates(/.*)?', type: "virt_content_t" }
 
     - name: Apply correct SELinux contexts recursively
       ansible.builtin.command: restorecon -Rv -F "{{ item }}"
-      changed_when: "'relabeled' in result.stdout"
-      register: result
+      register: virtualization_result
+      changed_when:
+        - virtualization_result.stdout is defined
+        - virtualization_result.stdout | regex_search('relabeled|relabeling|reset')
       loop:
         - /var/lib/libvirt/isos
         - /var/lib/libvirt/templates
