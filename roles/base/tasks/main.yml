@@ -196,7 +196,7 @@
 - name: Build and install cargo packages
   community.general.cargo:
     name: "{{ item }}"
-    locked: "{{ item != 'xh' }}"  # FIXME: workaround for xh installation
+    locked: true
     state: latest
   with_items: "{{ base_cargo_packages }}"
   become: true
