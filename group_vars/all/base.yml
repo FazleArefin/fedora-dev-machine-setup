@@ -168,6 +168,7 @@ base_cargo_packages:
   - cargo-update  # utility for managing updates of rust binaries installed via cargo
   - tlrc  # official tldr rust client
   - xh  # drop-in replacement for httpie/http
+  - television  # portable and hackable fuzzy finder
 
 base_permanent_night_light:
   night_light_enabled: false              # set this to true for permanently turning on night light
