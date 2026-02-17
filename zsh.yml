@@ -1,7 +1,6 @@
 ---
 
-- hosts: localhost
+- name: Install and configure Zsh
+  hosts: localhost
   roles:
     - zsh
-
-...

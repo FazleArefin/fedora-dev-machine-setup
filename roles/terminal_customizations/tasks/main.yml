@@ -1,33 +1,41 @@
 ---
 
-- block:
-    - name: Create local fonts directory
-      ansible.builtin.file:
-        path: "~{{ local_username }}/.local/share/fonts"
-        state: directory
+- name: Create local fonts directory
   become: true
   become_user: "{{ local_username }}"
+  block:
+    - name: Create local fonts directory
+      ansible.builtin.file:
+        path: "/home/{{ local_username }}/.local/share/fonts"
+        state: directory
+        mode: '0755'
 
-- block:
+- name: Download Nerd Fonts
+  become: true
+  become_user: "{{ local_username }}"
+  block:
     - name: Download nerd fonts to local fonts folder
       ansible.builtin.get_url:
         url: "{{ item }}"
-        dest: "~{{ local_username }}/.local/share/fonts/"
+        dest: "/home/{{ local_username }}/.local/share/fonts/"
+        mode: '0644'
       loop: "{{ terminal_customizations_nerd_fonts }}"
       loop_control:
         pause: 0.5  # slow down downloads to avoid server overload
-  become: true
-  become_user: "{{ local_username }}"
 
 - name: Refresh fonts cache
-  ansible.builtin.shell: "fc-cache -fv"
+  ansible.builtin.command: "fc-cache -fv"
   become: true
   become_user: "{{ local_username }}"
+  changed_when: false
 
-- block:
+- name: Configure Alacritty terminal emulator
+  become: true
+  become_user: "{{ local_username }}"
+  block:
     - name: Create alacritty config directory
       ansible.builtin.file:
-        path: "~{{ local_username }}/.config/alacritty"
+        path: "/home/{{ local_username }}/.config/alacritty"
         state: directory
         mode: '0755'
         owner: "{{ local_username }}"
@@ -36,46 +44,46 @@
     - name: Clone alacritty themes git repo
       ansible.builtin.git:
         repo: "{{ terminal_customizations_alacritty_themes_repo }}"
-        dest: "~{{ local_username }}/.config/alacritty/themes"
+        dest: "/home/{{ local_username }}/.config/alacritty/themes"
         clone: true
+        version: master
 
     - name: Copy sample alacritty config file
       ansible.builtin.copy:
         src: alacritty.toml
-        dest: "~{{ local_username }}/.config/alacritty/alacritty.toml"
+        dest: "/home/{{ local_username }}/.config/alacritty/alacritty.toml"
         mode: '0644'
+
+- name: Configure tmux with plugins
   become: true
   become_user: "{{ local_username }}"
-
-# setup tmux configs and plugins
-- block:
+  block:
     - name: Git clone tmux plugin repo
       ansible.builtin.git:
         repo: "{{ terminal_customizations_tmux_plugin_repo }}"
-        dest: "~{{ local_username }}/.tmux/plugins/tpm"
+        dest: "/home/{{ local_username }}/.tmux/plugins/tpm"
         clone: true
         version: master
 
     - name: Check if .tmux.conf exists in user's home dir
       ansible.builtin.stat:
-        path: "~{{ local_username }}/.tmux.conf"
-      register: dottmuxdotconf
+        path: "/home/{{ local_username }}/.tmux.conf"
+      register: terminal_customizations_dottmuxdotconf
 
     - name: Backup .tmux.conf if it exists
       ansible.builtin.copy:
-        src: "~{{ local_username }}/.tmux.conf"
-        dest: "~{{ local_username }}/.tmux.conf.orig"
-      when: dottmuxdotconf.stat.exists
+        src: "/home/{{ local_username }}/.tmux.conf"
+        dest: "/home/{{ local_username }}/.tmux.conf.orig"
+        mode: '0644'
+      when: terminal_customizations_dottmuxdotconf.stat.exists
 
     - name: Copy the sample .tmux.conf file
       ansible.builtin.copy:
         src: .tmux.conf
-        dest: "~{{ local_username }}/.tmux.conf"
+        dest: "/home/{{ local_username }}/.tmux.conf"
         force: true
+        mode: '0644'
 
     - name: Install all required tmux plugins
-      ansible.builtin.shell: "~{{local_username}}/.tmux/plugins/tpm/scripts/install_plugins.sh"
-      become: true
-      become_user: "{{ local_username }}"
-  become: true
-  become_user: "{{ local_username }}"
+      ansible.builtin.command: "/home/{{ local_username }}/.tmux/plugins/tpm/scripts/install_plugins.sh"
+      changed_when: false

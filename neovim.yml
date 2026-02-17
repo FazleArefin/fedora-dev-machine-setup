@@ -1,7 +1,6 @@
 ---
 
-- hosts: localhost
+- name: Install and configure Neovim
+  hosts: localhost
   roles:
     - neovim
-
-...

@@ -1,13 +1,34 @@
 ---
-- import_playbook: harden_system.yml
-- import_playbook: base.yml
-- import_playbook: zsh.yml
-- import_playbook: terminal_customizations.yml
-- import_playbook: neovim.yml
-- import_playbook: vscode.yml
-- import_playbook: privacy.yml
-- import_playbook: security.yml
-- import_playbook: googlechrome.yml
-- import_playbook: virtualization.yml
-- import_playbook: post_install.yml
-...
+
+- name: Harden system security by removing unnecessary services and configuring firewall
+  import_playbook: harden_system.yml
+
+- name: Install base system packages and configure system settings
+  import_playbook: base.yml
+
+- name: Install and configure Zsh shell with plugins
+  import_playbook: zsh.yml
+
+- name: Configure terminal customizations including fonts and tmux
+  import_playbook: terminal_customizations.yml
+
+- name: Install and configure Neovim editor
+  import_playbook: neovim.yml
+
+- name: Install and configure Visual Studio Code
+  import_playbook: vscode.yml
+
+- name: Install privacy tools including Tor and ProxyChains
+  import_playbook: privacy.yml
+
+- name: Install security tools including ClamAV and Firejail
+  import_playbook: security.yml
+
+- name: Install Google Chrome browser
+  import_playbook: googlechrome.yml
+
+- name: Install virtualization tools including Docker and KVM
+  import_playbook: virtualization.yml
+
+- name: Display post-installation instructions and cleanup
+  import_playbook: post_install.yml
