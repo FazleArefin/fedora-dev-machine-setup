@@ -25,7 +25,7 @@
 
 - name: Update all installed packages to latest
   ansible.builtin.dnf:
-    update_only: true
+    name: "*"
     state: latest
 
 - name: Add RPM Fusion Free repository
@@ -75,7 +75,7 @@
 
 - name: Create .ssh dir
   ansible.builtin.file:
-    path: "~{{ local_username }}/.ssh"
+    path: "/home/{{ local_username }}/.ssh"
     state: directory
     mode: '0700'
   become: true
@@ -87,7 +87,7 @@
   block:
     - name: Create directories for golang
       ansible.builtin.file:
-        path: "~{{ local_username }}/{{ item }}"
+        path: "/home/{{ local_username }}/{{ item }}"
         state: directory
         mode: '0755'
       with_items:
@@ -97,7 +97,7 @@
 
     - name: Make GOPATH available in .bashrc
       ansible.builtin.lineinfile:
-        path: "~{{ local_username }}/.bashrc"
+        path: "/home/{{ local_username }}/.bashrc"
         line: "{{ item }}"
         create: true
         mode: '0644'
@@ -140,7 +140,7 @@
 # Always prefer dark theme for GTK3 apps
 - name: Ensure GTK3 apps prefer dark theme
   community.general.ini_file:
-    path: "~{{ local_username }}/.config/{{ item }}/settings.ini"
+    path: "/home/{{ local_username }}/.config/{{ item }}/settings.ini"
     section: Settings
     option: gtk-application-prefer-dark-theme
     value: '1'
@@ -192,6 +192,7 @@
   become: true
   become_user: "{{ local_username }}"
   changed_when: false
+  ignore_errors: true
 
 - name: Build and install cargo packages
   community.general.cargo:
@@ -201,6 +202,7 @@
   with_items: "{{ base_cargo_packages }}"
   become: true
   become_user: "{{ local_username }}"
+  ignore_errors: true
 
 - name: Setup flatpak and install apps
   block:

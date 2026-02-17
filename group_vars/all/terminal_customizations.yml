@@ -1,6 +1,8 @@
 ---
 
-terminal_customizations_nerd_fonts_version: v3.4.0  # TODO: bump up version number as newer versions are made avaialbe from source git repo https://github.com/ryanoasis/nerd-fonts/releases/
+# TODO: bump up version number as newer versions are made available
+#       from source git repo https://github.com/ryanoasis/nerd-fonts/releases/
+terminal_customizations_nerd_fonts_version: v3.4.0
 terminal_customizations_nerd_fonts_base_url: "https://github.com/ryanoasis/nerd-fonts/raw/{{ terminal_customizations_nerd_fonts_version }}/patched-fonts"
 
 # nerd fonts from https://github.com/ryanoasis/nerd-fonts

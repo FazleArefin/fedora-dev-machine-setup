@@ -1,7 +1,6 @@
 ---
 
-- hosts: localhost
+- name: Configure base system packages and settings
+  hosts: localhost
   roles:
     - base
-
-...

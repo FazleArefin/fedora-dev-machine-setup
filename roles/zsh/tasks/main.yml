@@ -30,27 +30,27 @@
 
     - name: Check if .zshrc exists in user's home dir
       ansible.builtin.stat:
-        path: "~{{ local_username }}/.zshrc"
+        path: "/home/{{ local_username }}/.zshrc"
       register: zsh_dotzshrc
 
     - name: Backup .zshrc if it exists
       ansible.builtin.copy:
-        src: "~{{ local_username }}/.zshrc"
-        dest: "~{{ local_username }}/.zshrc.orig"
+        src: "/home/{{ local_username }}/.zshrc"
+        dest: "/home/{{ local_username }}/.zshrc.orig"
         mode: '0644'
       when: zsh_dotzshrc.stat.exists
 
     - name: Copy the sample .zshrc file
       ansible.builtin.copy:
         src: .zshrc
-        dest: "~{{ local_username }}/.zshrc"
+        dest: "/home/{{ local_username }}/.zshrc"
         mode: '0644'
         force: true
 
     - name: Copy the sample .shell_*.sh files
       ansible.builtin.copy:
         src: "{{ item }}"
-        dest: "~{{ local_username }}/{{ item }}"
+        dest: "/home/{{ local_username }}/{{ item }}"
         mode: '0644'
       with_items:
         - .shell_aliases.sh

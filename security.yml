@@ -1,8 +1,6 @@
-
 ---
 
-- hosts: localhost
+- name: Install security tools
+  hosts: localhost
   roles:
     - security
-
-...

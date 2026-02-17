@@ -1,7 +1,6 @@
 ---
 
-- hosts: localhost
+- name: Apply system security hardening
+  hosts: localhost
   roles:
     - harden_system
-
-...

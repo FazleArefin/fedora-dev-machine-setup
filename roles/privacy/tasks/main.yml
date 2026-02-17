@@ -10,7 +10,9 @@
   ansible.builtin.package_facts:
     manager: auto
 
-- block:
+- name: Configure Tor when installed
+  when: '"tor" in ansible_facts.packages'
+  block:
     - name: Copy torrc file
       ansible.builtin.copy:
         src: etc/tor/torrc
@@ -25,9 +27,10 @@
         name: tor
         state: started
         enabled: true
-  when: '"tor" in ansible_facts.packages'
 
-- block:
+- name: Configure ProxyChains when installed
+  when: '"proxychains-ng" in ansible_facts.packages'
+  block:
     - name: Copy proxychains config file
       ansible.builtin.copy:
         src: etc/proxychains.conf
@@ -36,6 +39,3 @@
         group: root
         mode: '0644'
         backup: true
-  when: '"proxychains-ng" in ansible_facts.packages'
-
-...

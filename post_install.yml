@@ -1,19 +1,29 @@
 ---
 
-- hosts: localhost
+- name: Post-installation cleanup and instructions
+  hosts: localhost
   tasks:
     - name: Remove redundant packages
       ansible.builtin.dnf:
-          autoremove: true
+        autoremove: true
 
     - name: Display post install message
       ansible.builtin.debug:
         msg:
           - 'Manual steps left to do:'
           - '- git clone the dotfiles repo (optional)'
-          - '- add noatime option for your SSD mounts points in /etc/fstab (optional)'
-          - '- enable WebRender in firefox; about:config in address bar, then manually set the gfx.webrender.enabled or gfx.webrender.all pref to true (optional)'
-          - '- cache in RAM only in firefox: about:config, browser.cache.disk.enable -> false, browser.cache.memory.enable -> true, browser.cache.memory.capacity -> 1048576, browser.cache.memory.max_entry_size -> 51200, verify using about:cache in address bar (optional)'
+          - >-
+            - add noatime option for your SSD mounts points
+            in /etc/fstab (optional)
+          - >-
+            - enable WebRender in firefox; about:config in address bar,
+            then manually set the gfx.webrender.enabled or
+            gfx.webrender.all pref to true (optional)
+          - >-
+            - cache in RAM only in firefox: about:config,
+            browser.cache.disk.enable -> false,
+            browser.cache.memory.enable -> true,
+            browser.cache.memory.capacity -> 1048576,
+            browser.cache.memory.max_entry_size -> 51200,
+            verify using about:cache in address bar (optional)
           - '- Reboot your system'
-
-...
