@@ -55,12 +55,6 @@
     name: "{{ base_system_tools }}"
     state: present
 
-- name: Install system tools for laptop
-  ansible.builtin.dnf:
-    name: "{{ base_system_tools_laptop }}"
-    state: present
-  when: laptop_mode | bool
-
 - name: Install developer tools
   ansible.builtin.dnf:
     name: "{{ base_developer_tools }}"

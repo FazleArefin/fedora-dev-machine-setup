@@ -27,7 +27,7 @@ Summary of packages that get installed and configured based on roles:
   - Install LibreOffice
   - Install Foliate, an e-book reader
   - Install Obsidian markdown editor
-  - Install power management tools like [TLP](https://github.com/linrunner/TLP)
+  - Install power management tools like Powertop
   - Install development tools like android-tools, awscli, httpie, docker, golang, poetry, etc.
   - Install code formatters and linters like ruff, ansible-lint, etc.
   - Set up golang directories
@@ -114,7 +114,7 @@ cd fedora-dev-machine-setup
 **Run the following as yourself (the primary user), not as `root`:**
 
 ```bash
-ansible-playbook main.yml -vv -e "laptop_mode=true local_username=$(id -un)" -K
+ansible-playbook main.yml -vv -e "local_username=$(id -un)" -K
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.
@@ -122,12 +122,6 @@ Enter your sudo password when prompted for `BECOME password:`.
 The `main.yml` playbook can take between 15 minutes to an hour to finish.
 
 Once complete, reboot your laptop for all changes to take effect.
-
-### Effect of the extra vars passed using `-e`
-
-- `laptop_mode`
-  - `true`: installs packages like [TLP](https://github.com/linrunner/TLP) for battery optimization
-  - `false`: skips installing battery-saving packages like [TLP](https://github.com/linrunner/TLP)
 
 ---
 
