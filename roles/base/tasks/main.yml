@@ -26,7 +26,7 @@
 - name: Update all installed packages to latest
   ansible.builtin.dnf:
     name: "*"
-    state: latest
+    state: latest  # noqa package-latest
 
 - name: Add RPM Fusion Free repository
   block:
