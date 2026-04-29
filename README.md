@@ -1,4 +1,4 @@
-# fedora-dev-machine-setup | Fedora Workstation 43
+# fedora-dev-machine-setup | Fedora Workstation 44
 
 ## Description
 
@@ -6,7 +6,7 @@ This repo contains Ansible playbooks to configure your system as a development m
 
 The playbooks have been tested on:
 
-- **Fedora Workstation 43**
+- **Fedora Workstation 44**
 
 ---
 
@@ -52,10 +52,10 @@ Summary of packages that get installed and configured based on roles:
 
 - **role: terminal_customizations**
   - Download and install Nerd Fonts from ryanoasis/nerd-fonts; ideal for terminal and programming editors
-  - Copy and enable a sample Tilix config file with configured Nerd Font
+  - Copy and enable a sample Alacritty terminal config file
   - Copy and enable a sample Tmux config file if one doesn't exist
   - Copy and enable `~/.tmux.conf` with [tmux plugin manager](https://github.com/tmux-plugins/tpm) and several plugins
-    - Open Tilix and run the `tmux` command, or enable a custom command option in Tilix
+    - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
 
 - **role: neovim**
