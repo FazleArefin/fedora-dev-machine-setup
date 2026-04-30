@@ -1,5 +1,15 @@
 ---
 
+base_docker:
+  packages:
+    - moby-engine
+    - docker-cli
+    - containerd
+    - docker-buildx
+    - docker-compose
+  user_groups:
+    - docker
+
 base_archiving_tools:
   - arj
   - cabextract

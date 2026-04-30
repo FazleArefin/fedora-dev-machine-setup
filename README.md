@@ -29,6 +29,7 @@ Summary of packages that get installed and configured based on roles:
   - Install Obsidian markdown editor
   - Install power management tools like Powertop
   - Install development tools like android-tools, awscli, httpie, docker, golang, poetry, etc.
+  - Install Docker packages
   - Install code formatters and linters like ruff, ansible-lint, etc.
   - Set up golang directories
   - Install download tools like axel, transmission, wget, aria2
@@ -82,7 +83,6 @@ Summary of packages that get installed and configured based on roles:
   - Install Firejail for sandboxing applications
 
 - **role: virtualization**
-  - Install Docker packages
   - Install and configure QEMU and KVM with libvirt
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
