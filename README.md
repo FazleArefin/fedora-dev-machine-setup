@@ -83,7 +83,7 @@ Summary of packages that get installed and configured based on roles:
   - Install Firejail for sandboxing applications
 
 - **role: virtualization**
-  - Install and configure QEMU and KVM with libvirt
+  - Install and configure QEMU and KVM with libvirt (only on bare metal, skipped if running in a VM)
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 

@@ -3,4 +3,5 @@
 - name: Install virtualization tools
   hosts: localhost
   roles:
-    - virtualization
+    - role: virtualization
+      when: ansible_facts['virtualization_role'] | default('host') != 'guest'
