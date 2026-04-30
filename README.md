@@ -1,4 +1,4 @@
-# fedora-dev-machine-setup | Fedora Workstation 43
+# fedora-dev-machine-setup | Fedora Workstation 44
 
 ## Description
 
@@ -6,7 +6,7 @@ This repo contains Ansible playbooks to configure your system as a development m
 
 The playbooks have been tested on:
 
-- **Fedora Workstation 43**
+- **Fedora Workstation 44**
 
 ---
 
@@ -27,8 +27,9 @@ Summary of packages that get installed and configured based on roles:
   - Install LibreOffice
   - Install Foliate, an e-book reader
   - Install Obsidian markdown editor
-  - Install power management tools like [TLP](https://github.com/linrunner/TLP)
+  - Install power management tools like Powertop
   - Install development tools like android-tools, awscli, httpie, docker, golang, poetry, etc.
+  - Install Docker packages
   - Install code formatters and linters like ruff, ansible-lint, etc.
   - Set up golang directories
   - Install download tools like axel, transmission, wget, aria2
@@ -52,10 +53,10 @@ Summary of packages that get installed and configured based on roles:
 
 - **role: terminal_customizations**
   - Download and install Nerd Fonts from ryanoasis/nerd-fonts; ideal for terminal and programming editors
-  - Copy and enable a sample Tilix config file with configured Nerd Font
+  - Copy and enable a sample Alacritty terminal config file
   - Copy and enable a sample Tmux config file if one doesn't exist
   - Copy and enable `~/.tmux.conf` with [tmux plugin manager](https://github.com/tmux-plugins/tpm) and several plugins
-    - Open Tilix and run the `tmux` command, or enable a custom command option in Tilix
+    - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
 
 - **role: neovim**
@@ -82,8 +83,7 @@ Summary of packages that get installed and configured based on roles:
   - Install Firejail for sandboxing applications
 
 - **role: virtualization**
-  - Install Docker packages
-  - Install and configure QEMU and KVM with libvirt
+  - Install and configure QEMU and KVM with libvirt (only on bare metal, skipped if running in a VM)
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 
@@ -114,7 +114,7 @@ cd fedora-dev-machine-setup
 **Run the following as yourself (the primary user), not as `root`:**
 
 ```bash
-ansible-playbook main.yml -vv -e "laptop_mode=true local_username=$(id -un)" -K
+ansible-playbook main.yml -vv -e "local_username=$(id -un)" -K
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.
@@ -122,12 +122,6 @@ Enter your sudo password when prompted for `BECOME password:`.
 The `main.yml` playbook can take between 15 minutes to an hour to finish.
 
 Once complete, reboot your laptop for all changes to take effect.
-
-### Effect of the extra vars passed using `-e`
-
-- `laptop_mode`
-  - `true`: installs packages like [TLP](https://github.com/linrunner/TLP) for battery optimization
-  - `false`: skips installing battery-saving packages like [TLP](https://github.com/linrunner/TLP)
 
 ---
 

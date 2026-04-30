@@ -1,5 +1,15 @@
 ---
 
+base_docker:
+  packages:
+    - moby-engine
+    - docker-cli
+    - containerd
+    - docker-buildx
+    - docker-compose
+  user_groups:
+    - docker
+
 base_archiving_tools:
   - arj
   - cabextract
@@ -24,6 +34,7 @@ base_system_tools:
   - alacritty  # A cross-platform, OpenGL terminal emulator
   - btop  # Modern and colorful command line resource monitor that shows usage and stats
   - htop
+  - powertop
   - fatrace
   - fdupes
   - fuse
@@ -41,11 +52,6 @@ base_system_tools:
   - qrencode
 #  - blackbox-terminal
 #  - syncthing
-
-base_system_tools_laptop:
-  - powertop
-  - tlp
-  - tlp-rdw
 
 base_download_tools:
   - aria2

@@ -1,18 +1,5 @@
 ---
 
-- name: Docker setup
-  block:
-    - name: Install docker packages
-      ansible.builtin.dnf:
-        name: "{{ virtualization_docker.packages }}"
-        state: present
-
-    - name: Add user to docker group
-      ansible.builtin.user:
-        name: "{{ local_username }}"
-        append: true
-        groups: "{{ virtualization_docker.user_groups }}"
-
 - name: Install and configure QEMU/KVM with libvirt
   block:
     - name: Install virtualization package groups
