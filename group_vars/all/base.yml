@@ -50,6 +50,7 @@ base_system_tools:
   - strace
   - trash-cli
   - qrencode
+  - chromium
 #  - blackbox-terminal
 #  - syncthing
 
