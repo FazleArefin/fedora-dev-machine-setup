@@ -26,7 +26,7 @@
 - name: Update all installed packages to latest
   ansible.builtin.dnf:
     name: "*"
-    state: latest
+    state: latest  # noqa package-latest
 
 - name: Add RPM Fusion Free repository
   block:
@@ -54,12 +54,6 @@
   ansible.builtin.dnf:
     name: "{{ base_system_tools }}"
     state: present
-
-- name: Install system tools for laptop
-  ansible.builtin.dnf:
-    name: "{{ base_system_tools_laptop }}"
-    state: present
-  when: laptop_mode | bool
 
 - name: Install developer tools
   ansible.builtin.dnf:
@@ -152,34 +146,6 @@
     - gtk-3.0
     - gtk-4.0
 
-- name: Setup fstrim timer for SSD longevity
-  block:
-    - name: Enable fstrim.timer
-      ansible.builtin.systemd:
-        name: fstrim.timer
-        state: started
-        enabled: true
-
-    - name: Create systemd fstrim.timer override dir
-      ansible.builtin.file:
-        path: /etc/systemd/system/fstrim.timer.d
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
-
-    - name: Create override.conf file for fstrim.timer
-      ansible.builtin.copy:
-        src: etc/systemd/system/fstrim.timer.d/override.conf
-        dest: /etc/systemd/system/fstrim.timer.d/override.conf
-        owner: root
-        group: root
-        mode: '0644'
-
-    - name: Force systemd to reread configs
-      ansible.builtin.systemd:
-        daemon_reload: true
-
 - name: Make poetry create virtualenv dirs inside the project dir itself
   ansible.builtin.command: "poetry config virtualenvs.in-project true"
   become: true
@@ -203,6 +169,17 @@
   become: true
   become_user: "{{ local_username }}"
   ignore_errors: true
+
+- name: Install docker packages
+  ansible.builtin.dnf:
+    name: "{{ base_docker.packages }}"
+    state: present
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ local_username }}"
+    append: true
+    groups: "{{ base_docker.user_groups }}"
 
 - name: Setup flatpak and install apps
   block:

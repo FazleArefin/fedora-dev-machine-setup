@@ -1,15 +1,5 @@
 ---
 
-virtualization_docker:
-  packages:
-    - moby-engine
-    - docker-cli
-    - containerd
-    - docker-buildx
-    - docker-compose
-  user_groups:
-    - docker
-
 virtualization_kvm_qemu:
   package_groups:
     - '@Virtualization'
