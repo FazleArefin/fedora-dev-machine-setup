@@ -77,9 +77,7 @@
     - name: Apply correct SELinux contexts recursively
       ansible.builtin.command: restorecon -Rv -F "{{ item }}"
       register: virtualization_result
-      changed_when:
-        - virtualization_result.stdout is defined
-        - virtualization_result.stdout | regex_search('relabeled|relabeling|reset')
+      changed_when: virtualization_result.stdout | length > 0
       loop:
         - /var/lib/libvirt/isos
         - /var/lib/libvirt/templates
