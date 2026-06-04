@@ -73,9 +73,11 @@ base_developer_tools:
   - bpython
   # - black
   - cargo
+  - clang
   - cloc  # cloc counts blank lines, comment lines, and physical lines of source code in many programming languages
   # - clusterssh
   # - python3-csvkit
+  - compiler-rt
   - curl
   - dos2unix
   - duf  # Disk Usage/Free Utility
@@ -96,6 +98,7 @@ base_developer_tools:
   - httpie
   - inotify-tools
   - jq
+  - llvm
   - makeself
   - meld
   - miller  # `mlr` is for querying, shaping, and reformatting data files in various formats including CSV, TSV, JSON, and JSON Lines
