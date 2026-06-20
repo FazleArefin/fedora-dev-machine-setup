@@ -170,16 +170,10 @@
   become_user: "{{ local_username }}"
   ignore_errors: true
 
-- name: Install docker packages
+- name: Install container packages
   ansible.builtin.dnf:
-    name: "{{ base_docker.packages }}"
+    name: "{{ base_podman.packages }}"
     state: present
-
-- name: Add user to docker group
-  ansible.builtin.user:
-    name: "{{ local_username }}"
-    append: true
-    groups: "{{ base_docker.user_groups }}"
 
 - name: Setup flatpak and install apps
   block:

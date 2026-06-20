@@ -29,7 +29,7 @@ Summary of packages that get installed and configured based on roles:
   - Install Obsidian markdown editor
   - Install power management tools like Powertop
   - Install development tools like android-tools, awscli, httpie, docker, golang, poetry, etc.
-  - Install Docker packages
+  - Install Podman as the container runtime (rootless, daemonless)
   - Install code formatters and linters like ruff, ansible-lint, etc.
   - Set up golang directories
   - Install download tools like axel, transmission, wget, aria2

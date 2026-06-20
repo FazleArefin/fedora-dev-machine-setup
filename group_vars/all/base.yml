@@ -1,14 +1,10 @@
 ---
 
-base_docker:
+base_podman:
   packages:
-    - moby-engine
-    - docker-cli
-    - containerd
-    - docker-buildx
-    - docker-compose
-  user_groups:
-    - docker
+    - podman
+    - podman-docker
+    - podman-compose
 
 base_archiving_tools:
   - arj
