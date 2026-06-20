@@ -154,7 +154,7 @@
 
 - name: Build and install golang binaries
   ansible.builtin.command: "go install {{ item }}"
-  with_items: "{{ base_golang_tools }}"
+  with_items: "{{ base_golang_tools | default([]) }}"
   become: true
   become_user: "{{ local_username }}"
   changed_when: false

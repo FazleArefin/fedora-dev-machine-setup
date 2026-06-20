@@ -166,7 +166,7 @@ base_media_tools:
   - vlc
 
 base_golang_tools:
-  - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
+  # - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
   # - github.com/wagoodman/dive@latest  # tool for exploring each layer in a docker image
   # - oss.terrastruct.com/d2@latest  # d2 diagram as code tool
 
