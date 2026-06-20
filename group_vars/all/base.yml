@@ -54,7 +54,7 @@ base_download_tools:
   - axel
   - transmission
   - wget
-  # - yt-dlp
+  - yt-dlp
   # - yt-dlp-zsh-completion
 
 base_developer_tools:
