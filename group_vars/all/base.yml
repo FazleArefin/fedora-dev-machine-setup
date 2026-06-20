@@ -7,15 +7,15 @@ base_podman:
     - podman-compose
 
 base_archiving_tools:
-  - arj
-  - cabextract
+  # - arj            # old archiver, p7zip covers it
+  # - cabextract     # Windows cabinet files, rarely needed
   - file-roller
   - p7zip
   - p7zip-plugins
-  - sharutils
+  # - sharutils      # shell archive utilities, obsolete
   - unrar
   - unzip
-  - uudeview
+  # - uudeview       # UUencode decoder, obsolete
   - zip
   - bzip2
   - bzip3
