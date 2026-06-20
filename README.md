@@ -18,6 +18,7 @@ Summary of packages that get installed and configured based on roles:
   - Remove the `passim` package and stop the `passimd` service from listening on 0.0.0.0
   - Disable Link-Local Multicast Name Resolution (LLMNR) listening on 0.0.0.0
   - Create and activate a new `firewalld` zone `FedoraWsHardened`, which DROPS all incoming requests
+  - Enable automatic security updates via `dnf5-plugin-automatic`
 
 - **role: base**
   - Enable the `firewalld` firewall
