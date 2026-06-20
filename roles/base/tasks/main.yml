@@ -63,7 +63,7 @@
 - name: Install developer tools pipx packages
   community.general.pipx:
     name: "{{ item }}"
-  with_items: "{{ base_developer_tools_pipx }}"
+  loop: "{{ base_developer_tools_pipx }}"
   become: true
   become_user: "{{ local_username }}"
 
@@ -84,7 +84,7 @@
         path: "/home/{{ local_username }}/{{ item }}"
         state: directory
         mode: '0755'
-      with_items:
+      loop:
         - go
         - go/src
         - go/bin
@@ -95,7 +95,7 @@
         line: "{{ item }}"
         create: true
         mode: '0644'
-      with_items:
+      loop:
         - export GOPATH=$HOME/go
         - export PATH=$PATH:$GOPATH/bin
 
@@ -154,10 +154,11 @@
 
 - name: Build and install golang binaries
   ansible.builtin.command: "go install {{ item }}"
-  with_items: "{{ base_golang_tools | default([]) }}"
+  loop: "{{ base_golang_tools | default([]) }}"
   become: true
   become_user: "{{ local_username }}"
-  changed_when: false
+  register: go_install_result
+  changed_when: go_install_result.rc == 0
   ignore_errors: true
 
 - name: Build and install cargo packages
@@ -165,7 +166,7 @@
     name: "{{ item }}"
     locked: true
     state: latest
-  with_items: "{{ base_cargo_packages }}"
+  loop: "{{ base_cargo_packages }}"
   become: true
   become_user: "{{ local_username }}"
   ignore_errors: true
