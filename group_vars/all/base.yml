@@ -29,16 +29,15 @@ base_productivity_tools:
 base_system_tools:
   - alacritty  # A cross-platform, OpenGL terminal emulator
   - btop  # Modern and colorful command line resource monitor that shows usage and stats
-  - htop
   - powertop
-  - fatrace
-  - fdupes
+  # - fatrace
+  # - fdupes
   - fuse
   - fuse-libs
   - zoxide  # a smarter `cd` command
   - gnome-calculator
   - progress
-  - pwgen
+  # - pwgen
   - gnome-tweaks
   - gnome-extensions-app
   - gnome-shell-extension-dash-to-dock
@@ -47,8 +46,8 @@ base_system_tools:
   - trash-cli
   - qrencode
   - chromium
-#  - blackbox-terminal
-#  - syncthing
+  # - blackbox-terminal
+  # - syncthing
 
 base_download_tools:
   - aria2
