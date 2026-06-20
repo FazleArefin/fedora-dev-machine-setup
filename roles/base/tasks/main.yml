@@ -157,8 +157,8 @@
   loop: "{{ base_golang_tools | default([]) }}"
   become: true
   become_user: "{{ local_username }}"
-  register: go_install_result
-  changed_when: go_install_result.rc == 0
+  register: base_go_install_result
+  changed_when: base_go_install_result.rc == 0
   ignore_errors: true
 
 - name: Build and install cargo packages
@@ -169,6 +169,10 @@
   loop: "{{ base_cargo_packages }}"
   become: true
   become_user: "{{ local_username }}"
+  register: base_cargo_install_result
+  failed_when: >
+    base_cargo_install_result.rc != 0
+    and 'is already installed' not in base_cargo_install_result.stderr
   ignore_errors: true
 
 - name: Install container packages
