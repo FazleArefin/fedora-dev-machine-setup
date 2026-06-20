@@ -8,6 +8,7 @@ virtualization_kvm_qemu:
     - edk2-ovmf
     - swtpm
     - quickemu
+    - qemu-tools
     - python3-libvirt
     - guestfs-tools
   systemd_services:
