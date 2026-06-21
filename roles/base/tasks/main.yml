@@ -160,9 +160,8 @@
   become: true
   become_user: "{{ local_username }}"
   register: base_cargo_install_result
-  failed_when: >
-    base_cargo_install_result.rc != 0
-    and 'is already installed' not in base_cargo_install_result.stderr
+  failed_when: base_cargo_install_result.rc != 0
+  changed_when: base_cargo_install_result.rc == 0 and 'is already installed' not in base_cargo_install_result.stderr
   ignore_errors: true
 
 - name: Install container packages
