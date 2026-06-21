@@ -111,18 +111,18 @@ base_developer_tools:
   # - pcre2-tools  # provides pcre2grep and pcre2test (perl-compatible regex)
   # - perf  # performance monitoring for the Linux kernel
   - pipx
-  - poetry
+  # - poetry
   # - pssh
   - ptpython
   - pv
   - pylint
-  - python3-demjson  # provides jsonlint-py3 for json lint
+  # - python3-demjson  # provides jsonlint-py3 for json lint
   - python3-devel
-  - python3-jmespath
+  # - python3-jmespath
   - python3-pip
   - python3-poetry
   - python3-autopep8
-  - python3-lxml
+  # - python3-lxml
   - rclone
   # - recode
   - remmina
