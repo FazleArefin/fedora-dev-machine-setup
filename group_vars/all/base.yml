@@ -90,6 +90,7 @@ base_developer_tools:
   - git-credential-libsecret
   - glow
   - golang-go
+  - graphviz # open source graph visualization software
   - httpie
   - inotify-tools
   - jq
