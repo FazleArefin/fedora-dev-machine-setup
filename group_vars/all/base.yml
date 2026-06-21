@@ -10,8 +10,7 @@ base_archiving_tools:
   # - arj            # old archiver, p7zip covers it
   # - cabextract     # Windows cabinet files, rarely needed
   - file-roller
-  - p7zip
-  - p7zip-plugins
+  - 7zip
   # - sharutils      # shell archive utilities, obsolete
   - unrar
   - unzip
@@ -53,7 +52,7 @@ base_download_tools:
   - aria2
   - axel
   - transmission
-  - wget
+  - wget2-wget
   - yt-dlp
   # - yt-dlp-zsh-completion
 
