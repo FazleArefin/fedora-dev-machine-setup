@@ -23,8 +23,8 @@
 
     - name: Copy custom torrc drop-in config
       ansible.builtin.copy:
-        src: etc/tor/torrc.d/99-exitnodes-custom.conf
-        dest: /etc/tor/torrc.d/99-exitnodes-custom.conf
+        src: etc/tor/torrc.d/99-tor-node-countries.conf
+        dest: /etc/tor/torrc.d/99-tor-node-countries.conf
         owner: root
         group: root
         mode: '0644'
