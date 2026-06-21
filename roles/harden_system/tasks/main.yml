@@ -89,7 +89,7 @@
       ansible.posix.firewalld:
         zone: FedoraWsHardened
         rich_rule: "{{ item }}"
-        state: present
+        state: enabled
         permanent: true
         immediate: true
       loop:
