@@ -88,10 +88,6 @@ Summary of packages that get installed and configured based on roles:
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 
-- **role: googlechrome**
-  - Add the Google Chrome DNF repo
-  - Install Google Chrome
-
 ---
 
 ## Step 0 | Prerequisites for running the Ansible playbooks
