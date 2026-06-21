@@ -37,7 +37,6 @@ Summary of packages that get installed and configured based on roles:
   - Install image, audio, and video tools like VLC, Totem, GIMP, ImageMagick, etc.
   - Option to turn on Night Light for eye comfort (set `base_permanent_night_light.night_light_enabled` to `true` in `group_vars/all/base.yml`)
   - Enable `fzf` fuzzy finder in the Zsh terminal
-  - Install [lazygit](https://github.com/jesseduffield/lazygit)
   - Install terminal emulator Alacritty
   - Set GNOME color-scheme to dark mode
 
@@ -88,11 +87,9 @@ Summary of packages that get installed and configured based on roles:
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 
-- ~**role: googlechrome**~
-  - ~Add the Google Chrome DNF repo~
-  - ~Install Google Chrome~
-
-*Enable `googlechrome` role by removing the comments in `main.yml`*
+- **role: googlechrome** (optional)
+  - Add the Google Chrome DNF repo
+  - Install Google Chrome
 
 ---
 
@@ -118,6 +115,7 @@ cd fedora-dev-machine-setup
 
 ```bash
 ansible-playbook main.yml -vv -e "local_username=$(id -un)" -K
+# Optional roles (e.g. googlechrome) are skipped by default. Append `--tags never` to install them.
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.

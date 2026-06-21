@@ -32,9 +32,11 @@
   import_playbook: security.yml
   tags: security
 
-# - name: Install Google Chrome browser
-#   import_playbook: googlechrome.yml
-#   tags: chrome
+- name: Install Google Chrome browser
+  import_playbook: googlechrome.yml
+  tags:
+    - never
+    - googlechrome
 
 - name: Install virtualization tools including Docker and KVM
   import_playbook: virtualization.yml
