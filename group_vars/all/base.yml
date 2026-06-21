@@ -111,7 +111,7 @@ base_developer_tools:
   # - pcre2-tools  # provides pcre2grep and pcre2test (perl-compatible regex)
   # - perf  # performance monitoring for the Linux kernel
   - pipx
-  # - poetry
+  - poetry
   # - pssh
   - ptpython
   - pv
@@ -120,7 +120,7 @@ base_developer_tools:
   - python3-devel
   # - python3-jmespath
   - python3-pip
-  - python3-poetry
+  # - python3-poetry
   - python3-autopep8
   # - python3-lxml
   - rclone
@@ -165,7 +165,7 @@ base_media_tools:
   - totem
   - vlc
 
-base_golang_tools:
+base_golang_tools: []
   # - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
   # - github.com/wagoodman/dive@latest  # tool for exploring each layer in a docker image
   # - oss.terrastruct.com/d2@latest  # d2 diagram as code tool
