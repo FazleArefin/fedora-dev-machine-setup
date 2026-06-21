@@ -85,6 +85,19 @@
       register: harden_system_set_default_zone
       changed_when: "'ZONE_ALREADY_SET' not in harden_system_set_default_zone.stderr"
 
+    - name: Allow essential IPv6 Neighbor Discovery
+      ansible.posix.firewalld:
+        zone: FedoraWsHardened
+        rich_rule: "{{ item }}"
+        state: present
+        permanent: true
+        immediate: true
+      loop:
+        - 'rule family="ipv6" icmp-type name="neighbour-solicitation" accept'
+        - 'rule family="ipv6" icmp-type name="neighbour-advertisement" accept'
+        - 'rule family="ipv6" icmp-type name="router-solicitation" accept'
+        - 'rule family="ipv6" icmp-type name="router-advertisement" accept'
+
 - name: Enable automatic security updates
   block:
     - name: Install dnf5 automatic plugin
