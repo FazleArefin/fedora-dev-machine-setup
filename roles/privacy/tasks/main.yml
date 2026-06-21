@@ -31,7 +31,7 @@
       notify: Restart tor
 
     - name: Ensure tor service runs on system startup
-      ansible.builtin.systemd:
+      ansible.builtin.systemd_service:
         name: tor
         state: started
         enabled: true
