@@ -36,7 +36,6 @@ zinit ice wait"1" lucid; zinit snippet OMZL::theme-and-appearance.zsh
 
 # Oh-My-Zsh Plugins
 zinit ice wait"1" lucid; zinit snippet OMZP::colored-man-pages
-zinit ice wait"1" lucid; zinit snippet OMZP::docker
 zinit ice wait"1" lucid; zinit snippet OMZP::git
 zinit ice wait"1" lucid; zinit snippet OMZP::git-extras
 zinit ice wait"1" lucid; zinit snippet OMZP::pip
