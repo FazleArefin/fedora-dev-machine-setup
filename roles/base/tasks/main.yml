@@ -89,15 +89,7 @@
         - go/src
         - go/bin
 
-    - name: Make GOPATH available in .bashrc
-      ansible.builtin.lineinfile:
-        path: "/home/{{ local_username }}/.bashrc"
-        line: "{{ item }}"
-        create: true
-        mode: '0644'
-      loop:
-        - export GOPATH=$HOME/go
-        - export PATH=$PATH:$GOPATH/bin
+
 
 - name: Install download tools
   ansible.builtin.dnf:
