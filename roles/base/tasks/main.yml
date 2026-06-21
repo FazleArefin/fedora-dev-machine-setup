@@ -89,8 +89,6 @@
         - go/src
         - go/bin
 
-
-
 - name: Install download tools
   ansible.builtin.dnf:
     name: "{{ base_download_tools }}"
