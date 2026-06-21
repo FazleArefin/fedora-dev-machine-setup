@@ -63,7 +63,7 @@
 - name: Install developer tools pipx packages
   community.general.pipx:
     name: "{{ item }}"
-  with_items: "{{ base_developer_tools_pipx }}"
+  loop: "{{ base_developer_tools_pipx }}"
   become: true
   become_user: "{{ local_username }}"
 
@@ -84,20 +84,10 @@
         path: "/home/{{ local_username }}/{{ item }}"
         state: directory
         mode: '0755'
-      with_items:
+      loop:
         - go
         - go/src
         - go/bin
-
-    - name: Make GOPATH available in .bashrc
-      ansible.builtin.lineinfile:
-        path: "/home/{{ local_username }}/.bashrc"
-        line: "{{ item }}"
-        create: true
-        mode: '0644'
-      with_items:
-        - export GOPATH=$HOME/go
-        - export PATH=$PATH:$GOPATH/bin
 
 - name: Install download tools
   ansible.builtin.dnf:
@@ -154,10 +144,11 @@
 
 - name: Build and install golang binaries
   ansible.builtin.command: "go install {{ item }}"
-  with_items: "{{ base_golang_tools }}"
+  loop: "{{ base_golang_tools | default([]) }}"
   become: true
   become_user: "{{ local_username }}"
-  changed_when: false
+  register: base_go_install_result
+  changed_when: base_go_install_result.rc == 0
   ignore_errors: true
 
 - name: Build and install cargo packages
@@ -165,21 +156,19 @@
     name: "{{ item }}"
     locked: true
     state: latest
-  with_items: "{{ base_cargo_packages }}"
+  loop: "{{ base_cargo_packages }}"
   become: true
   become_user: "{{ local_username }}"
+  register: base_cargo_install_result
+  changed_when: >
+    base_cargo_install_result.changed | default(false)
+    and 'is already installed' not in (base_cargo_install_result.stderr | default(''))
   ignore_errors: true
 
-- name: Install docker packages
+- name: Install container packages
   ansible.builtin.dnf:
-    name: "{{ base_docker.packages }}"
+    name: "{{ base_podman.packages }}"
     state: present
-
-- name: Add user to docker group
-  ansible.builtin.user:
-    name: "{{ local_username }}"
-    append: true
-    groups: "{{ base_docker.user_groups }}"
 
 - name: Setup flatpak and install apps
   block:

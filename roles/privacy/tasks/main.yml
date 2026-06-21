@@ -13,14 +13,22 @@
 - name: Configure Tor when installed
   when: '"tor" in ansible_facts.packages'
   block:
-    - name: Copy torrc file
+    - name: Ensure /etc/tor/torrc.d directory exists
+      ansible.builtin.file:
+        path: /etc/tor/torrc.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Copy custom torrc drop-in config
       ansible.builtin.copy:
-        src: etc/tor/torrc
-        dest: /etc/tor/torrc
+        src: etc/tor/torrc.d/99-tor-node-countries.conf
+        dest: /etc/tor/torrc.d/99-tor-node-countries.conf
         owner: root
         group: root
         mode: '0644'
-        backup: true
+      notify: Restart tor
 
     - name: Ensure tor service runs on system startup
       ansible.builtin.systemd:

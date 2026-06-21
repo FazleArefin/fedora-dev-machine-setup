@@ -52,7 +52,7 @@
         src: "{{ item }}"
         dest: "/home/{{ local_username }}/{{ item }}"
         mode: '0644'
-      with_items:
+      loop:
         - .shell_aliases.sh
         - .shell_functions.sh
         - .shell_variables.sh

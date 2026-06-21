@@ -2,33 +2,46 @@
 
 - name: Harden system security by removing unnecessary services and configuring firewall
   import_playbook: harden_system.yml
+  tags: harden
 
 - name: Install base system packages and configure system settings
   import_playbook: base.yml
+  tags: base
 
 - name: Install and configure Zsh shell with plugins
   import_playbook: zsh.yml
+  tags: zsh
 
 - name: Configure terminal customizations including fonts and tmux
   import_playbook: terminal_customizations.yml
+  tags: terminal
 
 - name: Install and configure Neovim editor
   import_playbook: neovim.yml
+  tags: neovim
 
 - name: Install and configure Visual Studio Code
   import_playbook: vscode.yml
+  tags: vscode
 
 - name: Install privacy tools including Tor and ProxyChains
   import_playbook: privacy.yml
+  tags: privacy
 
 - name: Install security tools including ClamAV and Firejail
   import_playbook: security.yml
+  tags: security
 
 - name: Install Google Chrome browser
   import_playbook: googlechrome.yml
+  tags:
+    - never
+    - googlechrome
 
 - name: Install virtualization tools including Docker and KVM
   import_playbook: virtualization.yml
+  tags: virtualization
 
 - name: Display post-installation instructions and cleanup
   import_playbook: post_install.yml
+  tags: post

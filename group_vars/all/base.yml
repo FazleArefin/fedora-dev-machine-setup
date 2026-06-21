@@ -1,25 +1,21 @@
 ---
 
-base_docker:
+base_podman:
   packages:
-    - moby-engine
-    - docker-cli
-    - containerd
-    - docker-buildx
-    - docker-compose
-  user_groups:
-    - docker
+    - podman
+    - podman-docker
+    - podman-compose
 
 base_archiving_tools:
-  - arj
-  - cabextract
+  # - arj            # old archiver, p7zip covers it
+  # - cabextract     # Windows cabinet files, rarely needed
   - file-roller
   - p7zip
   - p7zip-plugins
-  - sharutils
+  # - sharutils      # shell archive utilities, obsolete
   - unrar
   - unzip
-  - uudeview
+  # - uudeview       # UUencode decoder, obsolete
   - zip
   - bzip2
   - bzip3
@@ -33,16 +29,15 @@ base_productivity_tools:
 base_system_tools:
   - alacritty  # A cross-platform, OpenGL terminal emulator
   - btop  # Modern and colorful command line resource monitor that shows usage and stats
-  - htop
   - powertop
-  - fatrace
-  - fdupes
+  # - fatrace
+  # - fdupes
   - fuse
   - fuse-libs
   - zoxide  # a smarter `cd` command
   - gnome-calculator
   - progress
-  - pwgen
+  # - pwgen
   - gnome-tweaks
   - gnome-extensions-app
   - gnome-shell-extension-dash-to-dock
@@ -51,15 +46,15 @@ base_system_tools:
   - trash-cli
   - qrencode
   - chromium
-#  - blackbox-terminal
-#  - syncthing
+  # - blackbox-terminal
+  # - syncthing
 
 base_download_tools:
   - aria2
   - axel
   - transmission
   - wget
-  # - yt-dlp
+  - yt-dlp
   # - yt-dlp-zsh-completion
 
 base_developer_tools:
@@ -67,7 +62,7 @@ base_developer_tools:
   - android-tools
   - ansible
   - ansible-lint
-  - awscli
+  # - awscli
   - bat
   - bats  # bash automated testing system
   - bpython
@@ -83,7 +78,7 @@ base_developer_tools:
   - duf  # Disk Usage/Free Utility
   - difftastic  # Structural diff that understands syntax
   - entr
-  - expect
+  # - expect
   # - filezilla
   - fzf
   - g++
@@ -91,10 +86,11 @@ base_developer_tools:
   - git
   - git-delta
   - git-extras
-  - gitg
+  # - gitg
   - git-credential-libsecret
   - glow
   - golang-go
+  - graphviz # open source graph visualization software
   - httpie
   - inotify-tools
   - jq
@@ -107,43 +103,42 @@ base_developer_tools:
   - mtr
   - nmap
   - nmap-ncat
-  - nmon
+  # - nmon
   # - nodejs
   - opentofu  # terraform fork; infrastructure as code tool
   - pandoc
   - parallel
-  - pcre2-tools  # provides pcre2grep and pcre2test (perl-compatible regex)
-  - perf  # performance monitoring for the Linux kernel
+  # - pcre2-tools  # provides pcre2grep and pcre2test (perl-compatible regex)
+  # - perf  # performance monitoring for the Linux kernel
   - pipx
   - poetry
   # - pssh
   - ptpython
   - pv
   - pylint
-  - python3-demjson  # provides jsonlint-py3 for json lint
+  # - python3-demjson  # provides jsonlint-py3 for json lint
   - python3-devel
-  - python3-jmespath
+  # - python3-jmespath
   - python3-pip
-  - python3-poetry
+  # - python3-poetry
   - python3-autopep8
-  - python3-lxml
-  - qemu-tools
+  # - python3-lxml
   - rclone
   # - recode
   - remmina
   - renameutils
   - ripgrep  # launch using rg from the cli
-  - ruby
+  # - ruby
   - ruff  # Python linter and code formatter compatible with black, written in Rust
   - rust  # rust compiler
   - rustfmt  # rust code formatter
   - sequoia-sq  # OpenPGP toolchain and library
   - shellcheck
-  - siege  # HTTP loadtesting and benchmarking tool
+  # - siege  # HTTP loadtesting and benchmarking tool
   - socat
-  - sshfs
-  - sshpass
-  - sshuttle
+  # - sshfs
+  # - sshpass
+  # - sshuttle
   - tmux
   # - python3-tmuxp  # `tmuxp` is a session manager for tmux
   - tree
@@ -154,7 +149,7 @@ base_developer_tools:
   - xsel
   - yamllint
   - yq
-#  - zeal
+  # - zeal
 
 # uses pipx to install python pip packages in a virtualized environment
 base_developer_tools_pipx:
@@ -170,8 +165,8 @@ base_media_tools:
   - totem
   - vlc
 
-base_golang_tools:
-  - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
+base_golang_tools: []
+  # - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
   # - github.com/wagoodman/dive@latest  # tool for exploring each layer in a docker image
   # - oss.terrastruct.com/d2@latest  # d2 diagram as code tool
 

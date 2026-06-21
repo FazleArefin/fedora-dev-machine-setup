@@ -84,3 +84,71 @@
       ansible.builtin.command: firewall-cmd --set-default-zone=FedoraWsHardened
       register: harden_system_set_default_zone
       changed_when: "'ZONE_ALREADY_SET' not in harden_system_set_default_zone.stderr"
+
+    - name: Allow essential IPv6 Neighbor Discovery
+      ansible.posix.firewalld:
+        zone: FedoraWsHardened
+        rich_rule: "{{ item }}"
+        state: enabled
+        permanent: true
+        immediate: true
+      loop:
+        - 'rule family="ipv6" icmp-type name="neighbour-solicitation" accept'
+        - 'rule family="ipv6" icmp-type name="neighbour-advertisement" accept'
+        - 'rule family="ipv6" icmp-type name="router-solicitation" accept'
+        - 'rule family="ipv6" icmp-type name="router-advertisement" accept'
+
+- name: Enable automatic security updates
+  block:
+    - name: Install dnf5 automatic plugin
+      ansible.builtin.dnf5:
+        name: dnf5-plugin-automatic
+        state: present
+
+    - name: Configure dnf5-automatic for security updates
+      ansible.builtin.copy:
+        dest: /etc/dnf/automatic.conf
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [commands]
+          apply_updates = yes
+          download_updates = yes
+          upgrade_type = security
+          network_online_timeout = 60
+          random_sleep = 0
+          reboot = never
+
+          [emitters]
+          emit_via = motd
+          emit_no_updates = no
+
+    - name: Create systemd timer override directory
+      ansible.builtin.file:
+        path: /etc/systemd/system/dnf5-automatic.timer.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Override systemd timer to remove built-in random delay
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/dnf5-automatic.timer.d/override.conf
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          [Timer]
+          RandomizedDelaySec=0
+      notify: Reload systemd
+
+    - name: Flush handlers to apply systemd reload immediately
+      ansible.builtin.meta: flush_handlers
+
+    - name: Enable and start dnf5-automatic timer
+      ansible.builtin.systemd:
+        name: dnf5-automatic.timer
+        enabled: true
+        state: started
+        daemon_reload: true
