@@ -170,6 +170,14 @@
     name: "{{ base_podman.packages }}"
     state: present
 
+- name: Suppress podman CLI emulation message
+  ansible.builtin.file:
+    path: /etc/containers/nodocker
+    state: touch
+    mode: '0644'
+    owner: root
+    group: root
+
 - name: Setup flatpak and install apps
   block:
     - name: Add the flathub flatpak repository remote to the user installation
