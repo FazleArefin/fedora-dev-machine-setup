@@ -33,7 +33,6 @@ base_system_tools:
   # - fdupes
   - fuse
   - fuse-libs
-  - zoxide  # a smarter `cd` command
   - gnome-calculator
   - progress
   # - pwgen
@@ -79,7 +78,6 @@ base_developer_tools:
   - entr
   # - expect
   # - filezilla
-  - fzf
   - g++
   - gawk
   - git
