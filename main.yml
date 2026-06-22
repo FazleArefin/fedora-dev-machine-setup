@@ -38,7 +38,7 @@
     - never
     - googlechrome
 
-- name: Install virtualization tools including Docker and KVM
+- name: Install QEMU/KVM virtualization tools
   import_playbook: virtualization.yml
   tags: virtualization
 
