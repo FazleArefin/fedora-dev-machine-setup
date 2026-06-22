@@ -114,7 +114,7 @@ cd fedora-dev-machine-setup
 **Run the following as yourself (the primary user), not as `root`:**
 
 ```bash
-ansible-playbook main.yml -vv -e "local_username=$(id -un)" -K
+ansible-playbook main.yml -vv --ask-become-pass
 # Optional roles (e.g. googlechrome) are skipped by default. Append `--tags never` to install them.
 ```
 
