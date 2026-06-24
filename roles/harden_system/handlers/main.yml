@@ -8,3 +8,8 @@
 - name: Reload systemd
   ansible.builtin.systemd_service:
     daemon_reload: true
+
+- name: Reload firewalld
+  ansible.builtin.systemd_service:
+    name: firewalld
+    state: reloaded
