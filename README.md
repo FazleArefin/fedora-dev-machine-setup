@@ -59,7 +59,7 @@ Summary of packages that get installed and configured based on roles:
     - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
 
-- **role: neovim**
+- **role: neovim** (optional)
   - Install Neovim packages
   - Install [LazyVim](https://www.lazyvim.org) Neovim distribution
     - Open `nvim` from terminal; plugins will install automatically on first launch

@@ -18,7 +18,9 @@
 
 - name: Install and configure Neovim editor
   import_playbook: neovim.yml
-  tags: neovim
+  tags:
+    - never
+    - neovim
 
 - name: Install and configure Visual Studio Code
   import_playbook: vscode.yml
