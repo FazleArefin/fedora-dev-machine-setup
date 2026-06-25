@@ -10,6 +10,7 @@ virtualization_kvm_qemu:
     - quickemu
     - qemu-tools
     - python3-libvirt
+    - python3-lxml
     - guestfs-tools
   systemd_services:
     - libvirtd
