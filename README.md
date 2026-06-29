@@ -138,10 +138,3 @@ Once complete, reboot your laptop for all changes to take effect.
 
 Pull requests are welcome! However, this repo is tailored to my own development needs. For your own workflow, it's probably better to fork it and customize as you like.
 
----
-
-## Donations
-
-If this setup saved you time or effort, feel free to donate—though the repo is entirely free and open, with no strings attached.
-
-Bitcoin (BTC): `bc1qzlhpm94vtk2ht67etdutzcy2g5an5v6g36tp0m`
