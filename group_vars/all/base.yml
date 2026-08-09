@@ -44,6 +44,7 @@ base_system_tools:
   - trash-cli
   - qrencode
   - chromium
+  - flameshot  # screenshot software
   # - blackbox-terminal
   # - syncthing
 
