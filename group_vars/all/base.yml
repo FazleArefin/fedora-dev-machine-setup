@@ -45,6 +45,7 @@ base_system_tools:
   - qrencode
   - chromium
   - flameshot  # screenshot software
+  - binwalk  # firmware analysis tool
   # - blackbox-terminal
   # - syncthing
 
