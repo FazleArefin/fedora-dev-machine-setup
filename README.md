@@ -1,3 +1,5 @@
+
+
 # fedora-dev-machine-setup | Fedora Workstation 44
 
 ## Description
@@ -54,7 +56,7 @@ Summary of packages that get installed and configured based on roles:
 - **role: terminal_customizations**
   - Download and install Nerd Fonts from ryanoasis/nerd-fonts; ideal for terminal and programming editors
   - Copy and enable a sample Alacritty terminal config file
-  - Copy and enable a sample Tmux config file if one doesn't exist
+  - Back up any existing `~/.tmux.conf`, then copy and enable a sample Tmux config file
   - Copy and enable `~/.tmux.conf` with [tmux plugin manager](https://github.com/tmux-plugins/tpm) and several plugins
     - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
@@ -137,4 +139,3 @@ Once complete, reboot your laptop for all changes to take effect.
 ## Pull Requests and Forks
 
 Pull requests are welcome! However, this repo is tailored to my own development needs. For your own workflow, it's probably better to fork it and customize as you like.
-
