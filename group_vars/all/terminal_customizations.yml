@@ -1,28 +1,29 @@
 ---
 
 # TODO: bump up version number as newer versions are made available
-#       from source git repo https://github.com/ryanoasis/nerd-fonts/releases/
-terminal_customizations_nerd_fonts_version: v3.4.0
+#        from source git repo https://github.com/ryanoasis/nerd-fonts/releases/
+terminal_customizations_nerd_fonts_version: v3.5.1
 terminal_customizations_nerd_fonts_base_url: "https://github.com/ryanoasis/nerd-fonts/raw/{{ terminal_customizations_nerd_fonts_version }}/patched-fonts"
 
 # nerd fonts from https://github.com/ryanoasis/nerd-fonts
 terminal_customizations_nerd_fonts:
   # CascadiaCode
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-BoldItalic.ttf"    # don't remove; alacritty config uses this
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Bold.ttf"          # don't remove; alacritty config uses this
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Italic.ttf"     # don't remove; alacritty config uses this
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf"    # don't remove; alacritty config uses this
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-BoldItalic.ttf"  # don't remove; alacritty config uses this
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Bold.ttf"        # don't remove; alacritty config uses this
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Italic.ttf"      # don't remove; alacritty config uses this
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf"     # don't remove; alacritty config uses this
 
   # JetBrainsMono (Ligatures)
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/BoldItalic/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/Bold/JetBrainsMonoNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/Italic/JetBrainsMonoNerdFontMono-Italic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFontMono-Regular.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Bold.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Italic.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Regular.ttf"
+
   # JetBrainsMono (No Ligatures)
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/BoldItalic/JetBrainsMonoNLNerdFontMono-BoldItalic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/Bold/JetBrainsMonoNLNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/Italic/JetBrainsMonoNLNerdFontMono-Italic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/Regular/JetBrainsMonoNLNerdFontMono-Regular.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-BoldItalic.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Bold.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Italic.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Regular.ttf"
 
   # SourceCodePro
   - "{{ terminal_customizations_nerd_fonts_base_url }}/SourceCodePro/SauceCodeProNerdFontMono-BoldItalic.ttf"
@@ -31,10 +32,10 @@ terminal_customizations_nerd_fonts:
   - "{{ terminal_customizations_nerd_fonts_base_url }}/SourceCodePro/SauceCodeProNerdFontMono-Regular.ttf"
 
   # VictorMono
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/Bold-Italic/VictorMonoNerdFontMono-BoldItalic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/Bold/VictorMonoNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/Italic/VictorMonoNerdFontMono-Italic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/Regular/VictorMonoNerdFontMono-Regular.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-BoldItalic.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-Bold.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-Italic.ttf"
+  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-Regular.ttf"
 
 terminal_customizations_tmux_plugin_repo: "https://github.com/tmux-plugins/tpm"
 
