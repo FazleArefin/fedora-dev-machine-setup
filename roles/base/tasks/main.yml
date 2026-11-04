@@ -22,6 +22,7 @@
     name: vm.swappiness
     value: '0'
     state: present
+    sysctl_file: /etc/sysctl.d/99-swappiness.conf
 
 - name: Update all installed packages to latest
   ansible.builtin.dnf:
