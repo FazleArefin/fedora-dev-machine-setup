@@ -31,14 +31,14 @@
 
 - name: Add RPM Fusion Free repository
   block:
-    - name: Import RPM Fusion GPG key from local path
-      ansible.builtin.rpm_key:
-        key: "{{ base_rpmfusion_free_gpg_key_path }}"
-        state: present
-
     - name: Install RPM Fusion Free release package
       ansible.builtin.dnf:
         name: "{{ base_rpmfusion_free_repo_rpm_url }}"
+        state: present
+
+    - name: Import RPM Fusion GPG key from local path
+      ansible.builtin.rpm_key:
+        key: "{{ base_rpmfusion_free_gpg_key_path }}"
         state: present
 
 - name: Install archiving tools
