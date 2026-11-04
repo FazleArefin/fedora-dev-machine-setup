@@ -76,19 +76,19 @@
   become: true
   become_user: "{{ local_username }}"
 
-- name: Setup golang directories and GOPATH
-  become: true
-  become_user: "{{ local_username }}"
-  block:
-    - name: Create directories for golang
-      ansible.builtin.file:
-        path: "/home/{{ local_username }}/{{ item }}"
-        state: directory
-        mode: '0755'
-      loop:
-        - go
-        - go/src
-        - go/bin
+# - name: Setup golang directories and GOPATH
+#   become: true
+#   become_user: "{{ local_username }}"
+#   block:
+#     - name: Create directories for golang
+#       ansible.builtin.file:
+#         path: "/home/{{ local_username }}/{{ item }}"
+#         state: directory
+#         mode: '0755'
+#       loop:
+#         - go
+#         - go/src
+#         - go/bin
 
 - name: Install download tools
   ansible.builtin.dnf:
@@ -143,14 +143,14 @@
   become_user: "{{ local_username }}"
   changed_when: false
 
-- name: Build and install golang binaries
-  ansible.builtin.command: "go install {{ item }}"
-  loop: "{{ base_golang_tools | default([]) }}"
-  become: true
-  become_user: "{{ local_username }}"
-  register: base_go_install_result
-  changed_when: base_go_install_result.rc == 0
-  ignore_errors: true
+# - name: Build and install golang binaries
+#   ansible.builtin.command: "go install {{ item }}"
+#   loop: "{{ base_golang_tools | default([]) }}"
+#   become: true
+#   become_user: "{{ local_username }}"
+#   register: base_go_install_result
+#   changed_when: base_go_install_result.rc == 0
+#   ignore_errors: true
 
 - name: Build and install cargo packages
   community.general.cargo:

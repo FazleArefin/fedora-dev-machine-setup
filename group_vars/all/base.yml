@@ -88,7 +88,7 @@ base_developer_tools:
   # - gitg
   - git-credential-libsecret
   - glow
-  - golang
+  # - golang
   - graphviz # open source graph visualization software
   - httpie
   - inotify-tools
@@ -164,10 +164,10 @@ base_media_tools:
   - totem
   - vlc
 
-base_golang_tools: []
-  # - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
-  # - github.com/wagoodman/dive@latest  # tool for exploring each layer in a docker image
-  # - oss.terrastruct.com/d2@latest  # d2 diagram as code tool
+# base_golang_tools: []
+#   # - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
+#   # - github.com/wagoodman/dive@latest  # tool for exploring each layer in a docker image
+#   # - oss.terrastruct.com/d2@latest  # d2 diagram as code tool
 
 base_cargo_packages:
   - cargo-update  # utility for managing updates of rust binaries installed via cargo

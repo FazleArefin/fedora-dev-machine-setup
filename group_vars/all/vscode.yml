@@ -9,7 +9,7 @@ vscode_extensions:
   - formulahendry.code-runner  # code runner extension
   - donjayamanne.githistory  # git history viewer
   - eamodio.gitlens  # supercharged git capabilities
-  - golang.Go  # golang extension
+  # - golang.Go  # golang extension
   - vincaslt.highlight-matching-tag  # highlight matching tag extension
   - oderwat.indent-rainbow  # indent rainbow extension
   - yzhang.markdown-all-in-one  # all-in-one markdown extension

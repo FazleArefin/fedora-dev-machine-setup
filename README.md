@@ -29,10 +29,9 @@ Summary of packages that get installed and configured based on roles:
   - Install Foliate, an e-book reader
   - Install Obsidian markdown editor
   - Install power management tools like Powertop
-  - Install development tools like android-tools, httpie, golang, poetry, etc.
+  - Install development tools like android-tools, httpie, poetry, etc.
   - Install Podman as the container runtime (rootless, daemonless)
   - Install code formatters and linters like ruff, ansible-lint, etc.
-  - Set up golang directories
   - Install download tools like axel, transmission, wget, aria2
   - Install image, audio, and video tools like VLC, Totem, GIMP, ImageMagick, etc.
   - Option to turn on Night Light for eye comfort (set `base_permanent_night_light.night_light_enabled` to `true` in `group_vars/all/base.yml`)
