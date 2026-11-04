@@ -6,7 +6,7 @@ This repo contains Ansible playbooks to configure your system as a development m
 
 The playbooks have been tested on:
 
-- **Fedora Workstation 44**
+- **Fedora Workstation 45**
 
 ---
 
@@ -59,11 +59,6 @@ Summary of packages that get installed and configured based on roles:
     - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
 
-- **role: neovim** (optional)
-  - Install Neovim packages
-  - Install [LazyVim](https://www.lazyvim.org) Neovim distribution
-    - Open `nvim` from terminal; plugins will install automatically on first launch
-
 - **role: vscode**
   - Add the Visual Studio Code DNF repo
   - Install Visual Studio Code
@@ -87,9 +82,10 @@ Summary of packages that get installed and configured based on roles:
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 
-- **role: googlechrome** (optional)
-  - Add the Google Chrome DNF repo
-  - Install Google Chrome
+- **role: neovim** (optional)
+  - Install Neovim packages
+  - Install [LazyVim](https://www.lazyvim.org) Neovim distribution
+    - Open `nvim` from terminal; plugins will install automatically on first launch
 
 ---
 
@@ -115,7 +111,7 @@ cd fedora-dev-machine-setup
 
 ```bash
 ansible-playbook main.yml -vv --ask-become-pass
-# Optional roles (e.g. googlechrome) are skipped by default. Append `--tags never` to install them.
+# Optional roles (e.g. neovim) are skipped by default. Append `--tags never` to install them.
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.
@@ -137,4 +133,3 @@ Once complete, reboot your laptop for all changes to take effect.
 ## Pull Requests and Forks
 
 Pull requests are welcome! However, this repo is tailored to my own development needs. For your own workflow, it's probably better to fork it and customize as you like.
-

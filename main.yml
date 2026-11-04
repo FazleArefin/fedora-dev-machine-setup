@@ -34,12 +34,6 @@
   import_playbook: security.yml
   tags: security
 
-- name: Install Google Chrome browser
-  import_playbook: googlechrome.yml
-  tags:
-    - never
-    - googlechrome
-
 - name: Install QEMU/KVM virtualization tools
   import_playbook: virtualization.yml
   tags: virtualization
