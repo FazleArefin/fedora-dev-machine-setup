@@ -13,3 +13,8 @@
   ansible.builtin.systemd_service:
     name: firewalld
     state: reloaded
+
+- name: Reload sysctl
+  ansible.builtin.systemd_service:
+    name: systemd-sysctl
+    state: restarted

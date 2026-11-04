@@ -59,6 +59,19 @@
       notify:
         - Restart systemd-resolved
 
+- name: Apply hardened sysctl settings and persist them
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    sysctl_file: "{{ harden_system_sysctl_settings.file }}"
+    state: present
+    reload: false   # skip reloading for every loop; too many reloads
+    ignoreerrors: true   # skip keys not present on this kernel
+  loop: "{{ harden_system_sysctl_settings.parameters | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  notify: Reload sysctl
+
 - name: Create new Firewalld zone with hardened rules
   block:
     - name: Get current default zone (for rollback)
