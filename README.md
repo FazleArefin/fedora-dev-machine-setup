@@ -1,4 +1,4 @@
-# fedora-dev-machine-setup | Fedora Workstation 44
+# fedora-dev-machine-setup | Fedora Workstation 45
 
 ## Description
 
@@ -47,14 +47,14 @@ Summary of packages that get installed and configured based on roles:
     - enable Zsh syntax highlighting, autosuggestions, and completions
     - some other ohmyzsh plugins like git, python, clipboard utls, etc
     - Install ohmyzsh/ohmyzsh and enable bundled plugins
-  - Copy and enable a sample `~/.zshrc` file if one doesn't exist
+  - Copy and overwrite a sample `~/.zshrc` file (existing file is backed up first)
     - Includes a function to stop `ssh-agent` from repeatedly asking for encrypted SSH key passwords in new terminals
     - Adds additional aliases, functions, and variables in `~/.shell_aliases.sh`,`~/.shell_functions.sh`, and `~/.shell_variables.sh` for use in interactive sessions
 
 - **role: terminal_customizations**
   - Download and install Nerd Fonts from ryanoasis/nerd-fonts; ideal for terminal and programming editors
   - Copy and enable a sample Alacritty terminal config file
-  - Copy and enable a sample Tmux config file if one doesn't exist
+  - Copy and overwrite a sample `~/.tmux.conf` file (existing file is backed up first)
   - Copy and enable `~/.tmux.conf` with [tmux plugin manager](https://github.com/tmux-plugins/tpm) and several plugins
     - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
@@ -74,7 +74,7 @@ Summary of packages that get installed and configured based on roles:
   - Install a metadata anonymization toolkit
 
 - **role: security**
-  - Install ClamAV (antivirus) and its GNOME interface. Run scans manually via Nautilus or CLI using `clamscan`; `clamd` is not installed due to high memory usage
+  - Install ClamAV (antivirus) with an optional freshclam update unit; scan manually via CLI using `clamscan`; `clamd` is not installed due to high memory usage
   - Install Firejail for sandboxing applications
 
 - **role: virtualization**
