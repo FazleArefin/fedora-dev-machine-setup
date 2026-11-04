@@ -137,11 +137,11 @@
     - gtk-3.0
     - gtk-4.0
 
-- name: Make poetry create virtualenv dirs inside the project dir itself
-  ansible.builtin.command: "poetry config virtualenvs.in-project true"
-  become: true
-  become_user: "{{ local_username }}"
-  changed_when: false
+# - name: Make poetry create virtualenv dirs inside the project dir itself
+#   ansible.builtin.command: "poetry config virtualenvs.in-project true"
+#   become: true
+#   become_user: "{{ local_username }}"
+#   changed_when: false
 
 # - name: Build and install golang binaries
 #   ansible.builtin.command: "go install {{ item }}"

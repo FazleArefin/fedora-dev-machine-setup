@@ -110,7 +110,7 @@ base_developer_tools:
   # - pcre2-tools  # provides pcre2grep and pcre2test (perl-compatible regex)
   # - perf  # performance monitoring for the Linux kernel
   - pipx
-  - poetry
+  # - poetry
   # - pssh
   - ptpython
   - pv
