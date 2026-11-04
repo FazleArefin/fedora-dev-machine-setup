@@ -28,6 +28,7 @@ Summary of packages that get installed and configured based on roles:
   - Install LibreOffice
   - Install Foliate, an e-book reader
   - Install Obsidian markdown editor
+  - Install Bitwarden password manager
   - Install power management tools like Powertop
   - Install development tools like android-tools, httpie, etc.
   - Install Podman as the container runtime (rootless, daemonless)

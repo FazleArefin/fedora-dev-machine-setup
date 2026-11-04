@@ -186,6 +186,7 @@ base_flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
 base_flatpak_flathub_apps:
   - md.obsidian.Obsidian  # personal knowledge base and note-taking software application that operates on Markdown files
+  - com.bitwarden.desktop  # password manager
 
 base_rpmfusion_free_repo_rpm_url: >-
   https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm
