@@ -5,10 +5,10 @@
     name: "{{ security_packages }}"
     state: present
 
-- name: Ensure clamav-freshclam is enabled on boot
-  ansible.builtin.systemd_service:
-    state: started
-    enabled: true
-    name: clamav-freshclam
+# - name: Ensure clamav-freshclam is enabled on boot
+#   ansible.builtin.systemd_service:
+#     state: started
+#     enabled: true
+#     name: clamav-freshclam
 
 ...
