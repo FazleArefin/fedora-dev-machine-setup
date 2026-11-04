@@ -21,9 +21,9 @@ base_archiving_tools:
   - gzip
 
 base_productivity_tools:
-  - libreoffice
+  - '@libreoffice'
   - foliate
-  - qalculate
+  # - qalculate
 
 base_system_tools:
   - alacritty  # A cross-platform, OpenGL terminal emulator
@@ -34,7 +34,7 @@ base_system_tools:
   - fuse
   - fuse-libs
   - gnome-calculator
-  - progress
+  # - progress
   # - pwgen
   - gnome-tweaks
   - gnome-extensions-app
@@ -75,7 +75,7 @@ base_developer_tools:
   - compiler-rt
   - curl
   - dos2unix
-  - duf  # Disk Usage/Free Utility
+  # - duf  # Disk Usage/Free Utility
   - difftastic  # Structural diff that understands syntax
   - entr
   # - expect
@@ -94,7 +94,7 @@ base_developer_tools:
   - inotify-tools
   - jq
   - llvm
-  - makeself
+  # - makeself
   - meld
   - miller  # `mlr` is for querying, shaping, and reformatting data files in various formats including CSV, TSV, JSON, and JSON Lines
   - moreutils
@@ -112,7 +112,7 @@ base_developer_tools:
   - pipx
   # - poetry
   # - pssh
-  - ptpython
+  # - ptpython
   - pv
   - pylint
   # - python3-demjson  # provides jsonlint-py3 for json lint
@@ -124,7 +124,7 @@ base_developer_tools:
   # - python3-lxml
   - rclone
   # - recode
-  - remmina
+  # - remmina
   - renameutils
   - ripgrep  # launch using rg from the cli
   # - ruby
@@ -141,7 +141,7 @@ base_developer_tools:
   - tmux
   # - python3-tmuxp  # `tmuxp` is a session manager for tmux
   - tree
-  - uget
+  # - uget
   - uv  # An extremely fast Python package and project manager, written in Rust
   - vim
   - wl-clipboard  # Wayland clipboard utilities
