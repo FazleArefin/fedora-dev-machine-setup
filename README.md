@@ -75,7 +75,7 @@ Summary of packages that get installed and configured based on roles:
 
 - **role: security**
   - Install ClamAV (antivirus) with an optional freshclam update unit; scan manually via CLI using `clamscan`; `clamd` is not installed due to high memory usage
-  - Install Firejail for sandboxing applications
+  - Install bubblewrap for sandboxing applications
 
 - **role: virtualization**
   - Install and configure QEMU and KVM with libvirt (only on bare metal, skipped if running in a VM)
