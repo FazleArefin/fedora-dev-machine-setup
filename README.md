@@ -80,6 +80,7 @@ Summary of packages that get installed and configured based on roles:
 
 - **role: virtualization**
   - Install and configure QEMU and KVM with libvirt (only on bare metal, skipped if running in a VM)
+    - add your user to the `libvirt` and `kvm` groups (note: `libvirt` group access is root-equivalent on the host)
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 
