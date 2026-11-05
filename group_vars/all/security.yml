@@ -3,6 +3,6 @@
 security_packages:
   - clamav
   - clamav-freshclam
-  - firejail
+  - bubblewrap
 
 ...
