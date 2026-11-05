@@ -94,8 +94,8 @@ fi
 
 # 🛤️ System Paths
 export PATH=$PATH:$HOME/.cargo/bin        # Rust
-export GOPATH=$HOME/go                    # Go
-export PATH=$PATH:$GOPATH/bin
+# export GOPATH=$HOME/go                    # Go
+# export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.local/bin        # pipx / local binaries
 
 # 🐍 Python Settings
