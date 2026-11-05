@@ -36,13 +36,18 @@
     code --install-extension {{ item }}
   loop: "{{ vscode_extensions }}"
   loop_control:
-    pause: 0.5  # to avoid rate limiting
+    pause: 1  # slow down installs to avoid rate limiting
   become: true
   become_user: "{{ local_username }}"
   register: vscode_install_result
-  changed_when: "'successfully installed' in vscode_install_result.stdout"
+  async: 120
+  poll: 2
+  retries: 5
+  delay: 5
+  until: vscode_install_result is not failed
+  changed_when: "'successfully installed' in vscode_install_result.stdout | default('') | lower"
   failed_when: >
-    vscode_install_result.rc != 0
-    and 'already installed' not in vscode_install_result.stdout.lower()
+    vscode_install_result.rc | default(1) != 0
+    and 'already installed' not in vscode_install_result.stdout | default('') | lower
 
 ...
