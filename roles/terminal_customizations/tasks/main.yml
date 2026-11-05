@@ -19,20 +19,15 @@
         url: "{{ item }}"
         dest: "/home/{{ local_username }}/.local/share/fonts/"
         mode: '0644'
-        timeout: 30  # GitHub raw can be slow; avoid 10s default timeout
+        timeout: 20  # GitHub raw can be slow; avoid 10s default timeout
       register: terminal_customizations_nerd_font_downloads
       retries: 5
-      delay: 10
+      delay: 5
       until: terminal_customizations_nerd_font_downloads is not failed
       loop: "{{ terminal_customizations_nerd_fonts }}"
       loop_control:
-        pause: 0.5  # slow down downloads to avoid server overload
-
-- name: Refresh fonts cache
-  ansible.builtin.command: "fc-cache -fv"
-  become: true
-  become_user: "{{ local_username }}"
-  changed_when: false
+        pause: 1  # slow down downloads to avoid server overload
+      notify: Refresh font cache
 
 - name: Configure Alacritty terminal emulator
   become: true
