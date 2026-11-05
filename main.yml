@@ -30,7 +30,7 @@
   import_playbook: privacy.yml
   tags: privacy
 
-- name: Install security tools including ClamAV and Firejail
+- name: Install security tools such as ClamAV
   import_playbook: security.yml
   tags: security
 
