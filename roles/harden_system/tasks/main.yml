@@ -65,12 +65,11 @@
     value: "{{ item.value }}"
     sysctl_file: "{{ harden_system_sysctl_settings.file }}"
     state: present
-    reload: false   # skip reloading for every loop; too many reloads
+    reload: true
     ignoreerrors: true   # skip keys not present on this kernel
   loop: "{{ harden_system_sysctl_settings.parameters | dict2items }}"
   loop_control:
     label: "{{ item.key }}"
-  notify: Reload sysctl
 
 - name: Create new Firewalld zone with hardened rules
   block:
