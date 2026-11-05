@@ -48,14 +48,14 @@ Summary of packages that get installed and configured based on roles:
     - enable Zsh syntax highlighting, autosuggestions, and completions
     - some other ohmyzsh plugins like git, python, clipboard utls, etc
     - Install ohmyzsh/ohmyzsh and enable bundled plugins
-  - Copy and overwrite a sample `~/.zshrc` file (existing file is backed up first)
+  - Copy and overwrite a sample `~/.zshrc` file (a timestamped backup of the existing file is created if its content differs)
     - Includes a function to stop `ssh-agent` from repeatedly asking for encrypted SSH key passwords in new terminals
     - Adds additional aliases, functions, and variables in `~/.shell_aliases.sh`,`~/.shell_functions.sh`, and `~/.shell_variables.sh` for use in interactive sessions
 
 - **role: terminal_customizations**
   - Download and install Nerd Fonts from ryanoasis/nerd-fonts; ideal for terminal and programming editors
   - Copy and enable a sample Alacritty terminal config file
-  - Copy and overwrite a sample `~/.tmux.conf` file (existing file is backed up first)
+  - Copy and overwrite a sample `~/.tmux.conf` file (a timestamped backup of the existing file is created if its content differs)
   - Copy and enable `~/.tmux.conf` with [tmux plugin manager](https://github.com/tmux-plugins/tpm) and several plugins
     - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
