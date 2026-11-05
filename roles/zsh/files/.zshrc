@@ -78,16 +78,22 @@ SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
     echo "Initialising new SSH agent..."
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    (   umask 077   # create the env file as 0600 from the start
+        /usr/bin/ssh-agent -t 8h | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    )
     echo succeeded
-    chmod 600 "${SSH_ENV}"
+    chmod 600 "${SSH_ENV}"   # safety net for files left over from older runs
     source "${SSH_ENV}" > /dev/null
     /usr/bin/ssh-add
 }
 
 if [[ -f "${SSH_ENV}" ]]; then
     source "${SSH_ENV}" > /dev/null
-    kill -0 $SSH_AGENT_PID 2>/dev/null || start_agent
+    if ! kill -0 $SSH_AGENT_PID 2>/dev/null; then
+        start_agent
+    elif ! /usr/bin/ssh-add -l >/dev/null 2>&1; then
+        /usr/bin/ssh-add   # agent is alive but its keys expired
+    fi
 else
     start_agent
 fi
