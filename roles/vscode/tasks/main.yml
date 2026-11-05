@@ -18,6 +18,19 @@
   ansible.builtin.dnf:
     name: "{{ vscode_package_name }}"
 
+# TODO (workaround, not a permanent fix):
+# On Fedora 45 the system crypto library moved to OpenSSL 4, while VS Code's
+# bundled extension-signing helper (vsce-sign) only looks for libssl.so.3.
+# As a result every extension install fails with
+# "Signature verification failed with 'UnknownError'". Installing the OpenSSL 3
+# compat library (openssl3-libs, pulled in by this provides) restores
+# verification while keeping the system on OpenSSL 4.
+# See: https://computingforgeeks.com/install-visual-studio-code-on-fedora/
+- name: Workaround - install OpenSSL 3 compat library for VS Code extension verification (Fedora 45)
+  ansible.builtin.dnf:
+    name: "libssl.so.3()(64bit)"
+    state: present
+
 - name: Install some popular VSCode extensions
   ansible.builtin.command: >-
     code --install-extension {{ item }}

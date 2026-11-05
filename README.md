@@ -63,6 +63,7 @@ Summary of packages that get installed and configured based on roles:
 - **role: vscode**
   - Add the Visual Studio Code DNF repo
   - Install Visual Studio Code
+  - Work around a Fedora 45 issue where VS Code cannot verify extension signatures unless the OpenSSL 3 compat library (`libssl.so.3`) is installed (workaround, kept until upstream handles OpenSSL 4)
   - Install popular extensions
 
 - **role: privacy**
