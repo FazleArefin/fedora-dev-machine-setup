@@ -19,6 +19,11 @@
         url: "{{ item }}"
         dest: "/home/{{ local_username }}/.local/share/fonts/"
         mode: '0644'
+        timeout: 30  # GitHub raw can be slow; avoid 10s default timeout
+      register: terminal_customizations_nerd_font_downloads
+      retries: 5
+      delay: 10
+      until: terminal_customizations_nerd_font_downloads is not failed
       loop: "{{ terminal_customizations_nerd_fonts }}"
       loop_control:
         pause: 0.5  # slow down downloads to avoid server overload
