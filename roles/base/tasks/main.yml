@@ -31,15 +31,42 @@
 
 - name: Add RPM Fusion Free repository
   block:
-    - name: Install RPM Fusion Free release package
+    - name: Install distribution-gpg-keys (ships the RPM Fusion public keys)
       ansible.builtin.dnf:
-        name: "{{ base_rpmfusion_free_repo_rpm_url }}"
+        name: distribution-gpg-keys
         state: present
 
-    - name: Import RPM Fusion GPG key from local path
+    - name: Import RPM Fusion Free GPG key before installing the release package
       ansible.builtin.rpm_key:
         key: "{{ base_rpmfusion_free_gpg_key_path }}"
         state: present
+
+    - name: Create a temp file for the release package
+      ansible.builtin.tempfile:
+        suffix: .rpm
+      register: base_rpmfusion_free_rpm_tmp
+
+    - name: Download RPM Fusion Free release package
+      ansible.builtin.get_url:
+        url: "{{ base_rpmfusion_free_repo_rpm_url }}"
+        dest: "{{ base_rpmfusion_free_rpm_tmp.path }}"
+        mode: '0600'
+        force: true
+
+    - name: Verify the release package signature (fails on NOKEY or a bad signature)
+      ansible.builtin.command: "rpmkeys --checksig {{ base_rpmfusion_free_rpm_tmp.path }}"
+      changed_when: false
+
+    - name: Install the verified RPM Fusion Free release package
+      ansible.builtin.dnf:
+        name: "{{ base_rpmfusion_free_rpm_tmp.path }}"
+        state: present
+  always:
+    - name: Remove the temp file
+      ansible.builtin.file:
+        path: "{{ base_rpmfusion_free_rpm_tmp.path }}"
+        state: absent
+      when: base_rpmfusion_free_rpm_tmp.path is defined
 
 - name: Install archiving tools
   ansible.builtin.dnf:
