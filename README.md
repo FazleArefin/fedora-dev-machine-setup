@@ -19,6 +19,7 @@ Summary of packages that get installed and configured based on roles:
   - Disable Link-Local Multicast Name Resolution (LLMNR) listening on 0.0.0.0
   - Create and activate a new `firewalld` zone `FedoraWsHardened`, which DROPS all incoming requests
   - Enable automatic security updates via `dnf5-plugin-automatic`
+  - Set fallback DNS resolvers (Cloudflare, Quad9) for when a network provides none
 
 - **role: base**
   - Enable the `firewalld` firewall
