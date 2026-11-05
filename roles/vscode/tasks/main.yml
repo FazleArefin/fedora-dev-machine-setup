@@ -9,8 +9,10 @@
     name: code
     description: Visual Studio Code
     baseurl: "{{ vscode_yum_repository_url }}"
+    enabled: true
+    gpgkey: "{{ vscode_rpm_key_url }}"
     gpgcheck: true
-    file: "{{ vscode_package_name }}"
+    file: vscode
 
 - name: Install latest visual studio code
   ansible.builtin.dnf:
