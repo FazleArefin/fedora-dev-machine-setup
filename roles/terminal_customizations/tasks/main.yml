@@ -48,11 +48,12 @@
         clone: true
         version: master
 
-    - name: Copy sample alacritty config file
+    - name: Copy sample alacritty config file (timestamped backup if content changes)
       ansible.builtin.copy:
         src: alacritty.toml
         dest: "/home/{{ local_username }}/.config/alacritty/alacritty.toml"
         mode: '0644'
+        backup: true
 
 - name: Configure tmux with plugins
   become: true
@@ -65,24 +66,13 @@
         clone: true
         version: master
 
-    - name: Check if .tmux.conf exists in user's home dir
-      ansible.builtin.stat:
-        path: "/home/{{ local_username }}/.tmux.conf"
-      register: terminal_customizations_dottmuxdotconf
-
-    - name: Backup .tmux.conf if it exists
-      ansible.builtin.copy:
-        src: "/home/{{ local_username }}/.tmux.conf"
-        dest: "/home/{{ local_username }}/.tmux.conf.orig"
-        mode: '0644'
-      when: terminal_customizations_dottmuxdotconf.stat.exists
-
-    - name: Copy the sample .tmux.conf file
+    - name: Copy the sample .tmux.conf file (timestamped backup if content changes)
       ansible.builtin.copy:
         src: .tmux.conf
         dest: "/home/{{ local_username }}/.tmux.conf"
         force: true
         mode: '0644'
+        backup: true
 
     - name: Install all required tmux plugins
       ansible.builtin.command: "/home/{{ local_username }}/.tmux/plugins/tpm/scripts/install_plugins.sh"
