@@ -16,7 +16,7 @@
   block:
     - name: Download nerd fonts to local fonts folder
       ansible.builtin.get_url:
-        url: "{{ item.url }}"
+        url: "{{ terminal_customizations_nerd_fonts.base_url }}/{{ item.path }}"
         dest: "/home/{{ local_username }}/.local/share/fonts/"
         mode: '0644'
         checksum: "sha256:{{ item.sha256 }}"
@@ -25,7 +25,7 @@
       retries: 5
       delay: 5
       until: terminal_customizations_nerd_font_downloads is not failed
-      loop: "{{ terminal_customizations_nerd_fonts }}"
+      loop: "{{ terminal_customizations_nerd_fonts.downloads }}"
       loop_control:
         pause: 1  # slow down downloads to avoid server overload
       notify: Refresh font cache
@@ -44,7 +44,7 @@
 
     - name: Clone alacritty themes git repo
       ansible.builtin.git:
-        repo: "{{ terminal_customizations_alacritty_themes_repo }}"
+        repo: "{{ terminal_customizations_alacritty_themes.repo }}"
         dest: "/home/{{ local_username }}/.config/alacritty/themes"
         clone: true
         version: master
@@ -62,10 +62,10 @@
   block:
     - name: Git clone tmux plugin repo
       ansible.builtin.git:
-        repo: "{{ terminal_customizations_tmux_plugin_repo }}"
+        repo: "{{ terminal_customizations_tmux_plugin.repo }}"
         dest: "/home/{{ local_username }}/.tmux/plugins/tpm"
         clone: true
-        version: master
+        version: "{{ terminal_customizations_tmux_plugin.version }}"
 
     - name: Copy the sample .tmux.conf file (timestamped backup if content changes)
       ansible.builtin.copy:
