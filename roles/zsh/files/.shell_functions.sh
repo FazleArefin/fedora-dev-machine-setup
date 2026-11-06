@@ -172,6 +172,6 @@ function update_cargo_packages {
     cargo install --list |
         awk '/^[^[:space:]]+ v[0-9.]+:/ {print $1}' |
         while IFS= read -r pkg; do
-            cargo install "$pkg"
+            cargo install --locked "$pkg"
         done
 }
