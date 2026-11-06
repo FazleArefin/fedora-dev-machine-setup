@@ -114,6 +114,14 @@
         - 'rule family="ipv6" icmp-type name="router-solicitation" accept'
         - 'rule family="ipv6" icmp-type name="router-advertisement" accept'
 
+    - name: Ensure inbound SSH matches harden_system_firewall_allow_ssh in the hardened firewall zone
+      ansible.posix.firewalld:
+        zone: FedoraWsHardened
+        service: ssh
+        state: "{{ 'enabled' if (harden_system_firewall_allow_ssh | bool) else 'disabled' }}"
+        permanent: true
+        immediate: true
+
   rescue:
     - name: Restore original default zone
       ansible.builtin.command: >

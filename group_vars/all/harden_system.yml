@@ -53,3 +53,7 @@ harden_system_sysctl_settings:
 
     # Disable Multipath TCP if unused
     net.mptcp.enabled: "0"
+
+
+# Allow inbound SSH to the hardened host. Defaults to false (drop all inbound).
+harden_system_firewall_allow_ssh: false
