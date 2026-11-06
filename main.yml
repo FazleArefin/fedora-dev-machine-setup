@@ -30,15 +30,9 @@
   import_playbook: privacy.yml
   tags: privacy
 
-- name: Install security tools including ClamAV and Firejail
+- name: Install security tools such as ClamAV
   import_playbook: security.yml
   tags: security
-
-- name: Install Google Chrome browser
-  import_playbook: googlechrome.yml
-  tags:
-    - never
-    - googlechrome
 
 - name: Install QEMU/KVM virtualization tools
   import_playbook: virtualization.yml

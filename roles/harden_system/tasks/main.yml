@@ -59,6 +59,18 @@
       notify:
         - Restart systemd-resolved
 
+- name: Apply hardened sysctl settings and persist them
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    sysctl_file: "{{ harden_system_sysctl_settings.file }}"
+    state: present
+    reload: true
+    ignoreerrors: true   # skip keys not present on this kernel
+  loop: "{{ harden_system_sysctl_settings.parameters | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+
 - name: Create new Firewalld zone with hardened rules
   block:
     - name: Get current default zone (for rollback)
@@ -101,6 +113,14 @@
         - 'rule family="ipv6" icmp-type name="neighbour-advertisement" accept'
         - 'rule family="ipv6" icmp-type name="router-solicitation" accept'
         - 'rule family="ipv6" icmp-type name="router-advertisement" accept'
+
+    - name: Ensure inbound SSH matches harden_system_firewall_allow_ssh in the hardened firewall zone
+      ansible.posix.firewalld:
+        zone: FedoraWsHardened
+        service: ssh
+        state: "{{ 'enabled' if (harden_system_firewall_allow_ssh | bool) else 'disabled' }}"
+        permanent: true
+        immediate: true
 
   rescue:
     - name: Restore original default zone

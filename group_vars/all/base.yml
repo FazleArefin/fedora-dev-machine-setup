@@ -21,9 +21,9 @@ base_archiving_tools:
   - gzip
 
 base_productivity_tools:
-  - libreoffice
+  - '@libreoffice'
   - foliate
-  - qalculate
+  # - qalculate
 
 base_system_tools:
   - alacritty  # A cross-platform, OpenGL terminal emulator
@@ -34,10 +34,9 @@ base_system_tools:
   - fuse
   - fuse-libs
   - gnome-calculator
-  - progress
+  # - progress
   # - pwgen
   - gnome-tweaks
-  - gnome-extensions-app
   - gnome-shell-extension-dash-to-dock
   - lsd  # the next gen `ls` command
   - strace
@@ -75,7 +74,7 @@ base_developer_tools:
   - compiler-rt
   - curl
   - dos2unix
-  - duf  # Disk Usage/Free Utility
+  # - duf  # Disk Usage/Free Utility
   - difftastic  # Structural diff that understands syntax
   - entr
   # - expect
@@ -88,13 +87,13 @@ base_developer_tools:
   # - gitg
   - git-credential-libsecret
   - glow
-  - golang
+  # - golang
   - graphviz # open source graph visualization software
   - httpie
   - inotify-tools
   - jq
   - llvm
-  - makeself
+  # - makeself
   - meld
   - miller  # `mlr` is for querying, shaping, and reformatting data files in various formats including CSV, TSV, JSON, and JSON Lines
   - moreutils
@@ -110,9 +109,9 @@ base_developer_tools:
   # - pcre2-tools  # provides pcre2grep and pcre2test (perl-compatible regex)
   # - perf  # performance monitoring for the Linux kernel
   - pipx
-  - poetry
+  # - poetry
   # - pssh
-  - ptpython
+  # - ptpython
   - pv
   - pylint
   # - python3-demjson  # provides jsonlint-py3 for json lint
@@ -124,7 +123,7 @@ base_developer_tools:
   # - python3-lxml
   - rclone
   # - recode
-  - remmina
+  # - remmina
   - renameutils
   - ripgrep  # launch using rg from the cli
   # - ruby
@@ -141,7 +140,7 @@ base_developer_tools:
   - tmux
   # - python3-tmuxp  # `tmuxp` is a session manager for tmux
   - tree
-  - uget
+  # - uget
   - uv  # An extremely fast Python package and project manager, written in Rust
   - vim
   - wl-clipboard  # Wayland clipboard utilities
@@ -164,13 +163,12 @@ base_media_tools:
   - totem
   - vlc
 
-base_golang_tools: []
-  # - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
-  # - github.com/wagoodman/dive@latest  # tool for exploring each layer in a docker image
-  # - oss.terrastruct.com/d2@latest  # d2 diagram as code tool
+# base_golang_tools: []
+#   # - github.com/jesseduffield/lazygit@latest  # simple terminal UI for git commands
+#   # - github.com/wagoodman/dive@latest  # tool for exploring each layer in a docker image
+#   # - oss.terrastruct.com/d2@latest  # d2 diagram as code tool
 
 base_cargo_packages:
-  - cargo-update  # utility for managing updates of rust binaries installed via cargo
   - tlrc  # official tldr rust client
   - xh  # drop-in replacement for httpie/http
   - television  # portable and hackable fuzzy finder
@@ -186,6 +184,7 @@ base_flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
 
 base_flatpak_flathub_apps:
   - md.obsidian.Obsidian  # personal knowledge base and note-taking software application that operates on Markdown files
+  - com.bitwarden.desktop  # password manager
 
 base_rpmfusion_free_repo_rpm_url: >-
   https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts['distribution_major_version'] }}.noarch.rpm

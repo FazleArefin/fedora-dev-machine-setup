@@ -1,4 +1,4 @@
-# fedora-dev-machine-setup | Fedora Workstation 44
+# fedora-dev-machine-setup | Fedora Workstation 45
 
 ## Description
 
@@ -6,7 +6,7 @@ This repo contains Ansible playbooks to configure your system as a development m
 
 The playbooks have been tested on:
 
-- **Fedora Workstation 44**
+- **Fedora Workstation 45**
 
 ---
 
@@ -17,8 +17,9 @@ Summary of packages that get installed and configured based on roles:
 - **role: harden_system**
   - Remove the `passim` package and stop the `passimd` service from listening on 0.0.0.0
   - Disable Link-Local Multicast Name Resolution (LLMNR) listening on 0.0.0.0
-  - Create and activate a new `firewalld` zone `FedoraWsHardened`, which DROPS all incoming requests
+  - Create and activate a new `firewalld` zone `FedoraWsHardened`, which DROPS all incoming requests (SSH stays off unless `harden_system_firewall_allow_ssh` is set to `true`)
   - Enable automatic security updates via `dnf5-plugin-automatic`
+  - Set fallback DNS resolvers (Cloudflare, Quad9) for when a network provides none
 
 - **role: base**
   - Enable the `firewalld` firewall
@@ -28,11 +29,11 @@ Summary of packages that get installed and configured based on roles:
   - Install LibreOffice
   - Install Foliate, an e-book reader
   - Install Obsidian markdown editor
+  - Install Bitwarden password manager
   - Install power management tools like Powertop
-  - Install development tools like android-tools, httpie, golang, poetry, etc.
+  - Install development tools like android-tools, httpie, etc.
   - Install Podman as the container runtime (rootless, daemonless)
   - Install code formatters and linters like ruff, ansible-lint, etc.
-  - Set up golang directories
   - Install download tools like axel, transmission, wget, aria2
   - Install image, audio, and video tools like VLC, Totem, GIMP, ImageMagick, etc.
   - Option to turn on Night Light for eye comfort (set `base_permanent_night_light.night_light_enabled` to `true` in `group_vars/all/base.yml`)
@@ -47,26 +48,22 @@ Summary of packages that get installed and configured based on roles:
     - enable Zsh syntax highlighting, autosuggestions, and completions
     - some other ohmyzsh plugins like git, python, clipboard utls, etc
     - Install ohmyzsh/ohmyzsh and enable bundled plugins
-  - Copy and enable a sample `~/.zshrc` file if one doesn't exist
+  - Copy and overwrite a sample `~/.zshrc` file (a timestamped backup of the existing file is created if its content differs)
     - Includes a function to stop `ssh-agent` from repeatedly asking for encrypted SSH key passwords in new terminals
     - Adds additional aliases, functions, and variables in `~/.shell_aliases.sh`,`~/.shell_functions.sh`, and `~/.shell_variables.sh` for use in interactive sessions
 
 - **role: terminal_customizations**
   - Download and install Nerd Fonts from ryanoasis/nerd-fonts; ideal for terminal and programming editors
   - Copy and enable a sample Alacritty terminal config file
-  - Copy and enable a sample Tmux config file if one doesn't exist
+  - Copy and overwrite a sample `~/.tmux.conf` file (a timestamped backup of the existing file is created if its content differs)
   - Copy and enable `~/.tmux.conf` with [tmux plugin manager](https://github.com/tmux-plugins/tpm) and several plugins
     - Open Alacritty and run the `tmux` command, or enable a custom command option in Alacritty
     - Edit `~/.tmux.conf` as needed
 
-- **role: neovim** (optional)
-  - Install Neovim packages
-  - Install [LazyVim](https://www.lazyvim.org) Neovim distribution
-    - Open `nvim` from terminal; plugins will install automatically on first launch
-
 - **role: vscode**
   - Add the Visual Studio Code DNF repo
   - Install Visual Studio Code
+  - Work around a Fedora 45 issue where VS Code cannot verify extension signatures unless the OpenSSL 3 compat library (`libssl.so.3`) is installed (workaround, kept until upstream handles OpenSSL 4)
   - Install popular extensions
 
 - **role: privacy**
@@ -79,17 +76,19 @@ Summary of packages that get installed and configured based on roles:
   - Install a metadata anonymization toolkit
 
 - **role: security**
-  - Install ClamAV (antivirus) and its GNOME interface. Run scans manually via Nautilus or CLI using `clamscan`; `clamd` is not installed due to high memory usage
-  - Install Firejail for sandboxing applications
+  - Install ClamAV (antivirus) with an optional freshclam update unit; scan manually via CLI using `clamscan`; `clamd` is not installed due to high memory usage
+  - Install bubblewrap for sandboxing applications
 
 - **role: virtualization**
   - Install and configure QEMU and KVM with libvirt (only on bare metal, skipped if running in a VM)
+    - add your user to the `libvirt` and `kvm` groups (note: `libvirt` group access is root-equivalent on the host)
     - set up an isolated network `virbr69` `10.69.69.0/24` in addition to the default NAT network
     - set up additional storage pools `isos` and `templates` with correct SELinux contexts
 
-- **role: googlechrome** (optional)
-  - Add the Google Chrome DNF repo
-  - Install Google Chrome
+- **role: neovim** (optional)
+  - Install Neovim packages
+  - Install [LazyVim](https://www.lazyvim.org) Neovim distribution
+    - Open `nvim` from terminal; plugins will install automatically on first launch
 
 ---
 
@@ -115,7 +114,7 @@ cd fedora-dev-machine-setup
 
 ```bash
 ansible-playbook main.yml -vv --ask-become-pass
-# Optional roles (e.g. googlechrome) are skipped by default. Append `--tags never` to install them.
+# Optional roles (e.g. neovim) are skipped by default. Append `--tags never` to install them.
 ```
 
 Enter your sudo password when prompted for `BECOME password:`.
@@ -137,4 +136,3 @@ Once complete, reboot your laptop for all changes to take effect.
 ## Pull Requests and Forks
 
 Pull requests are welcome! However, this repo is tailored to my own development needs. For your own workflow, it's probably better to fork it and customize as you like.
-

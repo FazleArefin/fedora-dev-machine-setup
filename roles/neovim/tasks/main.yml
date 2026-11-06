@@ -11,6 +11,6 @@
   block:
     - name: Clone LazyVim starter git repo
       ansible.builtin.git:
-        repo: "{{ neovim_lazyvim_starter_url }}"
+        repo: "{{ neovim_lazyvim_starter.url }}"
         dest: "/home/{{ local_username }}/.config/nvim"
-        version: main
+        version: "{{ neovim_lazyvim_starter.version }}"

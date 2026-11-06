@@ -16,18 +16,19 @@
   block:
     - name: Download nerd fonts to local fonts folder
       ansible.builtin.get_url:
-        url: "{{ item }}"
+        url: "{{ terminal_customizations_nerd_fonts.base_url }}/{{ item.path }}"
         dest: "/home/{{ local_username }}/.local/share/fonts/"
         mode: '0644'
-      loop: "{{ terminal_customizations_nerd_fonts }}"
+        checksum: "sha256:{{ item.sha256 }}"
+        timeout: 20  # GitHub raw can be slow; avoid 10s default timeout
+      register: terminal_customizations_nerd_font_downloads
+      retries: 5
+      delay: 5
+      until: terminal_customizations_nerd_font_downloads is not failed
+      loop: "{{ terminal_customizations_nerd_fonts.downloads }}"
       loop_control:
-        pause: 0.5  # slow down downloads to avoid server overload
-
-- name: Refresh fonts cache
-  ansible.builtin.command: "fc-cache -fv"
-  become: true
-  become_user: "{{ local_username }}"
-  changed_when: false
+        pause: 1  # slow down downloads to avoid server overload
+      notify: Refresh font cache
 
 - name: Configure Alacritty terminal emulator
   become: true
@@ -43,16 +44,17 @@
 
     - name: Clone alacritty themes git repo
       ansible.builtin.git:
-        repo: "{{ terminal_customizations_alacritty_themes_repo }}"
+        repo: "{{ terminal_customizations_alacritty_themes.repo }}"
         dest: "/home/{{ local_username }}/.config/alacritty/themes"
         clone: true
         version: master
 
-    - name: Copy sample alacritty config file
+    - name: Copy sample alacritty config file (timestamped backup if content changes)
       ansible.builtin.copy:
         src: alacritty.toml
         dest: "/home/{{ local_username }}/.config/alacritty/alacritty.toml"
         mode: '0644'
+        backup: true
 
 - name: Configure tmux with plugins
   become: true
@@ -60,29 +62,18 @@
   block:
     - name: Git clone tmux plugin repo
       ansible.builtin.git:
-        repo: "{{ terminal_customizations_tmux_plugin_repo }}"
+        repo: "{{ terminal_customizations_tmux_plugin.repo }}"
         dest: "/home/{{ local_username }}/.tmux/plugins/tpm"
         clone: true
-        version: master
+        version: "{{ terminal_customizations_tmux_plugin.version }}"
 
-    - name: Check if .tmux.conf exists in user's home dir
-      ansible.builtin.stat:
-        path: "/home/{{ local_username }}/.tmux.conf"
-      register: terminal_customizations_dottmuxdotconf
-
-    - name: Backup .tmux.conf if it exists
-      ansible.builtin.copy:
-        src: "/home/{{ local_username }}/.tmux.conf"
-        dest: "/home/{{ local_username }}/.tmux.conf.orig"
-        mode: '0644'
-      when: terminal_customizations_dottmuxdotconf.stat.exists
-
-    - name: Copy the sample .tmux.conf file
+    - name: Copy the sample .tmux.conf file (timestamped backup if content changes)
       ansible.builtin.copy:
         src: .tmux.conf
         dest: "/home/{{ local_username }}/.tmux.conf"
         force: true
         mode: '0644'
+        backup: true
 
     - name: Install all required tmux plugins
       ansible.builtin.command: "/home/{{ local_username }}/.tmux/plugins/tpm/scripts/install_plugins.sh"

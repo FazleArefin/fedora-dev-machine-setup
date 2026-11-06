@@ -1,6 +1,0 @@
----
-
-- name: Install Google Chrome browser
-  hosts: localhost
-  roles:
-    - googlechrome

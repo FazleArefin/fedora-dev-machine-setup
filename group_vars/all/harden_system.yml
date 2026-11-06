@@ -2,3 +2,58 @@
 
 harden_system_redundant_packages:
   - passim
+
+harden_system_sysctl_settings:
+  file: /etc/sysctl.d/99-hardening.conf
+  parameters:
+    # Kernel information protection
+    kernel.kptr_restrict: "2"
+    kernel.dmesg_restrict: "1"
+    kernel.yama.ptrace_scope: "1"
+
+    # Kernel attack surface reduction
+    kernel.kexec_load_disabled: "1"
+    dev.tty.ldisc_autoload: "0"
+
+    # BPF hardening
+    kernel.unprivileged_bpf_disabled: "1"
+    net.core.bpf_jit_harden: "2"
+
+    # ASLR hardening (values valid for x86_64)
+    vm.mmap_rnd_bits: "32"
+    vm.mmap_rnd_compat_bits: "16"
+
+    # Privileged process protection
+    fs.suid_dumpable: "0"
+
+    # Filesystem protections
+    fs.protected_fifos: "2"
+    fs.protected_regular: "2"
+
+    # Network hardening - IPv4
+    net.ipv4.conf.all.accept_redirects: "0"
+    net.ipv4.conf.default.accept_redirects: "0"
+    net.ipv4.conf.all.secure_redirects: "0"
+    net.ipv4.conf.default.secure_redirects: "0"
+    net.ipv4.conf.all.send_redirects: "0"
+    net.ipv4.conf.default.send_redirects: "0"
+    net.ipv4.conf.all.accept_source_route: "0"
+    net.ipv4.conf.default.accept_source_route: "0"
+    net.ipv4.conf.all.rp_filter: "2"
+    net.ipv4.conf.default.rp_filter: "2"
+
+    # Network hardening - IPv6
+    net.ipv6.conf.all.accept_redirects: "0"
+    net.ipv6.conf.default.accept_redirects: "0"
+    net.ipv6.conf.all.accept_source_route: "-1"
+    net.ipv6.conf.default.accept_source_route: "-1"
+
+    # TCP hardening
+    net.ipv4.tcp_rfc1337: "1"
+
+    # Disable Multipath TCP if unused
+    net.mptcp.enabled: "0"
+
+
+# Allow inbound SSH to the hardened host. Defaults to false (drop all inbound).
+harden_system_firewall_allow_ssh: false

@@ -5,7 +5,7 @@ zsh_packages:
   - fzf
   - zoxide
 
-zsh_zinit_git_repo: "https://github.com/zdharma-continuum/zinit.git"
-zsh_zinit_install_path: "~/.local/share/zinit/zinit.git"
-
-...
+zsh_zinit:
+  repo: "https://github.com/zdharma-continuum/zinit.git"
+  install_path: "~/.local/share/zinit/zinit.git"
+  version: v3.17.1  # TODO (maintainer review): bump to latest tag: https://github.com/zdharma-continuum/zinit/tags

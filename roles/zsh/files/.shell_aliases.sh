@@ -14,7 +14,7 @@ alias clipboard='xsel -ib || xclip -selection clipboard'
 
 # aliases to send traffic through a man-in-the-middle proxy or the tor network
 alias proxy_on='export http_proxy=http://localhost:8080; export https_proxy=http://localhost:8080'
-alias proxy_tor_on='export http_proxy=socks5://localhost:9050; export https_proxy=socks5://localhost:9050'
+alias proxy_tor_on='export http_proxy=socks5h://localhost:9050; export https_proxy=socks5h://localhost:9050'
 alias proxy_status="env | grep -i 'http_proxy\|https_proxy'"
 alias proxy_off='unset http_proxy; unset https_proxy'
 

@@ -1,44 +1,57 @@
 ---
 
-# TODO: bump up version number as newer versions are made available
-#        from source git repo https://github.com/ryanoasis/nerd-fonts/releases/
-terminal_customizations_nerd_fonts_version: v3.5.1
-terminal_customizations_nerd_fonts_base_url: "https://github.com/ryanoasis/nerd-fonts/raw/{{ terminal_customizations_nerd_fonts_version }}/patched-fonts"
-
-# nerd fonts from https://github.com/ryanoasis/nerd-fonts
 terminal_customizations_nerd_fonts:
-  # CascadiaCode
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-BoldItalic.ttf"  # don't remove; alacritty config uses this
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Bold.ttf"        # don't remove; alacritty config uses this
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Italic.ttf"      # don't remove; alacritty config uses this
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf"     # don't remove; alacritty config uses this
+  version: v3.5.1  # TODO (maintainer review): bump to latest tag: https://github.com/ryanoasis/nerd-fonts/tags
+  base_url: "https://github.com/ryanoasis/nerd-fonts/raw/{{ terminal_customizations_nerd_fonts.version }}/patched-fonts"
+  downloads:
+    - path: "CascadiaCode/CaskaydiaCoveNerdFontMono-BoldItalic.ttf"
+      sha256: 4652b0cf7c7fdd8b8200d9bf54847c31c560652fc95af46ede697fe65e79a629
+    - path: "CascadiaCode/CaskaydiaCoveNerdFontMono-Bold.ttf"
+      sha256: fadc873712c25c12f1135709a6675f3a929bd624ddb77aecec3adb8db070592c
+    - path: "CascadiaCode/CaskaydiaCoveNerdFontMono-Italic.ttf"
+      sha256: 6d7a0d3eaa4d1c54597f04a560ed516e3cbdbc3e02afa63390eb146875d9979e
+    - path: "CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf"
+      sha256: 4e1e371b188bca589ec1ee7df494ca7bbb187c1c38228c059e5705f4029a9dc0
+    - path: "JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
+      sha256: 9dba502e00e35209f6ed2a151c7376c051657b067cdebbc6e52d06cb9002cf31
+    - path: "JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Bold.ttf"
+      sha256: bfcf9a917276ffc058867d87cbc8a5b2f1ab0f4b710e9170dc02763ccb80bd4b
+    - path: "JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Italic.ttf"
+      sha256: 31efd6ead98746f5b0afa1ee6dba60267ad48db36428360bee327bec10621f97
+    - path: "JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Regular.ttf"
+      sha256: f2a5ea6cfab397445ffab00c0370927b66d61e560a05db5db271b42006381c1a
+    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-BoldItalic.ttf"
+      sha256: 28ce03bcaf808f7fa64dcce6facb00319083bdb04cc4f61d41b9f6ad8f20c3e8
+    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Bold.ttf"
+      sha256: f799fc4b215c7b7254bf6cee51c0bce122ac684b53b46fd3cb83d408a0ccf385
+    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Italic.ttf"
+      sha256: 336a3cef8770dab01c0fc9c6bb0c0473bfa82f90a4033fde2cc52d8aa410528c
+    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Regular.ttf"
+      sha256: d9a80146bbf2ff23b187316a3e82ee2a2ceab8220267fe09ac150ca46ab2c3bd
+    - path: "SourceCodePro/SauceCodeProNerdFontMono-BoldItalic.ttf"
+      sha256: bc723ce781926ee93fbfb7585bd13e151f755ee2cdc08310e0e3200a753db8f3
+    - path: "SourceCodePro/SauceCodeProNerdFontMono-Bold.ttf"
+      sha256: fedd1dcdfc4228621075dc8a61190474aace7617aff61d1faca877d340a40ff6
+    - path: "SourceCodePro/SauceCodeProNerdFontMono-Italic.ttf"
+      sha256: a7f108988ed9c38001ba6e2554c537744d75ed326b7a64be1eacc0cb695969f2
+    - path: "SourceCodePro/SauceCodeProNerdFontMono-Regular.ttf"
+      sha256: cbfe6a91123b9d78a1b593cb2efa10a806a704490e3cea6b894078b86d67c0b1
+    - path: "VictorMono/VictorMonoNerdFontMono-BoldItalic.ttf"
+      sha256: e53d7f57877655ea017e3e3fa0ffe7069e8fb2969b0d5e2999a351816ece0880
+    - path: "VictorMono/VictorMonoNerdFontMono-Bold.ttf"
+      sha256: 1be17391d3e88e8c4cac97eedd6c053e551f076934a7b87ae04392549ea53681
+    - path: "VictorMono/VictorMonoNerdFontMono-Italic.ttf"
+      sha256: f56aaa48a3f601b2fc7353e123d730d4b7bed6fc5f419ce930ee7f626b900ade
+    - path: "VictorMono/VictorMonoNerdFontMono-Regular.ttf"
+      sha256: 9e43726e7c3ff61785a05a7f0691dde1a361cafaab849ae28467f84eb42ad7d1
 
-  # JetBrainsMono (Ligatures)
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Italic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Regular.ttf"
+terminal_customizations_tmux_plugin:
+  repo: "https://github.com/tmux-plugins/tpm"
+  version: v3.1.0  # TODO (maintainer review): bump to latest tag: https://github.com/tmux-plugins/tpm/tags
 
-  # JetBrainsMono (No Ligatures)
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-BoldItalic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Italic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Regular.ttf"
-
-  # SourceCodePro
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/SourceCodePro/SauceCodeProNerdFontMono-BoldItalic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/SourceCodePro/SauceCodeProNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/SourceCodePro/SauceCodeProNerdFontMono-Italic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/SourceCodePro/SauceCodeProNerdFontMono-Regular.ttf"
-
-  # VictorMono
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-BoldItalic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-Bold.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-Italic.ttf"
-  - "{{ terminal_customizations_nerd_fonts_base_url }}/VictorMono/VictorMonoNerdFontMono-Regular.ttf"
-
-terminal_customizations_tmux_plugin_repo: "https://github.com/tmux-plugins/tpm"
-
-terminal_customizations_alacritty_themes_repo: "https://github.com/alacritty/alacritty-theme"
+terminal_customizations_alacritty_themes:
+  repo: "https://github.com/alacritty/alacritty-theme"
 
 ...
+
+

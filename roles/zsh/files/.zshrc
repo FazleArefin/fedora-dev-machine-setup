@@ -73,29 +73,13 @@ zinit light sindresorhus/pure
 # zinit ice pick"spaceship.zsh"; zinit light spaceship-prompt/spaceship-prompt
 
 # 🔑 SSH-Agent Fix
-[ -d "$HOME/.ssh" ] || mkdir -p -m 700 "$HOME/.ssh"
-SSH_ENV="$HOME/.ssh/environment"
-
-function start_agent {
-    echo "Initialising new SSH agent..."
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    echo succeeded
-    chmod 600 "${SSH_ENV}"
-    source "${SSH_ENV}" > /dev/null
-    /usr/bin/ssh-add
-}
-
-if [[ -f "${SSH_ENV}" ]]; then
-    source "${SSH_ENV}" > /dev/null
-    kill -0 $SSH_AGENT_PID 2>/dev/null || start_agent
-else
-    start_agent
-fi
+zstyle :omz:plugins:ssh-agent lifetime 8h
+zinit snippet OMZP::ssh-agent
 
 # 🛤️ System Paths
 export PATH=$PATH:$HOME/.cargo/bin        # Rust
-export GOPATH=$HOME/go                    # Go
-export PATH=$PATH:$GOPATH/bin
+# export GOPATH=$HOME/go                    # Go
+# export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.local/bin        # pipx / local binaries
 
 # 🐍 Python Settings

@@ -2,7 +2,7 @@
 
 virtualization_kvm_qemu:
   package_groups:
-    - '@Virtualization'
+    - '@virtualization'
   packages:
     - virt-manager
     - edk2-ovmf
