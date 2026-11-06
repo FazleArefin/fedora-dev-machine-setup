@@ -16,9 +16,10 @@
   block:
     - name: Download nerd fonts to local fonts folder
       ansible.builtin.get_url:
-        url: "{{ item }}"
+        url: "{{ item.url }}"
         dest: "/home/{{ local_username }}/.local/share/fonts/"
         mode: '0644'
+        checksum: "sha256:{{ item.sha256 }}"
         timeout: 20  # GitHub raw can be slow; avoid 10s default timeout
       register: terminal_customizations_nerd_font_downloads
       retries: 5
