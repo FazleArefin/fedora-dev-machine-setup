@@ -73,30 +73,8 @@ zinit light sindresorhus/pure
 # zinit ice pick"spaceship.zsh"; zinit light spaceship-prompt/spaceship-prompt
 
 # 🔑 SSH-Agent Fix
-[ -d "$HOME/.ssh" ] || mkdir -p -m 700 "$HOME/.ssh"
-SSH_ENV="$HOME/.ssh/environment"
-
-function start_agent {
-    echo "Initialising new SSH agent..."
-    (   umask 077   # create the env file as 0600 from the start
-        /usr/bin/ssh-agent -t 8h | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    )
-    echo succeeded
-    chmod 600 "${SSH_ENV}"   # safety net for files left over from older runs
-    source "${SSH_ENV}" > /dev/null
-    /usr/bin/ssh-add
-}
-
-if [[ -f "${SSH_ENV}" ]]; then
-    source "${SSH_ENV}" > /dev/null
-    if ! kill -0 $SSH_AGENT_PID 2>/dev/null; then
-        start_agent
-    elif ! /usr/bin/ssh-add -l >/dev/null 2>&1; then
-        /usr/bin/ssh-add   # agent is alive but its keys expired
-    fi
-else
-    start_agent
-fi
+zstyle :omz:plugins:ssh-agent lifetime 8h
+zinit snippet OMZP::ssh-agent
 
 # 🛤️ System Paths
 export PATH=$PATH:$HOME/.cargo/bin        # Rust
