@@ -17,7 +17,7 @@ Summary of packages that get installed and configured based on roles:
 - **role: harden_system**
   - Remove the `passim` package and stop the `passimd` service from listening on 0.0.0.0
   - Disable Link-Local Multicast Name Resolution (LLMNR) listening on 0.0.0.0
-  - Create and activate a new `firewalld` zone `FedoraWsHardened`, which DROPS all incoming requests
+  - Create and activate a new `firewalld` zone `FedoraWsHardened`, which DROPS all incoming requests (SSH stays off unless `harden_system_firewall_allow_ssh` is set to `true`)
   - Enable automatic security updates via `dnf5-plugin-automatic`
   - Set fallback DNS resolvers (Cloudflare, Quad9) for when a network provides none
 
