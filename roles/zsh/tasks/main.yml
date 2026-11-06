@@ -16,16 +16,15 @@
   block:
     - name: Ensure zinit installation directory exists
       ansible.builtin.file:
-        # Using ~ ensures expansion to the become_user's home
-        path: "{{ zsh_zinit_install_path | expanduser }}"
+        path: "{{ zsh_zinit.install_path | expanduser }}"
         state: directory
         mode: '0755'
 
     - name: Clone zinit git repo
       ansible.builtin.git:
-        repo: "{{ zsh_zinit_git_repo }}"
-        dest: "{{ zsh_zinit_install_path | expanduser }}"
-        version: main
+        repo: "{{ zsh_zinit.repo }}"
+        dest: "{{ zsh_zinit.install_path | expanduser }}"
+        version: "{{ zsh_zinit.version }}"
         update: true
 
     - name: Copy the sample .zshrc file (timestamped backup if content changes)
