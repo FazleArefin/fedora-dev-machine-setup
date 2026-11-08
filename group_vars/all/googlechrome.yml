@@ -1,9 +1,0 @@
----
-
-googlechrome_yum_repository_url: "https://dl.google.com/linux/chrome/rpm/stable/x86_64"
-googlechrome_rpm_key_url: "https://dl.google.com/linux/linux_signing_key.pub"
-
-googlechrome_packages:
-  - google-chrome-stable
-
-...

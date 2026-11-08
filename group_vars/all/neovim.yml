@@ -10,4 +10,6 @@ neovim_dnf_packages:
   - git
   - curl
 
-neovim_lazyvim_starter_url: https://github.com/LazyVim/starter.git
+neovim_lazyvim_starter:
+  url: https://github.com/LazyVim/starter.git
+  version: 803bc181d7c0d6d5eeba9274d9be49b287294d99  # TODO (maintainer review): bump to latest tag: https://github.com/LazyVim/starter/tags

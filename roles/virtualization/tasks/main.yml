@@ -61,8 +61,8 @@
         group: "{{ item.group }}"
         mode: "{{ item.mode }}"
       loop:
-        - { path: "/var/lib/libvirt/isos", owner: "root", group: "root", mode: "0755" }
-        - { path: "/var/lib/libvirt/templates", owner: "root", group: "root", mode: "0755" }
+        - { path: "/var/lib/libvirt/isos", owner: "root", group: "root", mode: "0711" }
+        - { path: "/var/lib/libvirt/templates", owner: "root", group: "root", mode: "0711" }
 
     - name: Define persistent SELinux file context for custom directories
       community.general.sefcontext:

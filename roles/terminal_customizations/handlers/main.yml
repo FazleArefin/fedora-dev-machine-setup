@@ -1,0 +1,6 @@
+---
+- name: Refresh font cache
+  become: true
+  become_user: "{{ local_username }}"
+  ansible.builtin.command: fc-cache -f
+  changed_when: true
