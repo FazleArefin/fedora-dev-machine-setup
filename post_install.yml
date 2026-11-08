@@ -8,10 +8,13 @@
         autoremove: true
 
     - name: Display post install message
-      ansible.builtin.debug:
-        msg:
-          - 'Manual steps left to do:'
-          - >-
-            - add noatime option for your SSD mounts points
-            in /etc/fstab (optional)
-          - '- Reboot your system'
+      ansible.builtin.pause:
+        seconds: 10
+        prompt: |
+
+          Manual steps left to do:
+            - (optional) add noatime option for your SSD mount points in /etc/fstab
+            - (optional) configure additional multimedia codecs from https://rpmfusion.org/Howto/Multimedia
+            - Reboot your system
+
+          Press Enter to finish
