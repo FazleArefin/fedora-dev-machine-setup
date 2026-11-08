@@ -37,6 +37,7 @@ base_system_tools:
   # - progress
   # - pwgen
   - gnome-tweaks
+  - gnome-extensions-app
   - gnome-shell-extension-dash-to-dock
   - lsd  # the next gen `ls` command
   - strace
