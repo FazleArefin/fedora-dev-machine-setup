@@ -36,14 +36,6 @@ terminal_customizations_nerd_fonts:
       sha256: a7f108988ed9c38001ba6e2554c537744d75ed326b7a64be1eacc0cb695969f2
     - path: "SourceCodePro/SauceCodeProNerdFontMono-Regular.ttf"
       sha256: cbfe6a91123b9d78a1b593cb2efa10a806a704490e3cea6b894078b86d67c0b1
-    - path: "VictorMono/VictorMonoNerdFontMono-BoldItalic.ttf"
-      sha256: e53d7f57877655ea017e3e3fa0ffe7069e8fb2969b0d5e2999a351816ece0880
-    - path: "VictorMono/VictorMonoNerdFontMono-Bold.ttf"
-      sha256: 1be17391d3e88e8c4cac97eedd6c053e551f076934a7b87ae04392549ea53681
-    - path: "VictorMono/VictorMonoNerdFontMono-Italic.ttf"
-      sha256: f56aaa48a3f601b2fc7353e123d730d4b7bed6fc5f419ce930ee7f626b900ade
-    - path: "VictorMono/VictorMonoNerdFontMono-Regular.ttf"
-      sha256: 9e43726e7c3ff61785a05a7f0691dde1a361cafaab849ae28467f84eb42ad7d1
 
 terminal_customizations_tmux_plugin:
   repo: "https://github.com/tmux-plugins/tpm"
