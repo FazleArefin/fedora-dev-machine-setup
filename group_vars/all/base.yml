@@ -39,7 +39,7 @@ base_system_tools:
   - gnome-tweaks
   - gnome-extensions-app
   - gnome-shell-extension-dash-to-dock
-  - lsd  # the next gen `ls` command
+  - eza
   - strace
   - trash-cli
   - qrencode
