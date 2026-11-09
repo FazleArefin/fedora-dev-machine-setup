@@ -9,7 +9,6 @@
 
     - name: Display post install message
       ansible.builtin.pause:
-        seconds: 10
         prompt: |
 
           Manual steps left to do:
