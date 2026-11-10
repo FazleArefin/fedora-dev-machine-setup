@@ -72,7 +72,7 @@
         state: present
       loop:
         - { target: '/var/lib/libvirt/isos(/.*)?', type: "virt_content_t" }
-        - { target: '/var/lib/libvirt/templates(/.*)?', type: "virt_content_t" }
+        - { target: '/var/lib/libvirt/templates(/.*)?', type: "virt_image_t" }
 
     - name: Apply correct SELinux contexts recursively
       ansible.builtin.command: restorecon -Rv -F "{{ item }}"
