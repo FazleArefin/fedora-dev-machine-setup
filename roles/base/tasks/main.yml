@@ -219,4 +219,22 @@
         name: "{{ base_flatpak_flathub_apps }}"
         state: present
 
+- name: Silence GNU parallel citation prompt
+  become: true
+  become_user: "{{ local_username }}"
+  block:
+    - name: Ensure ~/.parallel exists
+      ansible.builtin.file:
+        path: "/home/{{ local_username }}/.parallel"
+        state: directory
+        mode: "0755"
+
+    - name: Create will-cite marker file
+      ansible.builtin.file:
+        path: "/home/{{ local_username }}/.parallel/will-cite"
+        state: touch
+        mode: "0644"
+        modification_time: preserve
+        access_time: preserve
+
 ...
