@@ -1,6 +1,6 @@
 ---
 
-- name: Create local fonts directory
+- name: Configure nerd fonts in local user's directory
   become: true
   become_user: "{{ local_username }}"
   block:
@@ -10,10 +10,6 @@
         state: directory
         mode: '0755'
 
-- name: Download Nerd Fonts
-  become: true
-  become_user: "{{ local_username }}"
-  block:
     - name: Download nerd fonts to local fonts folder
       ansible.builtin.get_url:
         url: "{{ terminal_customizations_nerd_fonts.base_url }}/{{ item.path }}"
