@@ -12,6 +12,14 @@ terminal_customizations_nerd_fonts:
       sha256: 6d7a0d3eaa4d1c54597f04a560ed516e3cbdbc3e02afa63390eb146875d9979e
     - path: "CascadiaCode/CaskaydiaCoveNerdFontMono-Regular.ttf"
       sha256: 4e1e371b188bca589ec1ee7df494ca7bbb187c1c38228c059e5705f4029a9dc0
+    - path: "CascadiaCode/CaskaydiaCoveNerdFont-BoldItalic.ttf"
+      sha256: 79b103e4b2e4d858e658420cc9bb626d704fc268c31857768c10a65c74923a97
+    - path: "CascadiaCode/CaskaydiaCoveNerdFont-Bold.ttf"
+      sha256: ff3a0f796e22d851705bdc003253cfdbae5b9aea866f079e4010600d41dbd9d1
+    - path: "CascadiaCode/CaskaydiaCoveNerdFont-Italic.ttf"
+      sha256: 0a31ca997ef060b8af02fb5dc6dfba120db16d8afecc4ba1271a086b7d4298d1
+    - path: "CascadiaCode/CaskaydiaCoveNerdFont-Regular.ttf"
+      sha256: fae37ce4fdc965ba5d3caea122b856418dc5dec2e4e638a024c49d681ffce5e9
     - path: "JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-BoldItalic.ttf"
       sha256: 9dba502e00e35209f6ed2a151c7376c051657b067cdebbc6e52d06cb9002cf31
     - path: "JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Bold.ttf"
