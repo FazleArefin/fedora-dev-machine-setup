@@ -20,14 +20,6 @@ terminal_customizations_nerd_fonts:
       sha256: 31efd6ead98746f5b0afa1ee6dba60267ad48db36428360bee327bec10621f97
     - path: "JetBrainsMono/Ligatures/JetBrainsMonoNerdFontMono-Regular.ttf"
       sha256: f2a5ea6cfab397445ffab00c0370927b66d61e560a05db5db271b42006381c1a
-    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-BoldItalic.ttf"
-      sha256: 28ce03bcaf808f7fa64dcce6facb00319083bdb04cc4f61d41b9f6ad8f20c3e8
-    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Bold.ttf"
-      sha256: f799fc4b215c7b7254bf6cee51c0bce122ac684b53b46fd3cb83d408a0ccf385
-    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Italic.ttf"
-      sha256: 336a3cef8770dab01c0fc9c6bb0c0473bfa82f90a4033fde2cc52d8aa410528c
-    - path: "JetBrainsMono/NoLigatures/JetBrainsMonoNLNerdFontMono-Regular.ttf"
-      sha256: d9a80146bbf2ff23b187316a3e82ee2a2ceab8220267fe09ac150ca46ab2c3bd
     - path: "SourceCodePro/SauceCodeProNerdFontMono-BoldItalic.ttf"
       sha256: bc723ce781926ee93fbfb7585bd13e151f755ee2cdc08310e0e3200a753db8f3
     - path: "SourceCodePro/SauceCodeProNerdFontMono-Bold.ttf"
@@ -45,5 +37,3 @@ terminal_customizations_alacritty_themes:
   repo: "https://github.com/alacritty/alacritty-theme"
 
 ...
-
-
